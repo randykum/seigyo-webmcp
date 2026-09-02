@@ -59,6 +59,7 @@ export class SimulationStateObject extends DurableObject<Env> {
 
   override async fetch(request: Request): Promise<Response> {
     if (request.headers.get("Upgrade")?.toLowerCase() !== "websocket") return new Response("WebSocket upgrade required", { status: 426 });
+    if (this.ctx.getWebSockets().length >= 32) return new Response("WebSocket connection limit reached", { status: 429 });
     const pair = new WebSocketPair();
     const client = pair[0];
     const server = pair[1];
@@ -69,6 +70,8 @@ export class SimulationStateObject extends DurableObject<Env> {
   }
 
   override webSocketMessage(socket: WebSocket, message: string | ArrayBuffer): void {
+    const size = typeof message === "string" ? new TextEncoder().encode(message).byteLength : message.byteLength;
+    if (size > 256) { socket.close(1009, "Message too large"); return; }
     if (typeof message === "string" && message === "ping") socket.send(JSON.stringify({ type: "pong", at: Date.now() }));
   }
 

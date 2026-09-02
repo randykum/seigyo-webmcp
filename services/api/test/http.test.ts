@@ -32,4 +32,20 @@ describe("HTTP security boundary", () => {
     const body = await response.json() as { error: { code: string } };
     expect(body.error.code).toBe("INVALID_ARGUMENT");
   });
+
+  it("rejects an oversized body when content length is missing", async () => {
+    const response = await SELF.fetch("https://worker.test/api/proposals", {
+      method: "POST",
+      headers: { "Content-Type": "application/json", "X-Session-Id": "seigyo-demo-operator" },
+      body: JSON.stringify({ value: "x".repeat(70_000) })
+    });
+    expect(response.status).toBe(400);
+    const body = await response.json() as { error: { code: string } };
+    expect(body.error.code).toBe("INVALID_ARGUMENT");
+  });
+
+  it("rejects WebSocket requests without the exact origin and session", async () => {
+    const response = await SELF.fetch("https://worker.test/ws", { headers: { Upgrade: "websocket" } });
+    expect(response.status).toBe(403);
+  });
 });

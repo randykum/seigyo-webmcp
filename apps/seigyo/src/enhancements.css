@@ -19,3 +19,15 @@
 .activity-row time { color: #929292; }
 th,
 .table-link span { color: #929292; }
+.log-row time,
+.log-row small,
+.service-name code,
+.control-step small,
+.stage-card p,
+.receipt p,
+.receipt dt,
+.receipt dd,
+.settings-panel p,
+.settings-panel label > span,
+.settings-dl dt { color: #929292; }
+.stage-number { color: #6f95cc; }

@@ -58,6 +58,17 @@ pnpm audit --prod
 
 ## Deployment
 
-Each application deploys independently to Cloudflare Workers. Configure `VITE_API_BASE_URL` for both frontend builds, then run the three deploy scripts from the root package.
+Each application deploys independently to Cloudflare Workers. Deploy the API first, add its HTTPS URL to `VITE_API_BASE_URL`, add the final frontend origins to the API allowlist, then deploy both frontends. The frontend deployment scripts fail closed when the API URL is missing.
+
+For a permanent account:
+
+```powershell
+pnpm deploy:api
+$env:VITE_API_BASE_URL="https://seigyo-api.your-account.workers.dev"
+pnpm deploy:seigyo
+pnpm deploy:myshop
+```
+
+For an unauthenticated temporary preview, add `--temporary` to the underlying Wrangler commands. Cloudflare deletes an unclaimed preview account after 60 minutes. Use the claim link printed by Wrangler to preserve its Workers and Durable Object.
 
 This environment is a production simulation. Checkout never charges real money.

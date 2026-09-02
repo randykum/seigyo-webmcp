@@ -7,7 +7,7 @@
     "dev": "vite --port 5174",
     "build": "tsc --noEmit && vite build",
     "typecheck": "tsc --noEmit",
-    "deploy": "vite build && wrangler deploy"
+    "deploy": "node ../../scripts/require-api-url.mjs && vite build && wrangler deploy"
   },
   "dependencies": {
     "@seigyo/contracts": "workspace:*",

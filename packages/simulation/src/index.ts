@@ -91,6 +91,7 @@ const canonical = (value: unknown): string => JSON.stringify(value, (_key, item)
 const round = (value: number, precision = 3): number => Number(value.toFixed(precision));
 const clamp = (value: number, min: number, max: number): number => Math.min(max, Math.max(min, value));
 const id = (prefix: string, number: number): string => `${prefix}-${String(number).padStart(3, "0")}`;
+const scopedId = (prefix: string, epoch: number, number: number): string => `${prefix}-${epoch}-${String(number).padStart(3, "0")}`;
 
 const createServices = (): Record<ServiceId, ServiceRuntime> => Object.fromEntries((Object.keys(base) as ServiceId[]).map((serviceId) => {
   const [name, owner] = names[serviceId];
@@ -322,7 +323,8 @@ export const executeProposal = async (state: SimulationState, proposalId: string
   if (!approval || approval.used || approval.sessionId !== sessionId) throw new Error("APPROVAL_REQUIRED");
   if (proposal.expiresAt <= state.virtualNow || approval.expiresAt <= state.virtualNow || approval.epoch !== state.epoch || approval.causalRevision !== state.causalRevision || approval.actionHash !== proposal.actionHash) { proposal.status = proposal.expiresAt <= state.virtualNow ? "expired" : "stale"; throw new Error("STALE_STATE"); }
   const beforeStateHash = await stateFingerprint(state);
-  const execution: Execution = { id: id("EXEC", state.executions.length + 1), proposalId, incidentId: proposal.incidentId, state: "running", action: proposal.action, startedAt: state.virtualNow, beforeStateHash, undoAvailable: proposal.predictedImpact.reversible };
+  const executionRevision = state.causalRevision + 1;
+  const execution: Execution = { id: scopedId("EXEC", state.epoch, state.executions.length + 1), proposalId, incidentId: proposal.incidentId, state: "running", action: proposal.action, startedAt: state.virtualNow, beforeStateHash, undoAvailable: proposal.predictedImpact.reversible, causalRevision: executionRevision };
   state.executions.push(execution);
   state.undoSnapshots[execution.id] = { version: state.services[proposal.action.targetService].version, previousVersion: state.services[proposal.action.targetService].previousVersion, replicas: state.services[proposal.action.targetService].replicas, enabled: state.services[proposal.action.targetService].enabled, restartUntil: state.services[proposal.action.targetService].restartUntil, featureFlags: { ...state.services[proposal.action.targetService].featureFlags }, ...(state.services[proposal.action.targetService].provider ? { provider: state.services[proposal.action.targetService].provider } : {}) };
   proposal.status = "executing";
@@ -330,14 +332,14 @@ export const executeProposal = async (state: SimulationState, proposalId: string
   if (incident) { incident.status = "mitigating"; incident.updatedAt = state.virtualNow; }
   approval.used = true;
   applyAction(state, proposal.action);
-  state.causalRevision += 1;
+  state.causalRevision = executionRevision;
   tick(state, ({ rollback_deployment: 10, restart_service: 5, scale_service: 15, shift_traffic: 5, disable_feature: 2, switch_provider: 5, maintenance_mode: 1 } satisfies Record<ActionType, number>)[proposal.action.type]);
   execution.state = "succeeded";
   execution.finishedAt = state.virtualNow;
   execution.afterStateHash = await stateFingerprint(state);
   proposal.status = "succeeded";
   const previousReceiptHash = state.receipts.at(-1)?.receiptHash ?? "GENESIS";
-  const receiptBase = { id: id("RCP", state.receipts.length + 1), incidentId: proposal.incidentId, proposalId, executionId: execution.id, action: proposal.action, actionHash: proposal.actionHash, beforeStateHash, afterStateHash: execution.afterStateHash, evidenceRefs: proposal.evidenceRefs, approvedAt: approval.approvedAt, executedAt: execution.finishedAt, result: "pending" as const, previousReceiptHash, epoch: state.epoch };
+  const receiptBase = { id: scopedId("RCP", state.epoch, state.receipts.length + 1), incidentId: proposal.incidentId, proposalId, executionId: execution.id, action: proposal.action, actionHash: proposal.actionHash, beforeStateHash, afterStateHash: execution.afterStateHash, evidenceRefs: proposal.evidenceRefs, approvedAt: approval.approvedAt, executedAt: execution.finishedAt, result: "pending" as const, previousReceiptHash, epoch: state.epoch };
   state.receipts.push({ ...receiptBase, receiptHash: await sha256(canonical(receiptBase)) });
   state.idempotency[idempotencyKey] = { fingerprint, result: execution };
   recordActivity(state, "seigyo.execute_action", "Execute the approved intervention", `${proposal.action.type} completed on ${proposal.action.targetService}.`);
@@ -358,23 +360,34 @@ export const verifyExecution = async (state: SimulationState, executionId: strin
   const latencyThreshold = base[execution.action.targetService].p95 * 4;
   let outcome: VerificationOutcome = correct === "containment" ? "contained" : correct === "partial" ? "partially_recovered" : correct === "recovery" && target.errorRate <= errorThreshold && target.p95Ms <= latencyThreshold && inventory.queueDepth <= 10 ? "recovered" : target.errorRate > 0.2 ? "unchanged" : "partially_recovered";
   if (execution.action.type === "restart_service" && target.errorRate > 0.5) outcome = "worsened";
-  const verification: Verification = { id: id("VER", state.verifications.length + 1), executionId, incidentId, outcome, verifiedAt: state.virtualNow, checks: [{ name: "service_health", status: target.errorRate <= errorThreshold ? "pass" : "fail", observed: target.status, expected: "within service objective" }, { name: "error_rate", status: target.errorRate <= errorThreshold ? "pass" : "fail", observed: `${round(target.errorRate * 100, 2)}%`, expected: `${round(errorThreshold * 100, 2)}% or lower` }, { name: "latency", status: target.p95Ms <= latencyThreshold ? "pass" : "fail", observed: `${target.p95Ms} ms`, expected: `${latencyThreshold} ms or lower` }], residualRisk: outcome === "recovered" ? "Metrics have remained within recovery thresholds for three consecutive samples." : outcome === "contained" ? "Customer traffic is stopped, but the underlying fault remains." : "The root condition or dependency pressure remains active." };
+  const verification: Verification = { id: scopedId("VER", state.epoch, state.verifications.length + 1), executionId, incidentId, outcome, verifiedAt: state.virtualNow, checks: [{ name: "service_health", status: target.errorRate <= errorThreshold ? "pass" : "fail", observed: target.status, expected: "within service objective" }, { name: "error_rate", status: target.errorRate <= errorThreshold ? "pass" : "fail", observed: `${round(target.errorRate * 100, 2)}%`, expected: `${round(errorThreshold * 100, 2)}% or lower` }, { name: "latency", status: target.p95Ms <= latencyThreshold ? "pass" : "fail", observed: `${target.p95Ms} ms`, expected: `${latencyThreshold} ms or lower` }], residualRisk: outcome === "recovered" ? "Metrics have remained within recovery thresholds for three consecutive samples." : outcome === "contained" ? "Customer traffic is stopped, but the underlying fault remains." : "The root condition or dependency pressure remains active." };
   state.verifications.push(verification);
   const incident = state.incidents.find(item => item.id === incidentId);
   if (incident) { incident.status = outcome === "recovered" ? "resolved" : outcome === "contained" ? "mitigating" : "monitoring"; incident.updatedAt = state.virtualNow; if (outcome === "recovered") { incident.resolvedAt = state.virtualNow; incident.customerErrorsPerMinute = 0; incident.ordersAtRisk = 0; } }
   const receipt = state.receipts.find(item => item.executionId === executionId);
-  if (receipt) { receipt.verifiedAt = state.virtualNow; receipt.result = outcome; receipt.receiptHash = await sha256(canonical({ ...receipt, receiptHash: undefined })); }
+  if (receipt) {
+    receipt.verifiedAt = state.virtualNow;
+    receipt.result = outcome;
+    let previousReceiptHash = "GENESIS";
+    for (const item of state.receipts) {
+      item.previousReceiptHash = previousReceiptHash;
+      item.receiptHash = await sha256(canonical({ ...item, receiptHash: undefined }));
+      previousReceiptHash = item.receiptHash;
+    }
+  }
   recordActivity(state, "seigyo.verify_action", "Measure the actual recovery result", `Verification result: ${outcome}.`);
   return verification;
 };
 
 export const undoExecution = async (state: SimulationState, executionId: string, idempotencyKey: string): Promise<Execution> => {
   validatePublicKey(idempotencyKey, "idempotencyKey");
+  const fingerprint = await sha256(canonical({ operation: "undo", executionId }));
+  const duplicate = Object.hasOwn(state.idempotency, idempotencyKey) ? state.idempotency[idempotencyKey] : undefined;
+  if (duplicate) { if (duplicate.fingerprint !== fingerprint) throw new Error("IDEMPOTENCY_CONFLICT"); return duplicate.result as Execution; }
   const original = state.executions.find(item => item.id === executionId);
   if (!original) throw new Error("NOT_FOUND");
   if (!original.undoAvailable) throw new Error("IRREVERSIBLE");
-  const duplicate = Object.hasOwn(state.idempotency, idempotencyKey) ? state.idempotency[idempotencyKey] : undefined;
-  if (duplicate) return duplicate.result as Execution;
+  if (state.causalRevision !== original.causalRevision) throw new Error("STALE_STATE:A newer causal change prevents restoring this snapshot.");
   const saved = state.undoSnapshots[executionId];
   if (!saved) throw new Error("IRREVERSIBLE:Original service state is unavailable.");
   const beforeStateHash = await stateFingerprint(state);
@@ -383,12 +396,12 @@ export const undoExecution = async (state: SimulationState, executionId: string,
   original.undoAvailable = false;
   state.causalRevision += 1;
   tick(state, 10);
-  const undo: Execution = { id: id("EXEC", state.executions.length + 1), proposalId: original.proposalId, incidentId: original.incidentId, state: "succeeded", action: original.action, startedAt: state.virtualNow - 10_000, finishedAt: state.virtualNow, beforeStateHash, afterStateHash: await stateFingerprint(state), undoAvailable: false };
+  const undo: Execution = { id: scopedId("EXEC", state.epoch, state.executions.length + 1), proposalId: original.proposalId, incidentId: original.incidentId, state: "succeeded", action: original.action, startedAt: state.virtualNow - 10_000, finishedAt: state.virtualNow, beforeStateHash, afterStateHash: await stateFingerprint(state), undoAvailable: false, causalRevision: state.causalRevision };
   state.executions.push(undo);
-  state.idempotency[idempotencyKey] = { fingerprint: await sha256(canonical({ executionId })), result: undo };
+  state.idempotency[idempotencyKey] = { fingerprint, result: undo };
   const originalReceipt = state.receipts.find(item => item.executionId === executionId);
   const previousReceiptHash = state.receipts.at(-1)?.receiptHash ?? "GENESIS";
-  const receiptBase = { id: id("RCP", state.receipts.length + 1), incidentId: original.incidentId, proposalId: original.proposalId, executionId: undo.id, action: original.action, actionHash: originalReceipt?.actionHash ?? await actionFingerprint(original.action), beforeStateHash, afterStateHash: undo.afterStateHash as string, evidenceRefs: originalReceipt?.evidenceRefs ?? [], approvedAt: originalReceipt?.approvedAt ?? state.virtualNow, executedAt: state.virtualNow, result: "pending" as const, previousReceiptHash, epoch: state.epoch, undoOf: originalReceipt?.id };
+  const receiptBase = { id: scopedId("RCP", state.epoch, state.receipts.length + 1), incidentId: original.incidentId, proposalId: original.proposalId, executionId: undo.id, action: original.action, actionHash: originalReceipt?.actionHash ?? await actionFingerprint(original.action), beforeStateHash, afterStateHash: undo.afterStateHash as string, evidenceRefs: originalReceipt?.evidenceRefs ?? [], approvedAt: originalReceipt?.approvedAt ?? state.virtualNow, executedAt: state.virtualNow, result: "pending" as const, previousReceiptHash, epoch: state.epoch, undoOf: originalReceipt?.id };
   state.receipts.push({ ...receiptBase, receiptHash: await sha256(canonical(receiptBase)) });
   recordActivity(state, "seigyo.undo_action", "Restore the service state captured before execution", `Undid ${original.action.type} on ${original.action.targetService}.`);
   return undo;

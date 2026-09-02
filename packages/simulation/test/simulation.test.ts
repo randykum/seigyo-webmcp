@@ -88,6 +88,41 @@ describe("causal simulation", () => {
     await expect(undoExecution(state, execution.id, "undo-execution-002")).rejects.toThrow("IRREVERSIBLE");
   });
 
+  it("makes an undo retry idempotent and rejects a conflicting key", async () => {
+    const state = seedSimulation("inventory-saturation");
+    const proposal = await proposeAction(state, { incidentId: "INC-044", action: { type: "scale_service", targetService: "inventory-db", parameters: { replicas: 5 } }, rationale: "Capacity is below the observed inventory demand.", evidenceRefs: ["metric:inventory-db"], idempotencyKey: "proposal-undo-retry" });
+    const approval = await approveProposal(state, proposal.id, "session-a");
+    const execution = await executeProposal(state, proposal.id, approval.token, "execute-undo-retry", "session-a");
+    const first = await undoExecution(state, execution.id, "undo-retry-key");
+    const retry = await undoExecution(state, execution.id, "undo-retry-key");
+    expect(retry.id).toBe(first.id);
+    await expect(undoExecution(state, first.id, "undo-retry-key")).rejects.toThrow("IDEMPOTENCY_CONFLICT");
+  });
+
+  it("rejects undo after a newer causal action", async () => {
+    const state = seedSimulation("inventory-saturation");
+    const firstProposal = await proposeAction(state, { incidentId: "INC-044", action: { type: "scale_service", targetService: "inventory-db", parameters: { replicas: 4 } }, rationale: "Restore database headroom.", evidenceRefs: ["metric:inventory-db"], idempotencyKey: "proposal-stale-undo-1" });
+    const firstApproval = await approveProposal(state, firstProposal.id, "session-a");
+    const firstExecution = await executeProposal(state, firstProposal.id, firstApproval.token, "execute-stale-undo-1", "session-a");
+    const secondProposal = await proposeAction(state, { incidentId: "INC-044", action: { type: "maintenance_mode", targetService: "storefront-edge", parameters: { enabled: true } }, rationale: "Contain customer writes during verification.", evidenceRefs: ["metric:inventory-db"], idempotencyKey: "proposal-stale-undo-2" });
+    const secondApproval = await approveProposal(state, secondProposal.id, "session-a");
+    await executeProposal(state, secondProposal.id, secondApproval.token, "execute-stale-undo-2", "session-a");
+    await expect(undoExecution(state, firstExecution.id, "undo-stale-key")).rejects.toThrow("STALE_STATE");
+  });
+
+  it("keeps execution and receipt identifiers unique across resets", async () => {
+    let state = seedSimulation("checkout-regression");
+    const proposal = await proposeAction(state, { incidentId: "INC-042", action: { type: "rollback_deployment", targetService: "checkout-api", parameters: {} }, rationale: "Rollback the correlated deployment.", evidenceRefs: ["deployment:DEP-160"], idempotencyKey: "proposal-before-reset" });
+    const approval = await approveProposal(state, proposal.id, "session-a");
+    const firstExecution = await executeProposal(state, proposal.id, approval.token, "execute-before-reset", "session-a");
+    state = resetSimulation(state, "checkout-regression");
+    const nextProposal = await proposeAction(state, { incidentId: "INC-042", action: { type: "rollback_deployment", targetService: "checkout-api", parameters: {} }, rationale: "Rollback the correlated deployment again.", evidenceRefs: ["deployment:DEP-160"], idempotencyKey: "proposal-after-reset" });
+    const nextApproval = await approveProposal(state, nextProposal.id, "session-a");
+    const nextExecution = await executeProposal(state, nextProposal.id, nextApproval.token, "execute-after-reset", "session-a");
+    expect(nextExecution.id).not.toBe(firstExecution.id);
+    expect(new Set(state.receipts.map(receipt => receipt.id)).size).toBe(state.receipts.length);
+  });
+
   it("bounds invalid metric limits and cart quantities", () => {
     const state = seedSimulation("checkout-regression");
     expect(queryMetrics(state, undefined, Number.NaN)).toHaveLength(180);

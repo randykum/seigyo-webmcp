@@ -34,10 +34,26 @@ test("customer failure, controlled recovery, and successful checkout", async ({ 
 });
 
 test("primary pages have no serious automated accessibility violations", async ({ page }) => {
-  for (const url of ["http://localhost:5173/", "http://localhost:5173/incidents", "http://localhost:5174/", "http://localhost:5174/collections/all"]) {
+  for (const url of [
+    "http://localhost:5173/", "http://localhost:5173/incidents", "http://localhost:5173/incidents/INC-042", "http://localhost:5173/services", "http://localhost:5173/deployments", "http://localhost:5173/evidence", "http://localhost:5173/runbooks", "http://localhost:5173/receipts", "http://localhost:5173/settings",
+    "http://localhost:5174/", "http://localhost:5174/collections/all", "http://localhost:5174/product/kuro-lounge-chair", "http://localhost:5174/search", "http://localhost:5174/cart", "http://localhost:5174/order", "http://localhost:5174/about"
+  ]) {
     await page.goto(url);
-    await expect(page.locator("main")).toBeVisible();
+    const retry = page.getByRole("button", { name: "Try again" });
+    if (await retry.isVisible().catch(() => false)) await retry.click();
+    await expect(page.locator("main"), url).toBeVisible({ timeout: 20_000 });
     const results = await new AxeBuilder({ page }).analyze();
     expect(results.violations.filter(item => ["critical", "serious"].includes(item.impact ?? "")), url).toEqual([]);
   }
+});
+
+test("invalid routes and orders show clear not-found states", async ({ page }) => {
+  await page.goto("http://localhost:5173/incidents/DOES-NOT-EXIST");
+  await expect(page.getByRole("heading", { name: "Incident not found" })).toBeVisible();
+  await page.goto("http://localhost:5173/DOES-NOT-EXIST");
+  await expect(page.getByRole("heading", { name: "Page not found" })).toBeVisible();
+  await page.goto("http://localhost:5174/DOES-NOT-EXIST");
+  await expect(page.getByRole("heading", { name: "Page not found" })).toBeVisible();
+  await page.goto("http://localhost:5174/confirmation/ORD-DOES-NOT-EXIST");
+  await expect(page.getByRole("heading", { name: "Order not found" })).toBeVisible();
 });

@@ -40,6 +40,6 @@ export const api = {
 };
 
 export const websocketUrl = (): string => {
-  if (API_BASE) return `${API_BASE.replace(/^http/, "ws")}/ws`;
-  return `${location.protocol === "https:" ? "wss:" : "ws:"}//${location.host}/ws`;
+  if (API_BASE) return `${API_BASE.replace(/^http/, "ws")}/ws?session=${encodeURIComponent(SESSION_ID)}`;
+  return `${location.protocol === "https:" ? "wss:" : "ws:"}//${location.host}/ws?session=${encodeURIComponent(SESSION_ID)}`;
 };

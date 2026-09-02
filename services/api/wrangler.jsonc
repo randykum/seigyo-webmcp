@@ -10,7 +10,7 @@
   },
   "vars": {
     "ENVIRONMENT": "production-simulation",
-    "ALLOWED_ORIGINS": "http://localhost:5173,http://localhost:5174,https://seigyo.destiny-scooter.workers.dev,https://myshop.destiny-scooter.workers.dev"
+    "ALLOWED_ORIGINS": "http://localhost:5173,http://localhost:5174,https://seigyo.cord-pail.workers.dev,https://myshop.cord-pail.workers.dev"
   },
   "durable_objects": {
     "bindings": [

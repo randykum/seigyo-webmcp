@@ -23,7 +23,25 @@ const sessionId = (header?: string): string => { if (header !== "seigyo-demo-ope
 const success = <T>(data: T, stateVersion = 0): ApiResult<T> => ({ ok: true, data, stateVersion, traceId: createTraceId() });
 const errorCode = (message: string): ErrorCode => message.includes("IDEMPOTENCY_CONFLICT") ? "CONFLICT" : message.includes("INVALID_ACTION") ? "INVALID_ARGUMENT" : message.includes("NOT_FOUND") ? "NOT_FOUND" : message.includes("AUTH_REQUIRED") ? "AUTH_REQUIRED" : message.includes("APPROVAL_REQUIRED") ? "APPROVAL_REQUIRED" : message.includes("STALE_STATE") ? "STALE_STATE" : message.includes("PRECONDITION_FAILED") ? "PRECONDITION_FAILED" : message.includes("IRREVERSIBLE") ? "IRREVERSIBLE" : message.includes("UPSTREAM_UNAVAILABLE") ? "UPSTREAM_UNAVAILABLE" : "INVALID_ARGUMENT";
 const failure = (caught: unknown, stateVersion = 0): ApiResult<never> => { const message = caught instanceof Error ? caught.message : "Unexpected request failure"; const code = errorCode(message); return { ok: false, error: { code, message: message.includes(":") ? message.slice(message.indexOf(":") + 1) : message.replaceAll("_", " ").toLowerCase(), retryable: code === "UPSTREAM_UNAVAILABLE" || code === "RATE_LIMITED", requiresHuman: code === "APPROVAL_REQUIRED" }, stateVersion, traceId: createTraceId() }; };
-const json = async (context: { req: { header(name: string): string | undefined; json(): Promise<unknown> } }): Promise<unknown> => { const length = Number(context.req.header("Content-Length") ?? 0); if (length > 65_536) throw new Error("INVALID_ARGUMENT:Request body is too large."); return context.req.json(); };
+const json = async (context: { req: { header(name: string): string | undefined; raw: Request } }): Promise<unknown> => {
+  const declaredLength = Number(context.req.header("Content-Length") ?? 0);
+  if (Number.isFinite(declaredLength) && declaredLength > 65_536) throw new Error("INVALID_ARGUMENT:Request body is too large.");
+  const reader = context.req.raw.body?.getReader();
+  if (!reader) throw new Error("INVALID_ARGUMENT:A JSON request body is required.");
+  const chunks: Uint8Array[] = [];
+  let total = 0;
+  while (true) {
+    const { done, value } = await reader.read();
+    if (done) break;
+    total += value.byteLength;
+    if (total > 65_536) { await reader.cancel(); throw new Error("INVALID_ARGUMENT:Request body is too large."); }
+    chunks.push(value);
+  }
+  const bytes = new Uint8Array(total);
+  let offset = 0;
+  for (const chunk of chunks) { bytes.set(chunk, offset); offset += chunk.byteLength; }
+  return JSON.parse(new TextDecoder().decode(bytes)) as unknown;
+};
 
 app.get("/", context => context.json({ name: "Seigyo API", environment: context.env.ENVIRONMENT, status: "ok" }));
 app.get("/api/snapshot", async context => { const data = await stub(context.env).getSnapshot(); return context.json(success(data, data.causalRevision)); });
@@ -57,7 +75,7 @@ app.get("/api/store/health", async context => context.json(success(await stub(co
 
 app.get("/ws", async context => {
   const origin = context.req.header("Origin");
-  if (origin && !allowedOrigins(context.env).includes(origin)) return new Response("Forbidden", { status: 403 });
+  if (!origin || !allowedOrigins(context.env).includes(origin) || context.req.query("session") !== "seigyo-demo-operator") return new Response("Forbidden", { status: 403 });
   return stub(context.env).fetch(context.req.raw);
 });
 

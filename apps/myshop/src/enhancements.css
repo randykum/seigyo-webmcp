@@ -26,3 +26,17 @@ footer a,
 .shop-logo span,
 footer > div > a { color: #9b978f; }
 .collection-tools { color: #9b978f; }
+.product-notes p,
+.search-suggestions > p,
+.order-lookup > p,
+.cart-line > div:nth-child(2) span,
+.cart-line > div:nth-child(2) button,
+.cart-total p,
+.empty-cart,
+.not-found,
+.drawer-item > div > span,
+.confirm-meta span,
+.confirm-products span { color: #9b978f; }
+.app-error { margin: 16px; }
+.app-error button { border: 0; background: none; color: #fafafa; cursor: pointer; padding: 0; text-decoration: underline; }
+.order-lookup button { color: #171512; }
