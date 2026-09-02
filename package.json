@@ -12,9 +12,9 @@
     "screenshots": "node scripts/capture-screenshots.mjs",
     "smoke:deployment": "node scripts/smoke-deployment.mjs",
     "verify": "pnpm --filter @seigyo/api types && pnpm typecheck && pnpm build && pnpm test && pnpm research:validate && pnpm design:validate",
-    "deploy:api": "pnpm --filter @seigyo/api deploy",
-    "deploy:seigyo": "pnpm --filter @seigyo/app deploy",
-    "deploy:myshop": "pnpm --filter @seigyo/myshop deploy",
+    "deploy:api": "pnpm --filter @seigyo/api run deploy",
+    "deploy:seigyo": "pnpm --filter @seigyo/app run deploy",
+    "deploy:myshop": "pnpm --filter @seigyo/myshop run deploy",
     "research:validate": "node \"C:/Users/Kum Randy B/.codex/skills/ui-research-forge/scripts/validate-ui-research.mjs\" ui_system/ui_research 50 25",
     "design:validate": "node \"C:/Users/Kum Randy B/.codex/skills/design-system-forge/scripts/validate-design-system.mjs\" final ui_system/design_systems"
   },
