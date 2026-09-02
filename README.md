@@ -4,9 +4,9 @@ Seigyo is an agent-native incident investigation and controlled-recovery product
 
 ## Live applications
 
-- Seigyo: https://seigyo.destiny-scooter.workers.dev
-- MyShop: https://myshop.destiny-scooter.workers.dev
-- Shared API: https://seigyo-api.destiny-scooter.workers.dev
+- Seigyo: https://seigyo.cord-pail.workers.dev
+- MyShop: https://myshop.cord-pail.workers.dev
+- Shared API: https://seigyo-api.cord-pail.workers.dev
 
 The live deployment uses a temporary Cloudflare preview account until its claim link is completed. The application URLs remain the intended public URLs after the account is claimed.
 
