@@ -1,0 +1,28 @@
+{
+  "name": "seigyo-webmcp",
+  "private": true,
+  "version": "0.1.0",
+  "packageManager": "pnpm@11.19.0",
+  "scripts": {
+    "dev": "pnpm --parallel --filter @seigyo/api --filter @seigyo/app --filter @seigyo/myshop dev",
+    "build": "pnpm -r --if-present build",
+    "typecheck": "pnpm -r --if-present typecheck",
+    "test": "pnpm -r --if-present test",
+    "test:e2e": "playwright test",
+    "screenshots": "node scripts/capture-screenshots.mjs",
+    "smoke:deployment": "node scripts/smoke-deployment.mjs",
+    "verify": "pnpm --filter @seigyo/api types && pnpm typecheck && pnpm build && pnpm test && pnpm research:validate && pnpm design:validate",
+    "deploy:api": "pnpm --filter @seigyo/api deploy",
+    "deploy:seigyo": "pnpm --filter @seigyo/app deploy",
+    "deploy:myshop": "pnpm --filter @seigyo/myshop deploy",
+    "research:validate": "node \"C:/Users/Kum Randy B/.codex/skills/ui-research-forge/scripts/validate-ui-research.mjs\" ui_system/ui_research 50 25",
+    "design:validate": "node \"C:/Users/Kum Randy B/.codex/skills/design-system-forge/scripts/validate-design-system.mjs\" final ui_system/design_systems"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "4.10.2",
+    "@playwright/test": "1.62.1",
+    "@types/node": "24.3.0",
+    "typescript": "5.9.2",
+    "vitest": "4.1.11"
+  }
+}

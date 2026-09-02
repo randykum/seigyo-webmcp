@@ -1,0 +1,21 @@
+section_id,section_title,selected_option_id,agent_recommendation,user_notes,status
+personality,"Product personality",personality-vector,personality-vector,"Approved plan delegated implementation decisions to the agent.",agent_decides
+color,"Color palettes",color-primary,color-primary,"Approved plan delegated implementation decisions to the agent.",agent_decides
+type,"Typography systems",type-control,type-control,"Approved plan delegated implementation decisions to the agent.",agent_decides
+density,"Spacing and density",density-selected,density-selected,"Approved plan delegated implementation decisions to the agent.",agent_decides
+shape,"Shape and radius",shape-vector,shape-vector,"Approved plan delegated implementation decisions to the agent.",agent_decides
+layering,"Elevation and borders",layering-primary,layering-primary,"Approved plan delegated implementation decisions to the agent.",agent_decides
+motion,"Motion language",motion-control,motion-control,"Approved plan delegated implementation decisions to the agent.",agent_decides
+icons,"Icon style",icons-selected,icons-selected,"Approved plan delegated implementation decisions to the agent.",agent_decides
+imagery,"Imagery direction",imagery-vector,imagery-vector,"Approved plan delegated implementation decisions to the agent.",agent_decides
+layout,"Page layout and grid",layout-primary,layout-primary,"Approved plan delegated implementation decisions to the agent.",agent_decides
+navigation,"Navigation patterns",navigation-control,navigation-control,"Approved plan delegated implementation decisions to the agent.",agent_decides
+buttons,"Buttons and actions",buttons-selected,buttons-selected,"Approved plan delegated implementation decisions to the agent.",agent_decides
+forms,"Forms and inputs",forms-vector,forms-vector,"Approved plan delegated implementation decisions to the agent.",agent_decides
+tables,"Tables and data",tables-primary,tables-primary,"Approved plan delegated implementation decisions to the agent.",agent_decides
+surfaces,"Cards and surfaces",surfaces-control,surfaces-control,"Approved plan delegated implementation decisions to the agent.",agent_decides
+feedback,"Feedback states",feedback-selected,feedback-selected,"Approved plan delegated implementation decisions to the agent.",agent_decides
+accessibility,"Accessibility defaults",accessibility-vector,accessibility-vector,"Approved plan delegated implementation decisions to the agent.",agent_decides
+voice,"Content voice",voice-primary,voice-primary,"Approved plan delegated implementation decisions to the agent.",agent_decides
+implementation,"Implementation strategy",implementation-control,implementation-control,"Approved plan delegated implementation decisions to the agent.",agent_decides
+adaptation,"Third-party adaptation",adaptation-selected,adaptation-selected,"Approved plan delegated implementation decisions to the agent.",agent_decides

@@ -1,0 +1,21 @@
+.chart-table { border-top: 1px solid #202020; padding: 8px 16px 12px; }
+.chart-table summary { color: #929292; cursor: pointer; font: 9px Consolas, monospace; }
+.chart-table table { margin-top: 9px; min-width: 0; }
+.chart-table th, .chart-table td { height: 28px; padding: 4px 8px; }
+.toast-stack { pointer-events: none; }
+.toast { pointer-events: auto; }
+.eyebrow,
+.impact-meta,
+.metric-detail,
+.dependency-node small,
+.empty-inline,
+.empty-proposal p,
+.environment small,
+.sidebar-foot small,
+.command-trigger kbd,
+.chart-alt,
+.panel-head,
+.activity-row p,
+.activity-row time { color: #929292; }
+th,
+.table-link span { color: #929292; }

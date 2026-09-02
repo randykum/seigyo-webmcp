@@ -1,0 +1,2177 @@
+{
+  "project": {
+    "name": "Seigyo and MyShop",
+    "type": "Operational incident recovery plus causal commerce simulation",
+    "audience": "Incident responders, engineering teams, judges, and shoppers",
+    "stack": "React 19, Tailwind 4, beUI source, Radix, Motion, Recharts",
+    "assumptions": [
+      "The user selected Black Vector.",
+      "The user asked the implementing agent to complete the build."
+    ]
+  },
+  "researchInputs": {
+    "index": "../ui_research/research-index.json",
+    "uiCandidates": "../ui_research/ui-inspiration-candidates.json",
+    "componentLibraries": "../ui_research/component-library-research.json",
+    "designSystems": "../ui_research/design-system-research.json"
+  },
+  "research": [
+    "ui-001",
+    "ui-008",
+    "ui-018",
+    "ui-020",
+    "ui-022",
+    "ui-025",
+    "ui-039",
+    "ui-041",
+    "lib-001",
+    "lib-002",
+    "lib-004",
+    "ds-001",
+    "ds-002",
+    "ds-004",
+    "ds-008"
+  ],
+  "sections": [
+    {
+      "id": "personality",
+      "title": "Product personality",
+      "agentRecommendation": "personality-vector",
+      "options": [
+        {
+          "id": "personality-vector",
+          "name": "Black Vector",
+          "status": "recommended",
+          "recommendationReason": "Matches the approved Black Vector brief and the strongest research evidence.",
+          "description": "Precise technical control with quiet confidence.",
+          "bestFor": "Seigyo and MyShop production implementation",
+          "tradeoffs": "Requires disciplined restraint and accurate semantic states.",
+          "researchEvidence": [
+            "ui-018",
+            "lib-001",
+            "ds-001"
+          ],
+          "visualPreview": {
+            "sample": "personality",
+            "image": "../ui_research/visual-evidence/ui-001.png",
+            "notes": "Preview reference for product personality."
+          },
+          "tokens": {}
+        },
+        {
+          "id": "personality-viable",
+          "name": "Ledger Black",
+          "status": "viable",
+          "recommendationReason": "",
+          "description": "More formal, audit-heavy enterprise tone.",
+          "bestFor": "A deliberate alternate direction",
+          "tradeoffs": "Less aligned with the chosen visual thesis.",
+          "researchEvidence": [
+            "ui-018",
+            "lib-001",
+            "ds-001"
+          ],
+          "visualPreview": {
+            "sample": "personality",
+            "image": "../ui_research/visual-evidence/ui-001.png",
+            "notes": "Preview reference for product personality."
+          },
+          "tokens": {}
+        },
+        {
+          "id": "personality-balanced",
+          "name": "Balanced product personality",
+          "status": "viable",
+          "recommendationReason": "",
+          "description": "A moderate interpretation of product personality that splits the difference between the primary and alternate directions.",
+          "bestFor": "A deliberate alternate direction",
+          "tradeoffs": "Safe, but less distinctive than Black Vector.",
+          "researchEvidence": [
+            "ui-018",
+            "lib-001",
+            "ds-001"
+          ],
+          "visualPreview": {
+            "sample": "personality",
+            "image": "../ui_research/visual-evidence/ui-001.png",
+            "notes": "Preview reference for product personality."
+          },
+          "tokens": {}
+        },
+        {
+          "id": "personality-special",
+          "name": "Watchfloor",
+          "status": "special-case",
+          "recommendationReason": "",
+          "description": "Higher urgency and denser status emphasis.",
+          "bestFor": "A deliberate alternate direction",
+          "tradeoffs": "Useful only in a narrow context.",
+          "researchEvidence": [
+            "ui-018",
+            "lib-001",
+            "ds-001"
+          ],
+          "visualPreview": {
+            "sample": "personality",
+            "image": "../ui_research/visual-evidence/ui-001.png",
+            "notes": "Preview reference for product personality."
+          },
+          "tokens": {}
+        },
+        {
+          "id": "personality-agent",
+          "name": "Agent decides",
+          "meaning": "Use the recommended option after evaluating project requirements and research.",
+          "status": "viable",
+          "description": "Delegates the final choice to the implementing agent.",
+          "bestFor": "Projects with no locked preference",
+          "tradeoffs": "The user has already selected Black Vector.",
+          "researchEvidence": [
+            "ui-018",
+            "lib-001",
+            "ds-001"
+          ],
+          "visualPreview": {
+            "sample": "personality",
+            "image": "../ui_research/visual-evidence/ui-001.png",
+            "notes": "Agent choice preview."
+          },
+          "tokens": {}
+        }
+      ]
+    },
+    {
+      "id": "color",
+      "title": "Color palettes",
+      "agentRecommendation": "color-primary",
+      "options": [
+        {
+          "id": "color-primary",
+          "name": "Near-black control",
+          "status": "recommended",
+          "recommendationReason": "Matches the approved Black Vector brief and the strongest research evidence.",
+          "description": "The approved Black Vector palette with one blue action accent.",
+          "bestFor": "Seigyo and MyShop production implementation",
+          "tradeoffs": "Requires disciplined restraint and accurate semantic states.",
+          "researchEvidence": [
+            "ds-001",
+            "lib-002",
+            "ds-003"
+          ],
+          "visualPreview": {
+            "sample": "color",
+            "image": "../ui_research/visual-evidence/ui-002.png",
+            "notes": "Preview reference for color palettes."
+          },
+          "tokens": {}
+        },
+        {
+          "id": "color-viable",
+          "name": "Graphite neutral",
+          "status": "viable",
+          "recommendationReason": "",
+          "description": "A softer gray operational palette.",
+          "bestFor": "A deliberate alternate direction",
+          "tradeoffs": "Less aligned with the chosen visual thesis.",
+          "researchEvidence": [
+            "ds-001",
+            "lib-002",
+            "ds-003"
+          ],
+          "visualPreview": {
+            "sample": "color",
+            "image": "../ui_research/visual-evidence/ui-002.png",
+            "notes": "Preview reference for color palettes."
+          },
+          "tokens": {}
+        },
+        {
+          "id": "color-balanced",
+          "name": "Balanced color palettes",
+          "status": "viable",
+          "recommendationReason": "",
+          "description": "A moderate interpretation of color palettes that splits the difference between the primary and alternate directions.",
+          "bestFor": "A deliberate alternate direction",
+          "tradeoffs": "Safe, but less distinctive than Black Vector.",
+          "researchEvidence": [
+            "ds-001",
+            "lib-002",
+            "ds-003"
+          ],
+          "visualPreview": {
+            "sample": "color",
+            "image": "../ui_research/visual-evidence/ui-002.png",
+            "notes": "Preview reference for color palettes."
+          },
+          "tokens": {}
+        },
+        {
+          "id": "color-special",
+          "name": "Amber watchfloor",
+          "status": "special-case",
+          "recommendationReason": "",
+          "description": "Amber-led attention for safety-critical rooms.",
+          "bestFor": "A deliberate alternate direction",
+          "tradeoffs": "Useful only in a narrow context.",
+          "researchEvidence": [
+            "ds-001",
+            "lib-002",
+            "ds-003"
+          ],
+          "visualPreview": {
+            "sample": "color",
+            "image": "../ui_research/visual-evidence/ui-002.png",
+            "notes": "Preview reference for color palettes."
+          },
+          "tokens": {}
+        },
+        {
+          "id": "color-agent",
+          "name": "Agent decides",
+          "meaning": "Use the recommended option after evaluating project requirements and research.",
+          "status": "viable",
+          "description": "Delegates the final choice to the implementing agent.",
+          "bestFor": "Projects with no locked preference",
+          "tradeoffs": "The user has already selected Black Vector.",
+          "researchEvidence": [
+            "ds-001",
+            "lib-002",
+            "ds-003"
+          ],
+          "visualPreview": {
+            "sample": "color",
+            "image": "../ui_research/visual-evidence/ui-002.png",
+            "notes": "Agent choice preview."
+          },
+          "tokens": {}
+        }
+      ]
+    },
+    {
+      "id": "type",
+      "title": "Typography systems",
+      "agentRecommendation": "type-control",
+      "options": [
+        {
+          "id": "type-control",
+          "name": "Geist pair",
+          "status": "recommended",
+          "recommendationReason": "Matches the approved Black Vector brief and the strongest research evidence.",
+          "description": "Geist Sans for interface and Geist Mono for evidence.",
+          "bestFor": "Seigyo and MyShop production implementation",
+          "tradeoffs": "Requires disciplined restraint and accurate semantic states.",
+          "researchEvidence": [
+            "ui-018",
+            "lib-001",
+            "ds-003"
+          ],
+          "visualPreview": {
+            "sample": "type",
+            "image": "../ui_research/visual-evidence/ui-003.png",
+            "notes": "Preview reference for typography systems."
+          },
+          "tokens": {}
+        },
+        {
+          "id": "type-viable",
+          "name": "Inter and JetBrains",
+          "status": "viable",
+          "recommendationReason": "",
+          "description": "Wider open-source utility pairing.",
+          "bestFor": "A deliberate alternate direction",
+          "tradeoffs": "Less aligned with the chosen visual thesis.",
+          "researchEvidence": [
+            "ui-018",
+            "lib-001",
+            "ds-003"
+          ],
+          "visualPreview": {
+            "sample": "type",
+            "image": "../ui_research/visual-evidence/ui-003.png",
+            "notes": "Preview reference for typography systems."
+          },
+          "tokens": {}
+        },
+        {
+          "id": "type-balanced",
+          "name": "Balanced typography systems",
+          "status": "viable",
+          "recommendationReason": "",
+          "description": "A moderate interpretation of typography systems that splits the difference between the primary and alternate directions.",
+          "bestFor": "A deliberate alternate direction",
+          "tradeoffs": "Safe, but less distinctive than Black Vector.",
+          "researchEvidence": [
+            "ui-018",
+            "lib-001",
+            "ds-003"
+          ],
+          "visualPreview": {
+            "sample": "type",
+            "image": "../ui_research/visual-evidence/ui-003.png",
+            "notes": "Preview reference for typography systems."
+          },
+          "tokens": {}
+        },
+        {
+          "id": "type-special",
+          "name": "Noto pair",
+          "status": "special-case",
+          "recommendationReason": "",
+          "description": "Broad language coverage with conservative metrics.",
+          "bestFor": "A deliberate alternate direction",
+          "tradeoffs": "Useful only in a narrow context.",
+          "researchEvidence": [
+            "ui-018",
+            "lib-001",
+            "ds-003"
+          ],
+          "visualPreview": {
+            "sample": "type",
+            "image": "../ui_research/visual-evidence/ui-003.png",
+            "notes": "Preview reference for typography systems."
+          },
+          "tokens": {}
+        },
+        {
+          "id": "type-agent",
+          "name": "Agent decides",
+          "meaning": "Use the recommended option after evaluating project requirements and research.",
+          "status": "viable",
+          "description": "Delegates the final choice to the implementing agent.",
+          "bestFor": "Projects with no locked preference",
+          "tradeoffs": "The user has already selected Black Vector.",
+          "researchEvidence": [
+            "ui-018",
+            "lib-001",
+            "ds-003"
+          ],
+          "visualPreview": {
+            "sample": "type",
+            "image": "../ui_research/visual-evidence/ui-003.png",
+            "notes": "Agent choice preview."
+          },
+          "tokens": {}
+        }
+      ]
+    },
+    {
+      "id": "density",
+      "title": "Spacing and density",
+      "agentRecommendation": "density-selected",
+      "options": [
+        {
+          "id": "density-selected",
+          "name": "Compact 4px grid",
+          "status": "recommended",
+          "recommendationReason": "Matches the approved Black Vector brief and the strongest research evidence.",
+          "description": "36 to 44px operational rows and measured 8 to 24px gaps.",
+          "bestFor": "Seigyo and MyShop production implementation",
+          "tradeoffs": "Requires disciplined restraint and accurate semantic states.",
+          "researchEvidence": [
+            "ds-001",
+            "lib-002",
+            "ds-001"
+          ],
+          "visualPreview": {
+            "sample": "density",
+            "image": "../ui_research/visual-evidence/ui-004.png",
+            "notes": "Preview reference for spacing and density."
+          },
+          "tokens": {}
+        },
+        {
+          "id": "density-viable",
+          "name": "Comfortable 8px",
+          "status": "viable",
+          "recommendationReason": "",
+          "description": "More breathing room for low-density settings.",
+          "bestFor": "A deliberate alternate direction",
+          "tradeoffs": "Less aligned with the chosen visual thesis.",
+          "researchEvidence": [
+            "ds-001",
+            "lib-002",
+            "ds-001"
+          ],
+          "visualPreview": {
+            "sample": "density",
+            "image": "../ui_research/visual-evidence/ui-004.png",
+            "notes": "Preview reference for spacing and density."
+          },
+          "tokens": {}
+        },
+        {
+          "id": "density-balanced",
+          "name": "Balanced spacing and density",
+          "status": "viable",
+          "recommendationReason": "",
+          "description": "A moderate interpretation of spacing and density that splits the difference between the primary and alternate directions.",
+          "bestFor": "A deliberate alternate direction",
+          "tradeoffs": "Safe, but less distinctive than Black Vector.",
+          "researchEvidence": [
+            "ds-001",
+            "lib-002",
+            "ds-001"
+          ],
+          "visualPreview": {
+            "sample": "density",
+            "image": "../ui_research/visual-evidence/ui-004.png",
+            "notes": "Preview reference for spacing and density."
+          },
+          "tokens": {}
+        },
+        {
+          "id": "density-special",
+          "name": "Watchfloor dense",
+          "status": "special-case",
+          "recommendationReason": "",
+          "description": "Maximum visible information with 32 to 36px rows.",
+          "bestFor": "A deliberate alternate direction",
+          "tradeoffs": "Useful only in a narrow context.",
+          "researchEvidence": [
+            "ds-001",
+            "lib-002",
+            "ds-001"
+          ],
+          "visualPreview": {
+            "sample": "density",
+            "image": "../ui_research/visual-evidence/ui-004.png",
+            "notes": "Preview reference for spacing and density."
+          },
+          "tokens": {}
+        },
+        {
+          "id": "density-agent",
+          "name": "Agent decides",
+          "meaning": "Use the recommended option after evaluating project requirements and research.",
+          "status": "viable",
+          "description": "Delegates the final choice to the implementing agent.",
+          "bestFor": "Projects with no locked preference",
+          "tradeoffs": "The user has already selected Black Vector.",
+          "researchEvidence": [
+            "ds-001",
+            "lib-002",
+            "ds-001"
+          ],
+          "visualPreview": {
+            "sample": "density",
+            "image": "../ui_research/visual-evidence/ui-004.png",
+            "notes": "Agent choice preview."
+          },
+          "tokens": {}
+        }
+      ]
+    },
+    {
+      "id": "shape",
+      "title": "Shape and radius",
+      "agentRecommendation": "shape-vector",
+      "options": [
+        {
+          "id": "shape-vector",
+          "name": "Technical radius",
+          "status": "recommended",
+          "recommendationReason": "Matches the approved Black Vector brief and the strongest research evidence.",
+          "description": "4 to 8px corners with square connected regions.",
+          "bestFor": "Seigyo and MyShop production implementation",
+          "tradeoffs": "Requires disciplined restraint and accurate semantic states.",
+          "researchEvidence": [
+            "ui-008",
+            "lib-001",
+            "ds-003"
+          ],
+          "visualPreview": {
+            "sample": "shape",
+            "image": "../ui_research/visual-evidence/ui-005.png",
+            "notes": "Preview reference for shape and radius."
+          },
+          "tokens": {}
+        },
+        {
+          "id": "shape-viable",
+          "name": "Soft utility",
+          "status": "viable",
+          "recommendationReason": "",
+          "description": "8 to 12px controls and surfaces.",
+          "bestFor": "A deliberate alternate direction",
+          "tradeoffs": "Less aligned with the chosen visual thesis.",
+          "researchEvidence": [
+            "ui-008",
+            "lib-001",
+            "ds-003"
+          ],
+          "visualPreview": {
+            "sample": "shape",
+            "image": "../ui_research/visual-evidence/ui-005.png",
+            "notes": "Preview reference for shape and radius."
+          },
+          "tokens": {}
+        },
+        {
+          "id": "shape-balanced",
+          "name": "Balanced shape and radius",
+          "status": "viable",
+          "recommendationReason": "",
+          "description": "A moderate interpretation of shape and radius that splits the difference between the primary and alternate directions.",
+          "bestFor": "A deliberate alternate direction",
+          "tradeoffs": "Safe, but less distinctive than Black Vector.",
+          "researchEvidence": [
+            "ui-008",
+            "lib-001",
+            "ds-003"
+          ],
+          "visualPreview": {
+            "sample": "shape",
+            "image": "../ui_research/visual-evidence/ui-005.png",
+            "notes": "Preview reference for shape and radius."
+          },
+          "tokens": {}
+        },
+        {
+          "id": "shape-special",
+          "name": "Hard edge",
+          "status": "special-case",
+          "recommendationReason": "",
+          "description": "Mostly square geometry for a console feel.",
+          "bestFor": "A deliberate alternate direction",
+          "tradeoffs": "Useful only in a narrow context.",
+          "researchEvidence": [
+            "ui-008",
+            "lib-001",
+            "ds-003"
+          ],
+          "visualPreview": {
+            "sample": "shape",
+            "image": "../ui_research/visual-evidence/ui-005.png",
+            "notes": "Preview reference for shape and radius."
+          },
+          "tokens": {}
+        },
+        {
+          "id": "shape-agent",
+          "name": "Agent decides",
+          "meaning": "Use the recommended option after evaluating project requirements and research.",
+          "status": "viable",
+          "description": "Delegates the final choice to the implementing agent.",
+          "bestFor": "Projects with no locked preference",
+          "tradeoffs": "The user has already selected Black Vector.",
+          "researchEvidence": [
+            "ui-008",
+            "lib-001",
+            "ds-003"
+          ],
+          "visualPreview": {
+            "sample": "shape",
+            "image": "../ui_research/visual-evidence/ui-005.png",
+            "notes": "Agent choice preview."
+          },
+          "tokens": {}
+        }
+      ]
+    },
+    {
+      "id": "layering",
+      "title": "Elevation and borders",
+      "agentRecommendation": "layering-primary",
+      "options": [
+        {
+          "id": "layering-primary",
+          "name": "Hairline layers",
+          "status": "recommended",
+          "recommendationReason": "Matches the approved Black Vector brief and the strongest research evidence.",
+          "description": "Opaque surfaces separated by 1px rules and tonal steps.",
+          "bestFor": "Seigyo and MyShop production implementation",
+          "tradeoffs": "Requires disciplined restraint and accurate semantic states.",
+          "researchEvidence": [
+            "ds-001",
+            "lib-002",
+            "ds-003"
+          ],
+          "visualPreview": {
+            "sample": "layering",
+            "image": "../ui_research/visual-evidence/ui-006.png",
+            "notes": "Preview reference for elevation and borders."
+          },
+          "tokens": {}
+        },
+        {
+          "id": "layering-viable",
+          "name": "Soft shadow",
+          "status": "viable",
+          "recommendationReason": "",
+          "description": "Subtle elevation for retail overlays.",
+          "bestFor": "A deliberate alternate direction",
+          "tradeoffs": "Less aligned with the chosen visual thesis.",
+          "researchEvidence": [
+            "ds-001",
+            "lib-002",
+            "ds-003"
+          ],
+          "visualPreview": {
+            "sample": "layering",
+            "image": "../ui_research/visual-evidence/ui-006.png",
+            "notes": "Preview reference for elevation and borders."
+          },
+          "tokens": {}
+        },
+        {
+          "id": "layering-balanced",
+          "name": "Balanced elevation and borders",
+          "status": "viable",
+          "recommendationReason": "",
+          "description": "A moderate interpretation of elevation and borders that splits the difference between the primary and alternate directions.",
+          "bestFor": "A deliberate alternate direction",
+          "tradeoffs": "Safe, but less distinctive than Black Vector.",
+          "researchEvidence": [
+            "ds-001",
+            "lib-002",
+            "ds-003"
+          ],
+          "visualPreview": {
+            "sample": "layering",
+            "image": "../ui_research/visual-evidence/ui-006.png",
+            "notes": "Preview reference for elevation and borders."
+          },
+          "tokens": {}
+        },
+        {
+          "id": "layering-special",
+          "name": "Flat bands",
+          "status": "special-case",
+          "recommendationReason": "",
+          "description": "Full-width section bands with almost no radius.",
+          "bestFor": "A deliberate alternate direction",
+          "tradeoffs": "Useful only in a narrow context.",
+          "researchEvidence": [
+            "ds-001",
+            "lib-002",
+            "ds-003"
+          ],
+          "visualPreview": {
+            "sample": "layering",
+            "image": "../ui_research/visual-evidence/ui-006.png",
+            "notes": "Preview reference for elevation and borders."
+          },
+          "tokens": {}
+        },
+        {
+          "id": "layering-agent",
+          "name": "Agent decides",
+          "meaning": "Use the recommended option after evaluating project requirements and research.",
+          "status": "viable",
+          "description": "Delegates the final choice to the implementing agent.",
+          "bestFor": "Projects with no locked preference",
+          "tradeoffs": "The user has already selected Black Vector.",
+          "researchEvidence": [
+            "ds-001",
+            "lib-002",
+            "ds-003"
+          ],
+          "visualPreview": {
+            "sample": "layering",
+            "image": "../ui_research/visual-evidence/ui-006.png",
+            "notes": "Agent choice preview."
+          },
+          "tokens": {}
+        }
+      ]
+    },
+    {
+      "id": "motion",
+      "title": "Motion language",
+      "agentRecommendation": "motion-control",
+      "options": [
+        {
+          "id": "motion-control",
+          "name": "Productive motion",
+          "status": "recommended",
+          "recommendationReason": "Matches the approved Black Vector brief and the strongest research evidence.",
+          "description": "150 to 180ms spatial transitions and one-time evidence entries.",
+          "bestFor": "Seigyo and MyShop production implementation",
+          "tradeoffs": "Requires disciplined restraint and accurate semantic states.",
+          "researchEvidence": [
+            "lib-004",
+            "lib-001",
+            "ds-001"
+          ],
+          "visualPreview": {
+            "sample": "motion",
+            "image": "../ui_research/visual-evidence/ui-007.png",
+            "notes": "Preview reference for motion language."
+          },
+          "tokens": {}
+        },
+        {
+          "id": "motion-viable",
+          "name": "Instant utility",
+          "status": "viable",
+          "recommendationReason": "",
+          "description": "70 to 120ms state changes with almost no layout motion.",
+          "bestFor": "A deliberate alternate direction",
+          "tradeoffs": "Less aligned with the chosen visual thesis.",
+          "researchEvidence": [
+            "lib-004",
+            "lib-001",
+            "ds-001"
+          ],
+          "visualPreview": {
+            "sample": "motion",
+            "image": "../ui_research/visual-evidence/ui-007.png",
+            "notes": "Preview reference for motion language."
+          },
+          "tokens": {}
+        },
+        {
+          "id": "motion-balanced",
+          "name": "Balanced motion language",
+          "status": "viable",
+          "recommendationReason": "",
+          "description": "A moderate interpretation of motion language that splits the difference between the primary and alternate directions.",
+          "bestFor": "A deliberate alternate direction",
+          "tradeoffs": "Safe, but less distinctive than Black Vector.",
+          "researchEvidence": [
+            "lib-004",
+            "lib-001",
+            "ds-001"
+          ],
+          "visualPreview": {
+            "sample": "motion",
+            "image": "../ui_research/visual-evidence/ui-007.png",
+            "notes": "Preview reference for motion language."
+          },
+          "tokens": {}
+        },
+        {
+          "id": "motion-special",
+          "name": "Editorial drift",
+          "status": "special-case",
+          "recommendationReason": "",
+          "description": "Slower image reveals reserved for MyShop.",
+          "bestFor": "A deliberate alternate direction",
+          "tradeoffs": "Useful only in a narrow context.",
+          "researchEvidence": [
+            "lib-004",
+            "lib-001",
+            "ds-001"
+          ],
+          "visualPreview": {
+            "sample": "motion",
+            "image": "../ui_research/visual-evidence/ui-007.png",
+            "notes": "Preview reference for motion language."
+          },
+          "tokens": {}
+        },
+        {
+          "id": "motion-agent",
+          "name": "Agent decides",
+          "meaning": "Use the recommended option after evaluating project requirements and research.",
+          "status": "viable",
+          "description": "Delegates the final choice to the implementing agent.",
+          "bestFor": "Projects with no locked preference",
+          "tradeoffs": "The user has already selected Black Vector.",
+          "researchEvidence": [
+            "lib-004",
+            "lib-001",
+            "ds-001"
+          ],
+          "visualPreview": {
+            "sample": "motion",
+            "image": "../ui_research/visual-evidence/ui-007.png",
+            "notes": "Agent choice preview."
+          },
+          "tokens": {}
+        }
+      ]
+    },
+    {
+      "id": "icons",
+      "title": "Icon style",
+      "agentRecommendation": "icons-selected",
+      "options": [
+        {
+          "id": "icons-selected",
+          "name": "Lucide geometric",
+          "status": "recommended",
+          "recommendationReason": "Matches the approved Black Vector brief and the strongest research evidence.",
+          "description": "Consistent 16 and 20px outlined SVG icons.",
+          "bestFor": "Seigyo and MyShop production implementation",
+          "tradeoffs": "Requires disciplined restraint and accurate semantic states.",
+          "researchEvidence": [
+            "lib-006",
+            "lib-002",
+            "ds-003"
+          ],
+          "visualPreview": {
+            "sample": "icons",
+            "image": "../ui_research/visual-evidence/ui-008.png",
+            "notes": "Preview reference for icon style."
+          },
+          "tokens": {}
+        },
+        {
+          "id": "icons-viable",
+          "name": "Carbon utility",
+          "status": "viable",
+          "recommendationReason": "",
+          "description": "Denser enterprise glyphs.",
+          "bestFor": "A deliberate alternate direction",
+          "tradeoffs": "Less aligned with the chosen visual thesis.",
+          "researchEvidence": [
+            "lib-006",
+            "lib-002",
+            "ds-003"
+          ],
+          "visualPreview": {
+            "sample": "icons",
+            "image": "../ui_research/visual-evidence/ui-008.png",
+            "notes": "Preview reference for icon style."
+          },
+          "tokens": {}
+        },
+        {
+          "id": "icons-balanced",
+          "name": "Balanced icon style",
+          "status": "viable",
+          "recommendationReason": "",
+          "description": "A moderate interpretation of icon style that splits the difference between the primary and alternate directions.",
+          "bestFor": "A deliberate alternate direction",
+          "tradeoffs": "Safe, but less distinctive than Black Vector.",
+          "researchEvidence": [
+            "lib-006",
+            "lib-002",
+            "ds-003"
+          ],
+          "visualPreview": {
+            "sample": "icons",
+            "image": "../ui_research/visual-evidence/ui-008.png",
+            "notes": "Preview reference for icon style."
+          },
+          "tokens": {}
+        },
+        {
+          "id": "icons-special",
+          "name": "Custom solid",
+          "status": "special-case",
+          "recommendationReason": "",
+          "description": "Small set of filled semantic marks.",
+          "bestFor": "A deliberate alternate direction",
+          "tradeoffs": "Useful only in a narrow context.",
+          "researchEvidence": [
+            "lib-006",
+            "lib-002",
+            "ds-003"
+          ],
+          "visualPreview": {
+            "sample": "icons",
+            "image": "../ui_research/visual-evidence/ui-008.png",
+            "notes": "Preview reference for icon style."
+          },
+          "tokens": {}
+        },
+        {
+          "id": "icons-agent",
+          "name": "Agent decides",
+          "meaning": "Use the recommended option after evaluating project requirements and research.",
+          "status": "viable",
+          "description": "Delegates the final choice to the implementing agent.",
+          "bestFor": "Projects with no locked preference",
+          "tradeoffs": "The user has already selected Black Vector.",
+          "researchEvidence": [
+            "lib-006",
+            "lib-002",
+            "ds-003"
+          ],
+          "visualPreview": {
+            "sample": "icons",
+            "image": "../ui_research/visual-evidence/ui-008.png",
+            "notes": "Agent choice preview."
+          },
+          "tokens": {}
+        }
+      ]
+    },
+    {
+      "id": "imagery",
+      "title": "Imagery direction",
+      "agentRecommendation": "imagery-vector",
+      "options": [
+        {
+          "id": "imagery-vector",
+          "name": "Warm material editorial",
+          "status": "recommended",
+          "recommendationReason": "Matches the approved Black Vector brief and the strongest research evidence.",
+          "description": "Photoreal home objects in limestone, oak, linen, and blackened metal.",
+          "bestFor": "Seigyo and MyShop production implementation",
+          "tradeoffs": "Requires disciplined restraint and accurate semantic states.",
+          "researchEvidence": [
+            "ui-041",
+            "lib-001",
+            "ds-003"
+          ],
+          "visualPreview": {
+            "sample": "imagery",
+            "image": "../ui_research/visual-evidence/ui-009.png",
+            "notes": "Preview reference for imagery direction."
+          },
+          "tokens": {}
+        },
+        {
+          "id": "imagery-viable",
+          "name": "Studio catalog",
+          "status": "viable",
+          "recommendationReason": "",
+          "description": "Consistent isolated product imagery.",
+          "bestFor": "A deliberate alternate direction",
+          "tradeoffs": "Less aligned with the chosen visual thesis.",
+          "researchEvidence": [
+            "ui-041",
+            "lib-001",
+            "ds-003"
+          ],
+          "visualPreview": {
+            "sample": "imagery",
+            "image": "../ui_research/visual-evidence/ui-009.png",
+            "notes": "Preview reference for imagery direction."
+          },
+          "tokens": {}
+        },
+        {
+          "id": "imagery-balanced",
+          "name": "Balanced imagery direction",
+          "status": "viable",
+          "recommendationReason": "",
+          "description": "A moderate interpretation of imagery direction that splits the difference between the primary and alternate directions.",
+          "bestFor": "A deliberate alternate direction",
+          "tradeoffs": "Safe, but less distinctive than Black Vector.",
+          "researchEvidence": [
+            "ui-041",
+            "lib-001",
+            "ds-003"
+          ],
+          "visualPreview": {
+            "sample": "imagery",
+            "image": "../ui_research/visual-evidence/ui-009.png",
+            "notes": "Preview reference for imagery direction."
+          },
+          "tokens": {}
+        },
+        {
+          "id": "imagery-special",
+          "name": "Architectural monochrome",
+          "status": "special-case",
+          "recommendationReason": "",
+          "description": "Stricter black and white spaces with sculptural objects.",
+          "bestFor": "A deliberate alternate direction",
+          "tradeoffs": "Useful only in a narrow context.",
+          "researchEvidence": [
+            "ui-041",
+            "lib-001",
+            "ds-003"
+          ],
+          "visualPreview": {
+            "sample": "imagery",
+            "image": "../ui_research/visual-evidence/ui-009.png",
+            "notes": "Preview reference for imagery direction."
+          },
+          "tokens": {}
+        },
+        {
+          "id": "imagery-agent",
+          "name": "Agent decides",
+          "meaning": "Use the recommended option after evaluating project requirements and research.",
+          "status": "viable",
+          "description": "Delegates the final choice to the implementing agent.",
+          "bestFor": "Projects with no locked preference",
+          "tradeoffs": "The user has already selected Black Vector.",
+          "researchEvidence": [
+            "ui-041",
+            "lib-001",
+            "ds-003"
+          ],
+          "visualPreview": {
+            "sample": "imagery",
+            "image": "../ui_research/visual-evidence/ui-009.png",
+            "notes": "Agent choice preview."
+          },
+          "tokens": {}
+        }
+      ]
+    },
+    {
+      "id": "layout",
+      "title": "Page layout and grid",
+      "agentRecommendation": "layout-primary",
+      "options": [
+        {
+          "id": "layout-primary",
+          "name": "Connected tri-pane",
+          "status": "recommended",
+          "recommendationReason": "Matches the approved Black Vector brief and the strongest research evidence.",
+          "description": "200px rail, fluid workspace, and 320px context rail.",
+          "bestFor": "Seigyo and MyShop production implementation",
+          "tradeoffs": "Requires disciplined restraint and accurate semantic states.",
+          "researchEvidence": [
+            "ui-018",
+            "lib-002",
+            "ds-001"
+          ],
+          "visualPreview": {
+            "sample": "layout",
+            "image": "../ui_research/visual-evidence/ui-010.png",
+            "notes": "Preview reference for page layout and grid."
+          },
+          "tokens": {}
+        },
+        {
+          "id": "layout-viable",
+          "name": "Two-pane calm",
+          "status": "viable",
+          "recommendationReason": "",
+          "description": "Navigation and one primary workspace.",
+          "bestFor": "A deliberate alternate direction",
+          "tradeoffs": "Less aligned with the chosen visual thesis.",
+          "researchEvidence": [
+            "ui-018",
+            "lib-002",
+            "ds-001"
+          ],
+          "visualPreview": {
+            "sample": "layout",
+            "image": "../ui_research/visual-evidence/ui-010.png",
+            "notes": "Preview reference for page layout and grid."
+          },
+          "tokens": {}
+        },
+        {
+          "id": "layout-balanced",
+          "name": "Balanced page layout and grid",
+          "status": "viable",
+          "recommendationReason": "",
+          "description": "A moderate interpretation of page layout and grid that splits the difference between the primary and alternate directions.",
+          "bestFor": "A deliberate alternate direction",
+          "tradeoffs": "Safe, but less distinctive than Black Vector.",
+          "researchEvidence": [
+            "ui-018",
+            "lib-002",
+            "ds-001"
+          ],
+          "visualPreview": {
+            "sample": "layout",
+            "image": "../ui_research/visual-evidence/ui-010.png",
+            "notes": "Preview reference for page layout and grid."
+          },
+          "tokens": {}
+        },
+        {
+          "id": "layout-special",
+          "name": "Full-canvas command",
+          "status": "special-case",
+          "recommendationReason": "",
+          "description": "Overlay-first expert workspace.",
+          "bestFor": "A deliberate alternate direction",
+          "tradeoffs": "Useful only in a narrow context.",
+          "researchEvidence": [
+            "ui-018",
+            "lib-002",
+            "ds-001"
+          ],
+          "visualPreview": {
+            "sample": "layout",
+            "image": "../ui_research/visual-evidence/ui-010.png",
+            "notes": "Preview reference for page layout and grid."
+          },
+          "tokens": {}
+        },
+        {
+          "id": "layout-agent",
+          "name": "Agent decides",
+          "meaning": "Use the recommended option after evaluating project requirements and research.",
+          "status": "viable",
+          "description": "Delegates the final choice to the implementing agent.",
+          "bestFor": "Projects with no locked preference",
+          "tradeoffs": "The user has already selected Black Vector.",
+          "researchEvidence": [
+            "ui-018",
+            "lib-002",
+            "ds-001"
+          ],
+          "visualPreview": {
+            "sample": "layout",
+            "image": "../ui_research/visual-evidence/ui-010.png",
+            "notes": "Agent choice preview."
+          },
+          "tokens": {}
+        }
+      ]
+    },
+    {
+      "id": "navigation",
+      "title": "Navigation patterns",
+      "agentRecommendation": "navigation-control",
+      "options": [
+        {
+          "id": "navigation-control",
+          "name": "Persistent rail",
+          "status": "recommended",
+          "recommendationReason": "Matches the approved Black Vector brief and the strongest research evidence.",
+          "description": "Stable route rail with compact collapse behavior.",
+          "bestFor": "Seigyo and MyShop production implementation",
+          "tradeoffs": "Requires disciplined restraint and accurate semantic states.",
+          "researchEvidence": [
+            "ui-008",
+            "lib-001",
+            "ds-003"
+          ],
+          "visualPreview": {
+            "sample": "navigation",
+            "image": "../ui_research/visual-evidence/ui-001.png",
+            "notes": "Preview reference for navigation patterns."
+          },
+          "tokens": {}
+        },
+        {
+          "id": "navigation-viable",
+          "name": "Top command shell",
+          "status": "viable",
+          "recommendationReason": "",
+          "description": "Top navigation with command palette priority.",
+          "bestFor": "A deliberate alternate direction",
+          "tradeoffs": "Less aligned with the chosen visual thesis.",
+          "researchEvidence": [
+            "ui-008",
+            "lib-001",
+            "ds-003"
+          ],
+          "visualPreview": {
+            "sample": "navigation",
+            "image": "../ui_research/visual-evidence/ui-001.png",
+            "notes": "Preview reference for navigation patterns."
+          },
+          "tokens": {}
+        },
+        {
+          "id": "navigation-balanced",
+          "name": "Balanced navigation patterns",
+          "status": "viable",
+          "recommendationReason": "",
+          "description": "A moderate interpretation of navigation patterns that splits the difference between the primary and alternate directions.",
+          "bestFor": "A deliberate alternate direction",
+          "tradeoffs": "Safe, but less distinctive than Black Vector.",
+          "researchEvidence": [
+            "ui-008",
+            "lib-001",
+            "ds-003"
+          ],
+          "visualPreview": {
+            "sample": "navigation",
+            "image": "../ui_research/visual-evidence/ui-001.png",
+            "notes": "Preview reference for navigation patterns."
+          },
+          "tokens": {}
+        },
+        {
+          "id": "navigation-special",
+          "name": "Contextual tabs",
+          "status": "special-case",
+          "recommendationReason": "",
+          "description": "Local tabs around each incident object.",
+          "bestFor": "A deliberate alternate direction",
+          "tradeoffs": "Useful only in a narrow context.",
+          "researchEvidence": [
+            "ui-008",
+            "lib-001",
+            "ds-003"
+          ],
+          "visualPreview": {
+            "sample": "navigation",
+            "image": "../ui_research/visual-evidence/ui-001.png",
+            "notes": "Preview reference for navigation patterns."
+          },
+          "tokens": {}
+        },
+        {
+          "id": "navigation-agent",
+          "name": "Agent decides",
+          "meaning": "Use the recommended option after evaluating project requirements and research.",
+          "status": "viable",
+          "description": "Delegates the final choice to the implementing agent.",
+          "bestFor": "Projects with no locked preference",
+          "tradeoffs": "The user has already selected Black Vector.",
+          "researchEvidence": [
+            "ui-008",
+            "lib-001",
+            "ds-003"
+          ],
+          "visualPreview": {
+            "sample": "navigation",
+            "image": "../ui_research/visual-evidence/ui-001.png",
+            "notes": "Agent choice preview."
+          },
+          "tokens": {}
+        }
+      ]
+    },
+    {
+      "id": "buttons",
+      "title": "Buttons and actions",
+      "agentRecommendation": "buttons-selected",
+      "options": [
+        {
+          "id": "buttons-selected",
+          "name": "Text-first controls",
+          "status": "recommended",
+          "recommendationReason": "Matches the approved Black Vector brief and the strongest research evidence.",
+          "description": "Explicit verbs, small icons, and one dominant action per region.",
+          "bestFor": "Seigyo and MyShop production implementation",
+          "tradeoffs": "Requires disciplined restraint and accurate semantic states.",
+          "researchEvidence": [
+            "ui-001",
+            "lib-002",
+            "ds-003"
+          ],
+          "visualPreview": {
+            "sample": "buttons",
+            "image": "../ui_research/visual-evidence/ui-002.png",
+            "notes": "Preview reference for buttons and actions."
+          },
+          "tokens": {}
+        },
+        {
+          "id": "buttons-viable",
+          "name": "Icon utility",
+          "status": "viable",
+          "recommendationReason": "",
+          "description": "Compact icon controls for expert workflows.",
+          "bestFor": "A deliberate alternate direction",
+          "tradeoffs": "Less aligned with the chosen visual thesis.",
+          "researchEvidence": [
+            "ui-001",
+            "lib-002",
+            "ds-003"
+          ],
+          "visualPreview": {
+            "sample": "buttons",
+            "image": "../ui_research/visual-evidence/ui-002.png",
+            "notes": "Preview reference for buttons and actions."
+          },
+          "tokens": {}
+        },
+        {
+          "id": "buttons-balanced",
+          "name": "Balanced buttons and actions",
+          "status": "viable",
+          "recommendationReason": "",
+          "description": "A moderate interpretation of buttons and actions that splits the difference between the primary and alternate directions.",
+          "bestFor": "A deliberate alternate direction",
+          "tradeoffs": "Safe, but less distinctive than Black Vector.",
+          "researchEvidence": [
+            "ui-001",
+            "lib-002",
+            "ds-003"
+          ],
+          "visualPreview": {
+            "sample": "buttons",
+            "image": "../ui_research/visual-evidence/ui-002.png",
+            "notes": "Preview reference for buttons and actions."
+          },
+          "tokens": {}
+        },
+        {
+          "id": "buttons-special",
+          "name": "Wide safety actions",
+          "status": "special-case",
+          "recommendationReason": "",
+          "description": "Large confirmation controls for consequential steps.",
+          "bestFor": "A deliberate alternate direction",
+          "tradeoffs": "Useful only in a narrow context.",
+          "researchEvidence": [
+            "ui-001",
+            "lib-002",
+            "ds-003"
+          ],
+          "visualPreview": {
+            "sample": "buttons",
+            "image": "../ui_research/visual-evidence/ui-002.png",
+            "notes": "Preview reference for buttons and actions."
+          },
+          "tokens": {}
+        },
+        {
+          "id": "buttons-agent",
+          "name": "Agent decides",
+          "meaning": "Use the recommended option after evaluating project requirements and research.",
+          "status": "viable",
+          "description": "Delegates the final choice to the implementing agent.",
+          "bestFor": "Projects with no locked preference",
+          "tradeoffs": "The user has already selected Black Vector.",
+          "researchEvidence": [
+            "ui-001",
+            "lib-002",
+            "ds-003"
+          ],
+          "visualPreview": {
+            "sample": "buttons",
+            "image": "../ui_research/visual-evidence/ui-002.png",
+            "notes": "Agent choice preview."
+          },
+          "tokens": {}
+        }
+      ]
+    },
+    {
+      "id": "forms",
+      "title": "Forms and inputs",
+      "agentRecommendation": "forms-vector",
+      "options": [
+        {
+          "id": "forms-vector",
+          "name": "Compact labeled",
+          "status": "recommended",
+          "recommendationReason": "Matches the approved Black Vector brief and the strongest research evidence.",
+          "description": "Visible labels, inline help, and strong focus rings.",
+          "bestFor": "Seigyo and MyShop production implementation",
+          "tradeoffs": "Requires disciplined restraint and accurate semantic states.",
+          "researchEvidence": [
+            "ds-004",
+            "lib-001",
+            "ds-001"
+          ],
+          "visualPreview": {
+            "sample": "forms",
+            "image": "../ui_research/visual-evidence/ui-003.png",
+            "notes": "Preview reference for forms and inputs."
+          },
+          "tokens": {}
+        },
+        {
+          "id": "forms-viable",
+          "name": "Floating labels",
+          "status": "viable",
+          "recommendationReason": "",
+          "description": "Space-saving labels inside controls.",
+          "bestFor": "A deliberate alternate direction",
+          "tradeoffs": "Less aligned with the chosen visual thesis.",
+          "researchEvidence": [
+            "ds-004",
+            "lib-001",
+            "ds-001"
+          ],
+          "visualPreview": {
+            "sample": "forms",
+            "image": "../ui_research/visual-evidence/ui-003.png",
+            "notes": "Preview reference for forms and inputs."
+          },
+          "tokens": {}
+        },
+        {
+          "id": "forms-balanced",
+          "name": "Balanced forms and inputs",
+          "status": "viable",
+          "recommendationReason": "",
+          "description": "A moderate interpretation of forms and inputs that splits the difference between the primary and alternate directions.",
+          "bestFor": "A deliberate alternate direction",
+          "tradeoffs": "Safe, but less distinctive than Black Vector.",
+          "researchEvidence": [
+            "ds-004",
+            "lib-001",
+            "ds-001"
+          ],
+          "visualPreview": {
+            "sample": "forms",
+            "image": "../ui_research/visual-evidence/ui-003.png",
+            "notes": "Preview reference for forms and inputs."
+          },
+          "tokens": {}
+        },
+        {
+          "id": "forms-special",
+          "name": "Sectioned forms",
+          "status": "special-case",
+          "recommendationReason": "",
+          "description": "Grouped large fields for checkout and settings.",
+          "bestFor": "A deliberate alternate direction",
+          "tradeoffs": "Useful only in a narrow context.",
+          "researchEvidence": [
+            "ds-004",
+            "lib-001",
+            "ds-001"
+          ],
+          "visualPreview": {
+            "sample": "forms",
+            "image": "../ui_research/visual-evidence/ui-003.png",
+            "notes": "Preview reference for forms and inputs."
+          },
+          "tokens": {}
+        },
+        {
+          "id": "forms-agent",
+          "name": "Agent decides",
+          "meaning": "Use the recommended option after evaluating project requirements and research.",
+          "status": "viable",
+          "description": "Delegates the final choice to the implementing agent.",
+          "bestFor": "Projects with no locked preference",
+          "tradeoffs": "The user has already selected Black Vector.",
+          "researchEvidence": [
+            "ds-004",
+            "lib-001",
+            "ds-001"
+          ],
+          "visualPreview": {
+            "sample": "forms",
+            "image": "../ui_research/visual-evidence/ui-003.png",
+            "notes": "Agent choice preview."
+          },
+          "tokens": {}
+        }
+      ]
+    },
+    {
+      "id": "tables",
+      "title": "Tables and data",
+      "agentRecommendation": "tables-primary",
+      "options": [
+        {
+          "id": "tables-primary",
+          "name": "Connected dense table",
+          "status": "recommended",
+          "recommendationReason": "Matches the approved Black Vector brief and the strongest research evidence.",
+          "description": "Sticky header, fixed rows, direct status, and responsive row fallback.",
+          "bestFor": "Seigyo and MyShop production implementation",
+          "tradeoffs": "Requires disciplined restraint and accurate semantic states.",
+          "researchEvidence": [
+            "ui-034",
+            "lib-002",
+            "ds-003"
+          ],
+          "visualPreview": {
+            "sample": "tables",
+            "image": "../ui_research/visual-evidence/ui-004.png",
+            "notes": "Preview reference for tables and data."
+          },
+          "tokens": {}
+        },
+        {
+          "id": "tables-viable",
+          "name": "Split list detail",
+          "status": "viable",
+          "recommendationReason": "",
+          "description": "Selectable list with a persistent inspector.",
+          "bestFor": "A deliberate alternate direction",
+          "tradeoffs": "Less aligned with the chosen visual thesis.",
+          "researchEvidence": [
+            "ui-034",
+            "lib-002",
+            "ds-003"
+          ],
+          "visualPreview": {
+            "sample": "tables",
+            "image": "../ui_research/visual-evidence/ui-004.png",
+            "notes": "Preview reference for tables and data."
+          },
+          "tokens": {}
+        },
+        {
+          "id": "tables-balanced",
+          "name": "Balanced tables and data",
+          "status": "viable",
+          "recommendationReason": "",
+          "description": "A moderate interpretation of tables and data that splits the difference between the primary and alternate directions.",
+          "bestFor": "A deliberate alternate direction",
+          "tradeoffs": "Safe, but less distinctive than Black Vector.",
+          "researchEvidence": [
+            "ui-034",
+            "lib-002",
+            "ds-003"
+          ],
+          "visualPreview": {
+            "sample": "tables",
+            "image": "../ui_research/visual-evidence/ui-004.png",
+            "notes": "Preview reference for tables and data."
+          },
+          "tokens": {}
+        },
+        {
+          "id": "tables-special",
+          "name": "Timeline first",
+          "status": "special-case",
+          "recommendationReason": "",
+          "description": "Chronological rows as the main information model.",
+          "bestFor": "A deliberate alternate direction",
+          "tradeoffs": "Useful only in a narrow context.",
+          "researchEvidence": [
+            "ui-034",
+            "lib-002",
+            "ds-003"
+          ],
+          "visualPreview": {
+            "sample": "tables",
+            "image": "../ui_research/visual-evidence/ui-004.png",
+            "notes": "Preview reference for tables and data."
+          },
+          "tokens": {}
+        },
+        {
+          "id": "tables-agent",
+          "name": "Agent decides",
+          "meaning": "Use the recommended option after evaluating project requirements and research.",
+          "status": "viable",
+          "description": "Delegates the final choice to the implementing agent.",
+          "bestFor": "Projects with no locked preference",
+          "tradeoffs": "The user has already selected Black Vector.",
+          "researchEvidence": [
+            "ui-034",
+            "lib-002",
+            "ds-003"
+          ],
+          "visualPreview": {
+            "sample": "tables",
+            "image": "../ui_research/visual-evidence/ui-004.png",
+            "notes": "Agent choice preview."
+          },
+          "tokens": {}
+        }
+      ]
+    },
+    {
+      "id": "surfaces",
+      "title": "Cards and surfaces",
+      "agentRecommendation": "surfaces-control",
+      "options": [
+        {
+          "id": "surfaces-control",
+          "name": "Cardless regions",
+          "status": "recommended",
+          "recommendationReason": "Matches the approved Black Vector brief and the strongest research evidence.",
+          "description": "Use cards only when the entire region is an interaction.",
+          "bestFor": "Seigyo and MyShop production implementation",
+          "tradeoffs": "Requires disciplined restraint and accurate semantic states.",
+          "researchEvidence": [
+            "ui-018",
+            "lib-001",
+            "ds-003"
+          ],
+          "visualPreview": {
+            "sample": "surfaces",
+            "image": "../ui_research/visual-evidence/ui-005.png",
+            "notes": "Preview reference for cards and surfaces."
+          },
+          "tokens": {}
+        },
+        {
+          "id": "surfaces-viable",
+          "name": "Framed modules",
+          "status": "viable",
+          "recommendationReason": "",
+          "description": "A few bounded modules for portable objects.",
+          "bestFor": "A deliberate alternate direction",
+          "tradeoffs": "Less aligned with the chosen visual thesis.",
+          "researchEvidence": [
+            "ui-018",
+            "lib-001",
+            "ds-003"
+          ],
+          "visualPreview": {
+            "sample": "surfaces",
+            "image": "../ui_research/visual-evidence/ui-005.png",
+            "notes": "Preview reference for cards and surfaces."
+          },
+          "tokens": {}
+        },
+        {
+          "id": "surfaces-balanced",
+          "name": "Balanced cards and surfaces",
+          "status": "viable",
+          "recommendationReason": "",
+          "description": "A moderate interpretation of cards and surfaces that splits the difference between the primary and alternate directions.",
+          "bestFor": "A deliberate alternate direction",
+          "tradeoffs": "Safe, but less distinctive than Black Vector.",
+          "researchEvidence": [
+            "ui-018",
+            "lib-001",
+            "ds-003"
+          ],
+          "visualPreview": {
+            "sample": "surfaces",
+            "image": "../ui_research/visual-evidence/ui-005.png",
+            "notes": "Preview reference for cards and surfaces."
+          },
+          "tokens": {}
+        },
+        {
+          "id": "surfaces-special",
+          "name": "Editorial media blocks",
+          "status": "special-case",
+          "recommendationReason": "",
+          "description": "Image-led blocks for MyShop collections.",
+          "bestFor": "A deliberate alternate direction",
+          "tradeoffs": "Useful only in a narrow context.",
+          "researchEvidence": [
+            "ui-018",
+            "lib-001",
+            "ds-003"
+          ],
+          "visualPreview": {
+            "sample": "surfaces",
+            "image": "../ui_research/visual-evidence/ui-005.png",
+            "notes": "Preview reference for cards and surfaces."
+          },
+          "tokens": {}
+        },
+        {
+          "id": "surfaces-agent",
+          "name": "Agent decides",
+          "meaning": "Use the recommended option after evaluating project requirements and research.",
+          "status": "viable",
+          "description": "Delegates the final choice to the implementing agent.",
+          "bestFor": "Projects with no locked preference",
+          "tradeoffs": "The user has already selected Black Vector.",
+          "researchEvidence": [
+            "ui-018",
+            "lib-001",
+            "ds-003"
+          ],
+          "visualPreview": {
+            "sample": "surfaces",
+            "image": "../ui_research/visual-evidence/ui-005.png",
+            "notes": "Agent choice preview."
+          },
+          "tokens": {}
+        }
+      ]
+    },
+    {
+      "id": "feedback",
+      "title": "Feedback states",
+      "agentRecommendation": "feedback-selected",
+      "options": [
+        {
+          "id": "feedback-selected",
+          "name": "Explicit state stack",
+          "status": "recommended",
+          "recommendationReason": "Matches the approved Black Vector brief and the strongest research evidence.",
+          "description": "Toast, inline status, timeline event, and durable receipt.",
+          "bestFor": "Seigyo and MyShop production implementation",
+          "tradeoffs": "Requires disciplined restraint and accurate semantic states.",
+          "researchEvidence": [
+            "ui-010",
+            "lib-002",
+            "ds-001"
+          ],
+          "visualPreview": {
+            "sample": "feedback",
+            "image": "../ui_research/visual-evidence/ui-006.png",
+            "notes": "Preview reference for feedback states."
+          },
+          "tokens": {}
+        },
+        {
+          "id": "feedback-viable",
+          "name": "Inline only",
+          "status": "viable",
+          "recommendationReason": "",
+          "description": "Keep all feedback inside the affected region.",
+          "bestFor": "A deliberate alternate direction",
+          "tradeoffs": "Less aligned with the chosen visual thesis.",
+          "researchEvidence": [
+            "ui-010",
+            "lib-002",
+            "ds-001"
+          ],
+          "visualPreview": {
+            "sample": "feedback",
+            "image": "../ui_research/visual-evidence/ui-006.png",
+            "notes": "Preview reference for feedback states."
+          },
+          "tokens": {}
+        },
+        {
+          "id": "feedback-balanced",
+          "name": "Balanced feedback states",
+          "status": "viable",
+          "recommendationReason": "",
+          "description": "A moderate interpretation of feedback states that splits the difference between the primary and alternate directions.",
+          "bestFor": "A deliberate alternate direction",
+          "tradeoffs": "Safe, but less distinctive than Black Vector.",
+          "researchEvidence": [
+            "ui-010",
+            "lib-002",
+            "ds-001"
+          ],
+          "visualPreview": {
+            "sample": "feedback",
+            "image": "../ui_research/visual-evidence/ui-006.png",
+            "notes": "Preview reference for feedback states."
+          },
+          "tokens": {}
+        },
+        {
+          "id": "feedback-special",
+          "name": "Command console",
+          "status": "special-case",
+          "recommendationReason": "",
+          "description": "Use a bottom activity console for expert detail.",
+          "bestFor": "A deliberate alternate direction",
+          "tradeoffs": "Useful only in a narrow context.",
+          "researchEvidence": [
+            "ui-010",
+            "lib-002",
+            "ds-001"
+          ],
+          "visualPreview": {
+            "sample": "feedback",
+            "image": "../ui_research/visual-evidence/ui-006.png",
+            "notes": "Preview reference for feedback states."
+          },
+          "tokens": {}
+        },
+        {
+          "id": "feedback-agent",
+          "name": "Agent decides",
+          "meaning": "Use the recommended option after evaluating project requirements and research.",
+          "status": "viable",
+          "description": "Delegates the final choice to the implementing agent.",
+          "bestFor": "Projects with no locked preference",
+          "tradeoffs": "The user has already selected Black Vector.",
+          "researchEvidence": [
+            "ui-010",
+            "lib-002",
+            "ds-001"
+          ],
+          "visualPreview": {
+            "sample": "feedback",
+            "image": "../ui_research/visual-evidence/ui-006.png",
+            "notes": "Agent choice preview."
+          },
+          "tokens": {}
+        }
+      ]
+    },
+    {
+      "id": "accessibility",
+      "title": "Accessibility defaults",
+      "agentRecommendation": "accessibility-vector",
+      "options": [
+        {
+          "id": "accessibility-vector",
+          "name": "WCAG-first operational",
+          "status": "recommended",
+          "recommendationReason": "Matches the approved Black Vector brief and the strongest research evidence.",
+          "description": "Visible focus, text status, 44px mobile targets, reduced motion, and chart tables.",
+          "bestFor": "Seigyo and MyShop production implementation",
+          "tradeoffs": "Requires disciplined restraint and accurate semantic states.",
+          "researchEvidence": [
+            "ds-008",
+            "lib-001",
+            "ds-003"
+          ],
+          "visualPreview": {
+            "sample": "accessibility",
+            "image": "../ui_research/visual-evidence/ui-007.png",
+            "notes": "Preview reference for accessibility defaults."
+          },
+          "tokens": {}
+        },
+        {
+          "id": "accessibility-viable",
+          "name": "Enterprise baseline",
+          "status": "viable",
+          "recommendationReason": "",
+          "description": "Standard keyboard and contrast requirements.",
+          "bestFor": "A deliberate alternate direction",
+          "tradeoffs": "Less aligned with the chosen visual thesis.",
+          "researchEvidence": [
+            "ds-008",
+            "lib-001",
+            "ds-003"
+          ],
+          "visualPreview": {
+            "sample": "accessibility",
+            "image": "../ui_research/visual-evidence/ui-007.png",
+            "notes": "Preview reference for accessibility defaults."
+          },
+          "tokens": {}
+        },
+        {
+          "id": "accessibility-balanced",
+          "name": "Balanced accessibility defaults",
+          "status": "viable",
+          "recommendationReason": "",
+          "description": "A moderate interpretation of accessibility defaults that splits the difference between the primary and alternate directions.",
+          "bestFor": "A deliberate alternate direction",
+          "tradeoffs": "Safe, but less distinctive than Black Vector.",
+          "researchEvidence": [
+            "ds-008",
+            "lib-001",
+            "ds-003"
+          ],
+          "visualPreview": {
+            "sample": "accessibility",
+            "image": "../ui_research/visual-evidence/ui-007.png",
+            "notes": "Preview reference for accessibility defaults."
+          },
+          "tokens": {}
+        },
+        {
+          "id": "accessibility-special",
+          "name": "High-visibility safety",
+          "status": "special-case",
+          "recommendationReason": "",
+          "description": "Stronger yellow focus and larger status text.",
+          "bestFor": "A deliberate alternate direction",
+          "tradeoffs": "Useful only in a narrow context.",
+          "researchEvidence": [
+            "ds-008",
+            "lib-001",
+            "ds-003"
+          ],
+          "visualPreview": {
+            "sample": "accessibility",
+            "image": "../ui_research/visual-evidence/ui-007.png",
+            "notes": "Preview reference for accessibility defaults."
+          },
+          "tokens": {}
+        },
+        {
+          "id": "accessibility-agent",
+          "name": "Agent decides",
+          "meaning": "Use the recommended option after evaluating project requirements and research.",
+          "status": "viable",
+          "description": "Delegates the final choice to the implementing agent.",
+          "bestFor": "Projects with no locked preference",
+          "tradeoffs": "The user has already selected Black Vector.",
+          "researchEvidence": [
+            "ds-008",
+            "lib-001",
+            "ds-003"
+          ],
+          "visualPreview": {
+            "sample": "accessibility",
+            "image": "../ui_research/visual-evidence/ui-007.png",
+            "notes": "Agent choice preview."
+          },
+          "tokens": {}
+        }
+      ]
+    },
+    {
+      "id": "voice",
+      "title": "Content voice",
+      "agentRecommendation": "voice-primary",
+      "options": [
+        {
+          "id": "voice-primary",
+          "name": "Direct operational",
+          "status": "recommended",
+          "recommendationReason": "Matches the approved Black Vector brief and the strongest research evidence.",
+          "description": "State what happened, what changed, and what can be done next.",
+          "bestFor": "Seigyo and MyShop production implementation",
+          "tradeoffs": "Requires disciplined restraint and accurate semantic states.",
+          "researchEvidence": [
+            "ds-003",
+            "lib-002",
+            "ds-003"
+          ],
+          "visualPreview": {
+            "sample": "voice",
+            "image": "../ui_research/visual-evidence/ui-008.png",
+            "notes": "Preview reference for content voice."
+          },
+          "tokens": {}
+        },
+        {
+          "id": "voice-viable",
+          "name": "Formal audit",
+          "status": "viable",
+          "recommendationReason": "",
+          "description": "More procedural and compliance-oriented language.",
+          "bestFor": "A deliberate alternate direction",
+          "tradeoffs": "Less aligned with the chosen visual thesis.",
+          "researchEvidence": [
+            "ds-003",
+            "lib-002",
+            "ds-003"
+          ],
+          "visualPreview": {
+            "sample": "voice",
+            "image": "../ui_research/visual-evidence/ui-008.png",
+            "notes": "Preview reference for content voice."
+          },
+          "tokens": {}
+        },
+        {
+          "id": "voice-balanced",
+          "name": "Balanced content voice",
+          "status": "viable",
+          "recommendationReason": "",
+          "description": "A moderate interpretation of content voice that splits the difference between the primary and alternate directions.",
+          "bestFor": "A deliberate alternate direction",
+          "tradeoffs": "Safe, but less distinctive than Black Vector.",
+          "researchEvidence": [
+            "ds-003",
+            "lib-002",
+            "ds-003"
+          ],
+          "visualPreview": {
+            "sample": "voice",
+            "image": "../ui_research/visual-evidence/ui-008.png",
+            "notes": "Preview reference for content voice."
+          },
+          "tokens": {}
+        },
+        {
+          "id": "voice-special",
+          "name": "Editorial retail",
+          "status": "special-case",
+          "recommendationReason": "",
+          "description": "Material-focused short copy for MyShop only.",
+          "bestFor": "A deliberate alternate direction",
+          "tradeoffs": "Useful only in a narrow context.",
+          "researchEvidence": [
+            "ds-003",
+            "lib-002",
+            "ds-003"
+          ],
+          "visualPreview": {
+            "sample": "voice",
+            "image": "../ui_research/visual-evidence/ui-008.png",
+            "notes": "Preview reference for content voice."
+          },
+          "tokens": {}
+        },
+        {
+          "id": "voice-agent",
+          "name": "Agent decides",
+          "meaning": "Use the recommended option after evaluating project requirements and research.",
+          "status": "viable",
+          "description": "Delegates the final choice to the implementing agent.",
+          "bestFor": "Projects with no locked preference",
+          "tradeoffs": "The user has already selected Black Vector.",
+          "researchEvidence": [
+            "ds-003",
+            "lib-002",
+            "ds-003"
+          ],
+          "visualPreview": {
+            "sample": "voice",
+            "image": "../ui_research/visual-evidence/ui-008.png",
+            "notes": "Agent choice preview."
+          },
+          "tokens": {}
+        }
+      ]
+    },
+    {
+      "id": "implementation",
+      "title": "Implementation strategy",
+      "agentRecommendation": "implementation-control",
+      "options": [
+        {
+          "id": "implementation-control",
+          "name": "Source-owned composition",
+          "status": "recommended",
+          "recommendationReason": "Matches the approved Black Vector brief and the strongest research evidence.",
+          "description": "Adapt beUI source over shadcn and Radix with project tokens.",
+          "bestFor": "Seigyo and MyShop production implementation",
+          "tradeoffs": "Requires disciplined restraint and accurate semantic states.",
+          "researchEvidence": [
+            "lib-001",
+            "lib-001",
+            "ds-001"
+          ],
+          "visualPreview": {
+            "sample": "implementation",
+            "image": "../ui_research/visual-evidence/ui-009.png",
+            "notes": "Preview reference for implementation strategy."
+          },
+          "tokens": {}
+        },
+        {
+          "id": "implementation-viable",
+          "name": "Library-first",
+          "status": "viable",
+          "recommendationReason": "",
+          "description": "Use off-the-shelf component defaults.",
+          "bestFor": "A deliberate alternate direction",
+          "tradeoffs": "Less aligned with the chosen visual thesis.",
+          "researchEvidence": [
+            "lib-001",
+            "lib-001",
+            "ds-001"
+          ],
+          "visualPreview": {
+            "sample": "implementation",
+            "image": "../ui_research/visual-evidence/ui-009.png",
+            "notes": "Preview reference for implementation strategy."
+          },
+          "tokens": {}
+        },
+        {
+          "id": "implementation-balanced",
+          "name": "Balanced implementation strategy",
+          "status": "viable",
+          "recommendationReason": "",
+          "description": "A moderate interpretation of implementation strategy that splits the difference between the primary and alternate directions.",
+          "bestFor": "A deliberate alternate direction",
+          "tradeoffs": "Safe, but less distinctive than Black Vector.",
+          "researchEvidence": [
+            "lib-001",
+            "lib-001",
+            "ds-001"
+          ],
+          "visualPreview": {
+            "sample": "implementation",
+            "image": "../ui_research/visual-evidence/ui-009.png",
+            "notes": "Preview reference for implementation strategy."
+          },
+          "tokens": {}
+        },
+        {
+          "id": "implementation-special",
+          "name": "Custom-first",
+          "status": "special-case",
+          "recommendationReason": "",
+          "description": "Build every interaction from primitives.",
+          "bestFor": "A deliberate alternate direction",
+          "tradeoffs": "Useful only in a narrow context.",
+          "researchEvidence": [
+            "lib-001",
+            "lib-001",
+            "ds-001"
+          ],
+          "visualPreview": {
+            "sample": "implementation",
+            "image": "../ui_research/visual-evidence/ui-009.png",
+            "notes": "Preview reference for implementation strategy."
+          },
+          "tokens": {}
+        },
+        {
+          "id": "implementation-agent",
+          "name": "Agent decides",
+          "meaning": "Use the recommended option after evaluating project requirements and research.",
+          "status": "viable",
+          "description": "Delegates the final choice to the implementing agent.",
+          "bestFor": "Projects with no locked preference",
+          "tradeoffs": "The user has already selected Black Vector.",
+          "researchEvidence": [
+            "lib-001",
+            "lib-001",
+            "ds-001"
+          ],
+          "visualPreview": {
+            "sample": "implementation",
+            "image": "../ui_research/visual-evidence/ui-009.png",
+            "notes": "Agent choice preview."
+          },
+          "tokens": {}
+        }
+      ]
+    },
+    {
+      "id": "adaptation",
+      "title": "Third-party adaptation",
+      "agentRecommendation": "adaptation-selected",
+      "options": [
+        {
+          "id": "adaptation-selected",
+          "name": "Behavior first",
+          "status": "recommended",
+          "recommendationReason": "Matches the approved Black Vector brief and the strongest research evidence.",
+          "description": "Keep accessible behavior, replace all foreign visual tokens and copy.",
+          "bestFor": "Seigyo and MyShop production implementation",
+          "tradeoffs": "Requires disciplined restraint and accurate semantic states.",
+          "researchEvidence": [
+            "lib-002",
+            "lib-002",
+            "ds-003"
+          ],
+          "visualPreview": {
+            "sample": "adaptation",
+            "image": "../ui_research/visual-evidence/ui-010.png",
+            "notes": "Preview reference for third-party adaptation."
+          },
+          "tokens": {}
+        },
+        {
+          "id": "adaptation-viable",
+          "name": "Minimal override",
+          "status": "viable",
+          "recommendationReason": "",
+          "description": "Retain library styling where close enough.",
+          "bestFor": "A deliberate alternate direction",
+          "tradeoffs": "Less aligned with the chosen visual thesis.",
+          "researchEvidence": [
+            "lib-002",
+            "lib-002",
+            "ds-003"
+          ],
+          "visualPreview": {
+            "sample": "adaptation",
+            "image": "../ui_research/visual-evidence/ui-010.png",
+            "notes": "Preview reference for third-party adaptation."
+          },
+          "tokens": {}
+        },
+        {
+          "id": "adaptation-balanced",
+          "name": "Balanced third-party adaptation",
+          "status": "viable",
+          "recommendationReason": "",
+          "description": "A moderate interpretation of third-party adaptation that splits the difference between the primary and alternate directions.",
+          "bestFor": "A deliberate alternate direction",
+          "tradeoffs": "Safe, but less distinctive than Black Vector.",
+          "researchEvidence": [
+            "lib-002",
+            "lib-002",
+            "ds-003"
+          ],
+          "visualPreview": {
+            "sample": "adaptation",
+            "image": "../ui_research/visual-evidence/ui-010.png",
+            "notes": "Preview reference for third-party adaptation."
+          },
+          "tokens": {}
+        },
+        {
+          "id": "adaptation-special",
+          "name": "Forked components",
+          "status": "special-case",
+          "recommendationReason": "",
+          "description": "Deeply rewrite every copied component.",
+          "bestFor": "A deliberate alternate direction",
+          "tradeoffs": "Useful only in a narrow context.",
+          "researchEvidence": [
+            "lib-002",
+            "lib-002",
+            "ds-003"
+          ],
+          "visualPreview": {
+            "sample": "adaptation",
+            "image": "../ui_research/visual-evidence/ui-010.png",
+            "notes": "Preview reference for third-party adaptation."
+          },
+          "tokens": {}
+        },
+        {
+          "id": "adaptation-agent",
+          "name": "Agent decides",
+          "meaning": "Use the recommended option after evaluating project requirements and research.",
+          "status": "viable",
+          "description": "Delegates the final choice to the implementing agent.",
+          "bestFor": "Projects with no locked preference",
+          "tradeoffs": "The user has already selected Black Vector.",
+          "researchEvidence": [
+            "lib-002",
+            "lib-002",
+            "ds-003"
+          ],
+          "visualPreview": {
+            "sample": "adaptation",
+            "image": "../ui_research/visual-evidence/ui-010.png",
+            "notes": "Agent choice preview."
+          },
+          "tokens": {}
+        }
+      ]
+    }
+  ]
+}

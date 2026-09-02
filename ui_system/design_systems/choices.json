@@ -1,0 +1,105 @@
+{
+  "project": "Seigyo and MyShop",
+  "choices": {
+    "personality": {
+      "selectedOptionId": "personality-vector",
+      "status": "agent_decides",
+      "userNotes": "Black Vector and implementation authority were already approved in the build plan."
+    },
+    "color": {
+      "selectedOptionId": "color-primary",
+      "status": "agent_decides",
+      "userNotes": "Black Vector and implementation authority were already approved in the build plan."
+    },
+    "type": {
+      "selectedOptionId": "type-control",
+      "status": "agent_decides",
+      "userNotes": "Black Vector and implementation authority were already approved in the build plan."
+    },
+    "density": {
+      "selectedOptionId": "density-selected",
+      "status": "agent_decides",
+      "userNotes": "Black Vector and implementation authority were already approved in the build plan."
+    },
+    "shape": {
+      "selectedOptionId": "shape-vector",
+      "status": "agent_decides",
+      "userNotes": "Black Vector and implementation authority were already approved in the build plan."
+    },
+    "layering": {
+      "selectedOptionId": "layering-primary",
+      "status": "agent_decides",
+      "userNotes": "Black Vector and implementation authority were already approved in the build plan."
+    },
+    "motion": {
+      "selectedOptionId": "motion-control",
+      "status": "agent_decides",
+      "userNotes": "Black Vector and implementation authority were already approved in the build plan."
+    },
+    "icons": {
+      "selectedOptionId": "icons-selected",
+      "status": "agent_decides",
+      "userNotes": "Black Vector and implementation authority were already approved in the build plan."
+    },
+    "imagery": {
+      "selectedOptionId": "imagery-vector",
+      "status": "agent_decides",
+      "userNotes": "Black Vector and implementation authority were already approved in the build plan."
+    },
+    "layout": {
+      "selectedOptionId": "layout-primary",
+      "status": "agent_decides",
+      "userNotes": "Black Vector and implementation authority were already approved in the build plan."
+    },
+    "navigation": {
+      "selectedOptionId": "navigation-control",
+      "status": "agent_decides",
+      "userNotes": "Black Vector and implementation authority were already approved in the build plan."
+    },
+    "buttons": {
+      "selectedOptionId": "buttons-selected",
+      "status": "agent_decides",
+      "userNotes": "Black Vector and implementation authority were already approved in the build plan."
+    },
+    "forms": {
+      "selectedOptionId": "forms-vector",
+      "status": "agent_decides",
+      "userNotes": "Black Vector and implementation authority were already approved in the build plan."
+    },
+    "tables": {
+      "selectedOptionId": "tables-primary",
+      "status": "agent_decides",
+      "userNotes": "Black Vector and implementation authority were already approved in the build plan."
+    },
+    "surfaces": {
+      "selectedOptionId": "surfaces-control",
+      "status": "agent_decides",
+      "userNotes": "Black Vector and implementation authority were already approved in the build plan."
+    },
+    "feedback": {
+      "selectedOptionId": "feedback-selected",
+      "status": "agent_decides",
+      "userNotes": "Black Vector and implementation authority were already approved in the build plan."
+    },
+    "accessibility": {
+      "selectedOptionId": "accessibility-vector",
+      "status": "agent_decides",
+      "userNotes": "Black Vector and implementation authority were already approved in the build plan."
+    },
+    "voice": {
+      "selectedOptionId": "voice-primary",
+      "status": "agent_decides",
+      "userNotes": "Black Vector and implementation authority were already approved in the build plan."
+    },
+    "implementation": {
+      "selectedOptionId": "implementation-control",
+      "status": "agent_decides",
+      "userNotes": "Black Vector and implementation authority were already approved in the build plan."
+    },
+    "adaptation": {
+      "selectedOptionId": "adaptation-selected",
+      "status": "agent_decides",
+      "userNotes": "Black Vector and implementation authority were already approved in the build plan."
+    }
+  }
+}

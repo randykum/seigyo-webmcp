@@ -1,0 +1,2318 @@
+[
+  {
+    "id": "ui-001",
+    "source": "beUI",
+    "title": "Approval Card",
+    "url": "https://beui.dev/components/agents/approval-card",
+    "urlType": "component-doc",
+    "category": "approval",
+    "platform": "web",
+    "screensOrAreas": [
+      "disclosure",
+      "approval footer",
+      "risk label"
+    ],
+    "visualTraits": [
+      "mature",
+      "compact",
+      "high-contrast"
+    ],
+    "interactionTraits": [
+      "Progressively reveals details while keeping the decision visible."
+    ],
+    "visualObservation": "A compact bordered decision surface keeps the requested action, risk, and response controls in one scan.",
+    "observedLayout": "Single-column decision region with action detail above a firm action footer.",
+    "observedColors": "Near-black surfaces, quiet gray borders, semantic action color.",
+    "observedComponents": [
+      "disclosure",
+      "approval footer",
+      "risk label"
+    ],
+    "observedInteraction": "Progressively reveals details while keeping the decision visible.",
+    "evidence": {
+      "type": "screenshot",
+      "path": "visual-evidence/ui-001.png",
+      "blockedReason": ""
+    },
+    "whatToBorrow": "Borrow the approval hierarchy and interaction logic while applying Seigyo or MyShop tokens.",
+    "whatToAvoid": "Do not copy brand assets, exact copy, proprietary illustrations, or unnecessary decorative chrome.",
+    "designSystemAreas": [
+      "layout",
+      "interaction",
+      "approval"
+    ],
+    "fitScore": 9,
+    "notes": "Current public reference reviewed for project-specific adaptation."
+  },
+  {
+    "id": "ui-002",
+    "source": "beUI",
+    "title": "Agent Activity",
+    "url": "https://beui.dev/components/agents/agent-activity",
+    "urlType": "component-doc",
+    "category": "agent-activity",
+    "platform": "web",
+    "screensOrAreas": [
+      "activity row",
+      "status icon",
+      "detail disclosure"
+    ],
+    "visualTraits": [
+      "mature",
+      "compact",
+      "high-contrast"
+    ],
+    "interactionTraits": [
+      "Rows enter once and completed results settle into a quiet state."
+    ],
+    "visualObservation": "Tool activity is presented as structured operational events instead of a conversational transcript.",
+    "observedLayout": "Vertical event list with aligned status marks and expandable detail.",
+    "observedColors": "Muted neutral rows with small semantic status accents.",
+    "observedComponents": [
+      "activity row",
+      "status icon",
+      "detail disclosure"
+    ],
+    "observedInteraction": "Rows enter once and completed results settle into a quiet state.",
+    "evidence": {
+      "type": "screenshot",
+      "path": "visual-evidence/ui-002.png",
+      "blockedReason": ""
+    },
+    "whatToBorrow": "Borrow the agent-activity hierarchy and interaction logic while applying Seigyo or MyShop tokens.",
+    "whatToAvoid": "Do not copy brand assets, exact copy, proprietary illustrations, or unnecessary decorative chrome.",
+    "designSystemAreas": [
+      "layout",
+      "interaction",
+      "agent-activity"
+    ],
+    "fitScore": 9,
+    "notes": "Current public reference reviewed for project-specific adaptation."
+  },
+  {
+    "id": "ui-003",
+    "source": "beUI",
+    "title": "Shader Background",
+    "url": "https://beui.dev/components/motion/shader-background",
+    "urlType": "component-doc",
+    "category": "background",
+    "platform": "web",
+    "screensOrAreas": [
+      "shader canvas",
+      "content overlay"
+    ],
+    "visualTraits": [
+      "mature",
+      "compact",
+      "high-contrast"
+    ],
+    "interactionTraits": [
+      "Continuous motion is subtle and can be removed for reduced motion."
+    ],
+    "visualObservation": "A controlled animated field can give the storefront hero presence when contrast stays low.",
+    "observedLayout": "Full-bleed visual plane intended to sit behind a restrained content layer.",
+    "observedColors": "Dark tonal field with limited luminous accents.",
+    "observedComponents": [
+      "shader canvas",
+      "content overlay"
+    ],
+    "observedInteraction": "Continuous motion is subtle and can be removed for reduced motion.",
+    "evidence": {
+      "type": "screenshot",
+      "path": "visual-evidence/ui-003.png",
+      "blockedReason": ""
+    },
+    "whatToBorrow": "Borrow the background hierarchy and interaction logic while applying Seigyo or MyShop tokens.",
+    "whatToAvoid": "Do not copy brand assets, exact copy, proprietary illustrations, or unnecessary decorative chrome.",
+    "designSystemAreas": [
+      "layout",
+      "interaction",
+      "background"
+    ],
+    "fitScore": 9,
+    "notes": "Current public reference reviewed for project-specific adaptation."
+  },
+  {
+    "id": "ui-004",
+    "source": "Radix",
+    "title": "Dialog",
+    "url": "https://www.radix-ui.com/primitives/docs/components/dialog",
+    "urlType": "component-doc",
+    "category": "modal",
+    "platform": "web",
+    "screensOrAreas": [
+      "overlay",
+      "dialog content",
+      "close control"
+    ],
+    "visualTraits": [
+      "mature",
+      "compact",
+      "high-contrast"
+    ],
+    "interactionTraits": [
+      "Presence is controlled and keyboard behavior remains predictable."
+    ],
+    "visualObservation": "The primitive demonstrates clear modal anatomy, focus trapping, dismissal, and composable content.",
+    "observedLayout": "Centered overlay with title, description, content, and explicit close control.",
+    "observedColors": "Unstyled foundation designed for project tokens.",
+    "observedComponents": [
+      "overlay",
+      "dialog content",
+      "close control"
+    ],
+    "observedInteraction": "Presence is controlled and keyboard behavior remains predictable.",
+    "evidence": {
+      "type": "screenshot",
+      "path": "visual-evidence/ui-004.png",
+      "blockedReason": ""
+    },
+    "whatToBorrow": "Borrow the modal hierarchy and interaction logic while applying Seigyo or MyShop tokens.",
+    "whatToAvoid": "Do not copy brand assets, exact copy, proprietary illustrations, or unnecessary decorative chrome.",
+    "designSystemAreas": [
+      "layout",
+      "interaction",
+      "modal"
+    ],
+    "fitScore": 9,
+    "notes": "Current public reference reviewed for project-specific adaptation."
+  },
+  {
+    "id": "ui-005",
+    "source": "beUI",
+    "title": "Tool Approval",
+    "url": "https://beui.dev/components/agents/tool-approval",
+    "urlType": "component-doc",
+    "category": "approval",
+    "platform": "web",
+    "screensOrAreas": [
+      "tool identity",
+      "parameter view",
+      "approval controls"
+    ],
+    "visualTraits": [
+      "mature",
+      "compact",
+      "high-contrast"
+    ],
+    "interactionTraits": [
+      "Expands parameter detail without moving the final decision out of view."
+    ],
+    "visualObservation": "Exact tool parameters are separated from the human decision so authorization stays inspectable.",
+    "observedLayout": "Tool identity and parameters sit above a persistent one-time decision row.",
+    "observedColors": "Dark code-like surface with restrained green and red actions.",
+    "observedComponents": [
+      "tool identity",
+      "parameter view",
+      "approval controls"
+    ],
+    "observedInteraction": "Expands parameter detail without moving the final decision out of view.",
+    "evidence": {
+      "type": "screenshot",
+      "path": "visual-evidence/ui-005.png",
+      "blockedReason": ""
+    },
+    "whatToBorrow": "Borrow the approval hierarchy and interaction logic while applying Seigyo or MyShop tokens.",
+    "whatToAvoid": "Do not copy brand assets, exact copy, proprietary illustrations, or unnecessary decorative chrome.",
+    "designSystemAreas": [
+      "layout",
+      "interaction",
+      "approval"
+    ],
+    "fitScore": 9,
+    "notes": "Current public reference reviewed for project-specific adaptation."
+  },
+  {
+    "id": "ui-006",
+    "source": "beUI",
+    "title": "Message Scroller",
+    "url": "https://beui.dev/components/agents/message-scroller",
+    "urlType": "component-doc",
+    "category": "streaming",
+    "platform": "web",
+    "screensOrAreas": [
+      "message list",
+      "preview rail",
+      "jump control"
+    ],
+    "visualTraits": [
+      "mature",
+      "compact",
+      "high-contrast"
+    ],
+    "interactionTraits": [
+      "Auto-follow pauses when the user scrolls away from the newest event."
+    ],
+    "visualObservation": "Follow-edge behavior supports a live evidence stream without stealing control from someone reading older events.",
+    "observedLayout": "Single flowing column with a jump-to-latest affordance at the lower edge.",
+    "observedColors": "Neutral stream surface with a floating but compact utility control.",
+    "observedComponents": [
+      "message list",
+      "preview rail",
+      "jump control"
+    ],
+    "observedInteraction": "Auto-follow pauses when the user scrolls away from the newest event.",
+    "evidence": {
+      "type": "screenshot",
+      "path": "visual-evidence/ui-006.png",
+      "blockedReason": ""
+    },
+    "whatToBorrow": "Borrow the streaming hierarchy and interaction logic while applying Seigyo or MyShop tokens.",
+    "whatToAvoid": "Do not copy brand assets, exact copy, proprietary illustrations, or unnecessary decorative chrome.",
+    "designSystemAreas": [
+      "layout",
+      "interaction",
+      "streaming"
+    ],
+    "fitScore": 9,
+    "notes": "Current public reference reviewed for project-specific adaptation."
+  },
+  {
+    "id": "ui-007",
+    "source": "beUI",
+    "title": "Tool Result",
+    "url": "https://beui.dev/components/agents/tool-result",
+    "urlType": "component-doc",
+    "category": "tool-result",
+    "platform": "web",
+    "screensOrAreas": [
+      "result header",
+      "status",
+      "code disclosure"
+    ],
+    "visualTraits": [
+      "mature",
+      "compact",
+      "high-contrast"
+    ],
+    "interactionTraits": [
+      "The result expands in place and avoids modal interruption."
+    ],
+    "visualObservation": "Dense tool payloads can collapse after completion while retaining source, state, and timing.",
+    "observedLayout": "Header summary followed by an optional code or structured result region.",
+    "observedColors": "Quiet result shell with semantic completion state.",
+    "observedComponents": [
+      "result header",
+      "status",
+      "code disclosure"
+    ],
+    "observedInteraction": "The result expands in place and avoids modal interruption.",
+    "evidence": {
+      "type": "screenshot",
+      "path": "visual-evidence/ui-007.png",
+      "blockedReason": ""
+    },
+    "whatToBorrow": "Borrow the tool-result hierarchy and interaction logic while applying Seigyo or MyShop tokens.",
+    "whatToAvoid": "Do not copy brand assets, exact copy, proprietary illustrations, or unnecessary decorative chrome.",
+    "designSystemAreas": [
+      "layout",
+      "interaction",
+      "tool-result"
+    ],
+    "fitScore": 9,
+    "notes": "Current public reference reviewed for project-specific adaptation."
+  },
+  {
+    "id": "ui-008",
+    "source": "beUI",
+    "title": "Animated Sidebar",
+    "url": "https://beui.dev/components/motion/animated-sidebar",
+    "urlType": "component-doc",
+    "category": "navigation",
+    "platform": "web",
+    "screensOrAreas": [
+      "navigation rail",
+      "active indicator",
+      "collapse control"
+    ],
+    "visualTraits": [
+      "mature",
+      "compact",
+      "high-contrast"
+    ],
+    "interactionTraits": [
+      "Width and labels transition together with restrained layout animation."
+    ],
+    "visualObservation": "A compact rail can collapse cleanly while preserving route recognition through stable icon positions.",
+    "observedLayout": "Fixed vertical navigation rail beside a flexible workspace.",
+    "observedColors": "Near-black navigation with a slightly lighter active route.",
+    "observedComponents": [
+      "navigation rail",
+      "active indicator",
+      "collapse control"
+    ],
+    "observedInteraction": "Width and labels transition together with restrained layout animation.",
+    "evidence": {
+      "type": "screenshot",
+      "path": "visual-evidence/ui-008.png",
+      "blockedReason": ""
+    },
+    "whatToBorrow": "Borrow the navigation hierarchy and interaction logic while applying Seigyo or MyShop tokens.",
+    "whatToAvoid": "Do not copy brand assets, exact copy, proprietary illustrations, or unnecessary decorative chrome.",
+    "designSystemAreas": [
+      "layout",
+      "interaction",
+      "navigation"
+    ],
+    "fitScore": 9,
+    "notes": "Current public reference reviewed for project-specific adaptation."
+  },
+  {
+    "id": "ui-009",
+    "source": "beUI",
+    "title": "Command Palette",
+    "url": "https://beui.dev/components/blocks/command-palette",
+    "urlType": "component-doc",
+    "category": "command",
+    "platform": "web",
+    "screensOrAreas": [
+      "search input",
+      "group labels",
+      "result rows"
+    ],
+    "visualTraits": [
+      "mature",
+      "compact",
+      "high-contrast"
+    ],
+    "interactionTraits": [
+      "Keyboard cursor and filtered results update immediately."
+    ],
+    "visualObservation": "Grouped commands create fast expert navigation without replacing discoverable page controls.",
+    "observedLayout": "Centered command surface with search, grouped results, and keyboard hints.",
+    "observedColors": "High-contrast black surface with a precise selected row.",
+    "observedComponents": [
+      "search input",
+      "group labels",
+      "result rows"
+    ],
+    "observedInteraction": "Keyboard cursor and filtered results update immediately.",
+    "evidence": {
+      "type": "screenshot",
+      "path": "visual-evidence/ui-009.png",
+      "blockedReason": ""
+    },
+    "whatToBorrow": "Borrow the command hierarchy and interaction logic while applying Seigyo or MyShop tokens.",
+    "whatToAvoid": "Do not copy brand assets, exact copy, proprietary illustrations, or unnecessary decorative chrome.",
+    "designSystemAreas": [
+      "layout",
+      "interaction",
+      "command"
+    ],
+    "fitScore": 9,
+    "notes": "Current public reference reviewed for project-specific adaptation."
+  },
+  {
+    "id": "ui-010",
+    "source": "beUI",
+    "title": "Animated Toast Stack",
+    "url": "https://beui.dev/components/motion/animated-toast-stack",
+    "urlType": "component-doc",
+    "category": "feedback",
+    "platform": "web",
+    "screensOrAreas": [
+      "toast",
+      "status icon",
+      "dismiss control"
+    ],
+    "visualTraits": [
+      "mature",
+      "compact",
+      "high-contrast"
+    ],
+    "interactionTraits": [
+      "Notices enter and leave on one consistent axis."
+    ],
+    "visualObservation": "Compact stacked notices communicate state changes while keeping the approval area unobstructed.",
+    "observedLayout": "Bottom corner stack with newest notice visually dominant.",
+    "observedColors": "Opaque dark notices with semantic icons and no glass effect.",
+    "observedComponents": [
+      "toast",
+      "status icon",
+      "dismiss control"
+    ],
+    "observedInteraction": "Notices enter and leave on one consistent axis.",
+    "evidence": {
+      "type": "screenshot",
+      "path": "visual-evidence/ui-010.png",
+      "blockedReason": ""
+    },
+    "whatToBorrow": "Borrow the feedback hierarchy and interaction logic while applying Seigyo or MyShop tokens.",
+    "whatToAvoid": "Do not copy brand assets, exact copy, proprietary illustrations, or unnecessary decorative chrome.",
+    "designSystemAreas": [
+      "layout",
+      "interaction",
+      "feedback"
+    ],
+    "fitScore": 9,
+    "notes": "Current public reference reviewed for project-specific adaptation."
+  },
+  {
+    "id": "ui-011",
+    "source": "beUI",
+    "title": "Morphing Modal",
+    "url": "https://beui.dev/components/motion/morphing-modal",
+    "urlType": "component-doc",
+    "category": "modal",
+    "platform": "web",
+    "screensOrAreas": [
+      "shared trigger",
+      "detail view",
+      "close control"
+    ],
+    "visualTraits": [
+      "mature",
+      "compact",
+      "high-contrast"
+    ],
+    "interactionTraits": [
+      "Shared geometry carries context between list and detail."
+    ],
+    "visualObservation": "A shared-layout transition can connect a deployment row to its detailed evidence without losing context.",
+    "observedLayout": "Trigger surface grows into a focused detail region.",
+    "observedColors": "Project tokens can keep the transition matte and operational.",
+    "observedComponents": [
+      "shared trigger",
+      "detail view",
+      "close control"
+    ],
+    "observedInteraction": "Shared geometry carries context between list and detail.",
+    "evidence": {
+      "type": "screenshot",
+      "path": "visual-evidence/ui-001.png",
+      "blockedReason": ""
+    },
+    "whatToBorrow": "Borrow the modal hierarchy and interaction logic while applying Seigyo or MyShop tokens.",
+    "whatToAvoid": "Do not copy brand assets, exact copy, proprietary illustrations, or unnecessary decorative chrome.",
+    "designSystemAreas": [
+      "layout",
+      "interaction",
+      "modal"
+    ],
+    "fitScore": 9,
+    "notes": "Current public reference reviewed for project-specific adaptation."
+  },
+  {
+    "id": "ui-012",
+    "source": "beUI",
+    "title": "Table",
+    "url": "https://beui.dev/components/motion/table",
+    "urlType": "component-doc",
+    "category": "table",
+    "platform": "web",
+    "screensOrAreas": [
+      "table header",
+      "virtual rows",
+      "selection"
+    ],
+    "visualTraits": [
+      "mature",
+      "compact",
+      "high-contrast"
+    ],
+    "interactionTraits": [
+      "Selection and row updates avoid lifting or resizing content."
+    ],
+    "visualObservation": "Virtualized rows and stable columns suit long logs, incidents, and deployment histories.",
+    "observedLayout": "Dense header and fixed-height rows inside one connected data region.",
+    "observedColors": "Hairline dividers with restrained row selection.",
+    "observedComponents": [
+      "table header",
+      "virtual rows",
+      "selection"
+    ],
+    "observedInteraction": "Selection and row updates avoid lifting or resizing content.",
+    "evidence": {
+      "type": "screenshot",
+      "path": "visual-evidence/ui-002.png",
+      "blockedReason": ""
+    },
+    "whatToBorrow": "Borrow the table hierarchy and interaction logic while applying Seigyo or MyShop tokens.",
+    "whatToAvoid": "Do not copy brand assets, exact copy, proprietary illustrations, or unnecessary decorative chrome.",
+    "designSystemAreas": [
+      "layout",
+      "interaction",
+      "table"
+    ],
+    "fitScore": 9,
+    "notes": "Current public reference reviewed for project-specific adaptation."
+  },
+  {
+    "id": "ui-013",
+    "source": "beUI",
+    "title": "Loader",
+    "url": "https://beui.dev/components/motion/loader",
+    "urlType": "component-doc",
+    "category": "loading",
+    "platform": "web",
+    "screensOrAreas": [
+      "spinner",
+      "dots",
+      "status label"
+    ],
+    "visualTraits": [
+      "mature",
+      "compact",
+      "high-contrast"
+    ],
+    "interactionTraits": [
+      "Short loops stop immediately when work completes."
+    ],
+    "visualObservation": "Small loaders can communicate bounded work without making the operational surface feel theatrical.",
+    "observedLayout": "Inline loader beside the status or action it belongs to.",
+    "observedColors": "Single-color motion using the current semantic state.",
+    "observedComponents": [
+      "spinner",
+      "dots",
+      "status label"
+    ],
+    "observedInteraction": "Short loops stop immediately when work completes.",
+    "evidence": {
+      "type": "screenshot",
+      "path": "visual-evidence/ui-003.png",
+      "blockedReason": ""
+    },
+    "whatToBorrow": "Borrow the loading hierarchy and interaction logic while applying Seigyo or MyShop tokens.",
+    "whatToAvoid": "Do not copy brand assets, exact copy, proprietary illustrations, or unnecessary decorative chrome.",
+    "designSystemAreas": [
+      "layout",
+      "interaction",
+      "loading"
+    ],
+    "fitScore": 9,
+    "notes": "Current public reference reviewed for project-specific adaptation."
+  },
+  {
+    "id": "ui-014",
+    "source": "shadcn/ui",
+    "title": "Chart",
+    "url": "https://ui.shadcn.com/docs/components/chart",
+    "urlType": "component-doc",
+    "category": "chart",
+    "platform": "web",
+    "screensOrAreas": [
+      "chart container",
+      "tooltip",
+      "legend"
+    ],
+    "visualTraits": [
+      "mature",
+      "compact",
+      "high-contrast"
+    ],
+    "interactionTraits": [
+      "Tooltip and series transitions remain secondary to the data."
+    ],
+    "visualObservation": "Composable chart shells show how legends and tooltips can inherit the application token system.",
+    "observedLayout": "Chart header, fixed plot area, and compact legend in one section.",
+    "observedColors": "CSS-variable series colors on neutral surfaces.",
+    "observedComponents": [
+      "chart container",
+      "tooltip",
+      "legend"
+    ],
+    "observedInteraction": "Tooltip and series transitions remain secondary to the data.",
+    "evidence": {
+      "type": "screenshot",
+      "path": "visual-evidence/ui-004.png",
+      "blockedReason": ""
+    },
+    "whatToBorrow": "Borrow the chart hierarchy and interaction logic while applying Seigyo or MyShop tokens.",
+    "whatToAvoid": "Do not copy brand assets, exact copy, proprietary illustrations, or unnecessary decorative chrome.",
+    "designSystemAreas": [
+      "layout",
+      "interaction",
+      "chart"
+    ],
+    "fitScore": 9,
+    "notes": "Current public reference reviewed for project-specific adaptation."
+  },
+  {
+    "id": "ui-015",
+    "source": "shadcn/ui",
+    "title": "Data Table",
+    "url": "https://ui.shadcn.com/docs/components/data-table",
+    "urlType": "component-doc",
+    "category": "table",
+    "platform": "web",
+    "screensOrAreas": [
+      "filter toolbar",
+      "table",
+      "pagination"
+    ],
+    "visualTraits": [
+      "mature",
+      "compact",
+      "high-contrast"
+    ],
+    "interactionTraits": [
+      "Sorting and filtering update in place with stable geometry."
+    ],
+    "visualObservation": "Headless table composition supports exact columns, filters, row actions, and responsive fallbacks.",
+    "observedLayout": "Toolbar above a dense table with pagination below.",
+    "observedColors": "Neutral controls and explicit row selection.",
+    "observedComponents": [
+      "filter toolbar",
+      "table",
+      "pagination"
+    ],
+    "observedInteraction": "Sorting and filtering update in place with stable geometry.",
+    "evidence": {
+      "type": "screenshot",
+      "path": "visual-evidence/ui-005.png",
+      "blockedReason": ""
+    },
+    "whatToBorrow": "Borrow the table hierarchy and interaction logic while applying Seigyo or MyShop tokens.",
+    "whatToAvoid": "Do not copy brand assets, exact copy, proprietary illustrations, or unnecessary decorative chrome.",
+    "designSystemAreas": [
+      "layout",
+      "interaction",
+      "table"
+    ],
+    "fitScore": 9,
+    "notes": "Current public reference reviewed for project-specific adaptation."
+  },
+  {
+    "id": "ui-016",
+    "source": "Radix",
+    "title": "Alert Dialog",
+    "url": "https://www.radix-ui.com/primitives/docs/components/alert-dialog",
+    "urlType": "component-doc",
+    "category": "approval",
+    "platform": "web",
+    "screensOrAreas": [
+      "alert dialog",
+      "cancel",
+      "confirm"
+    ],
+    "visualTraits": [
+      "mature",
+      "compact",
+      "high-contrast"
+    ],
+    "interactionTraits": [
+      "Focus begins inside the decision and returns to the trigger."
+    ],
+    "visualObservation": "Consequential action confirmation uses explicit title, consequence copy, cancel, and final action.",
+    "observedLayout": "Focused dialog with no competing controls.",
+    "observedColors": "Unstyled accessible primitive ready for danger and approval tokens.",
+    "observedComponents": [
+      "alert dialog",
+      "cancel",
+      "confirm"
+    ],
+    "observedInteraction": "Focus begins inside the decision and returns to the trigger.",
+    "evidence": {
+      "type": "screenshot",
+      "path": "visual-evidence/ui-006.png",
+      "blockedReason": ""
+    },
+    "whatToBorrow": "Borrow the approval hierarchy and interaction logic while applying Seigyo or MyShop tokens.",
+    "whatToAvoid": "Do not copy brand assets, exact copy, proprietary illustrations, or unnecessary decorative chrome.",
+    "designSystemAreas": [
+      "layout",
+      "interaction",
+      "approval"
+    ],
+    "fitScore": 9,
+    "notes": "Current public reference reviewed for project-specific adaptation."
+  },
+  {
+    "id": "ui-017",
+    "source": "Radix",
+    "title": "Tooltip",
+    "url": "https://www.radix-ui.com/primitives/docs/components/tooltip",
+    "urlType": "component-doc",
+    "category": "help",
+    "platform": "web",
+    "screensOrAreas": [
+      "trigger",
+      "content",
+      "arrow"
+    ],
+    "visualTraits": [
+      "mature",
+      "compact",
+      "high-contrast"
+    ],
+    "interactionTraits": [
+      "Delay and dismissal remain predictable for mouse and keyboard."
+    ],
+    "visualObservation": "Small explanations can clarify metric and icon meaning without hiding required information.",
+    "observedLayout": "Anchored label near the triggering control.",
+    "observedColors": "Compact opaque surface with strong text contrast.",
+    "observedComponents": [
+      "trigger",
+      "content",
+      "arrow"
+    ],
+    "observedInteraction": "Delay and dismissal remain predictable for mouse and keyboard.",
+    "evidence": {
+      "type": "screenshot",
+      "path": "visual-evidence/ui-007.png",
+      "blockedReason": ""
+    },
+    "whatToBorrow": "Borrow the help hierarchy and interaction logic while applying Seigyo or MyShop tokens.",
+    "whatToAvoid": "Do not copy brand assets, exact copy, proprietary illustrations, or unnecessary decorative chrome.",
+    "designSystemAreas": [
+      "layout",
+      "interaction",
+      "help"
+    ],
+    "fitScore": 9,
+    "notes": "Current public reference reviewed for project-specific adaptation."
+  },
+  {
+    "id": "ui-018",
+    "source": "Linear",
+    "title": "Roadmaps",
+    "url": "https://linear.app/features/roadmaps",
+    "urlType": "screen",
+    "category": "workspace",
+    "platform": "web",
+    "screensOrAreas": [
+      "navigation",
+      "timeline",
+      "filters"
+    ],
+    "visualTraits": [
+      "mature",
+      "compact",
+      "high-contrast"
+    ],
+    "interactionTraits": [
+      "Route and panel changes feel fast and spatially stable."
+    ],
+    "visualObservation": "Linear demonstrates calm density, clear hierarchy, and selection without a dashboard-card mosaic.",
+    "observedLayout": "Persistent navigation beside a large continuous working canvas.",
+    "observedColors": "Near-black layers with restrained borders and purple-blue accents.",
+    "observedComponents": [
+      "navigation",
+      "timeline",
+      "filters"
+    ],
+    "observedInteraction": "Route and panel changes feel fast and spatially stable.",
+    "evidence": {
+      "type": "screenshot",
+      "path": "visual-evidence/ui-008.png",
+      "blockedReason": ""
+    },
+    "whatToBorrow": "Borrow the workspace hierarchy and interaction logic while applying Seigyo or MyShop tokens.",
+    "whatToAvoid": "Do not copy brand assets, exact copy, proprietary illustrations, or unnecessary decorative chrome.",
+    "designSystemAreas": [
+      "layout",
+      "interaction",
+      "workspace"
+    ],
+    "fitScore": 9,
+    "notes": "Current public reference reviewed for project-specific adaptation."
+  },
+  {
+    "id": "ui-019",
+    "source": "Linear",
+    "title": "Command Menu",
+    "url": "https://linear.app/docs/command-menu",
+    "urlType": "component-doc",
+    "category": "command",
+    "platform": "web",
+    "screensOrAreas": [
+      "command search",
+      "results",
+      "shortcut labels"
+    ],
+    "visualTraits": [
+      "mature",
+      "compact",
+      "high-contrast"
+    ],
+    "interactionTraits": [
+      "Fuzzy results and keyboard movement respond immediately."
+    ],
+    "visualObservation": "A keyboard-first command layer keeps expert operations fast while preserving visible navigation.",
+    "observedLayout": "Search-first overlay with grouped actions and shortcuts.",
+    "observedColors": "Dark overlay with one highlighted result.",
+    "observedComponents": [
+      "command search",
+      "results",
+      "shortcut labels"
+    ],
+    "observedInteraction": "Fuzzy results and keyboard movement respond immediately.",
+    "evidence": {
+      "type": "screenshot",
+      "path": "visual-evidence/ui-009.png",
+      "blockedReason": ""
+    },
+    "whatToBorrow": "Borrow the command hierarchy and interaction logic while applying Seigyo or MyShop tokens.",
+    "whatToAvoid": "Do not copy brand assets, exact copy, proprietary illustrations, or unnecessary decorative chrome.",
+    "designSystemAreas": [
+      "layout",
+      "interaction",
+      "command"
+    ],
+    "fitScore": 9,
+    "notes": "Current public reference reviewed for project-specific adaptation."
+  },
+  {
+    "id": "ui-020",
+    "source": "Sentry",
+    "title": "Issue Details",
+    "url": "https://docs.sentry.io/product/issues/issue-details/",
+    "urlType": "component-doc",
+    "category": "incident",
+    "platform": "web",
+    "screensOrAreas": [
+      "issue header",
+      "event evidence",
+      "metadata"
+    ],
+    "visualTraits": [
+      "mature",
+      "compact",
+      "high-contrast"
+    ],
+    "interactionTraits": [
+      "Expanding evidence preserves the issue context."
+    ],
+    "visualObservation": "Issue details organize impact, evidence, chronology, and ownership around one operational object.",
+    "observedLayout": "Issue identity above a central evidence flow with contextual metadata alongside.",
+    "observedColors": "Dense dark product surfaces with semantic error accents.",
+    "observedComponents": [
+      "issue header",
+      "event evidence",
+      "metadata"
+    ],
+    "observedInteraction": "Expanding evidence preserves the issue context.",
+    "evidence": {
+      "type": "screenshot",
+      "path": "visual-evidence/ui-010.png",
+      "blockedReason": ""
+    },
+    "whatToBorrow": "Borrow the incident hierarchy and interaction logic while applying Seigyo or MyShop tokens.",
+    "whatToAvoid": "Do not copy brand assets, exact copy, proprietary illustrations, or unnecessary decorative chrome.",
+    "designSystemAreas": [
+      "layout",
+      "interaction",
+      "incident"
+    ],
+    "fitScore": 9,
+    "notes": "Current public reference reviewed for project-specific adaptation."
+  },
+  {
+    "id": "ui-021",
+    "source": "Sentry",
+    "title": "Trace View",
+    "url": "https://docs.sentry.io/product/explore/traces/trace-view/",
+    "urlType": "component-doc",
+    "category": "trace",
+    "platform": "web",
+    "screensOrAreas": [
+      "trace waterfall",
+      "span detail",
+      "filters"
+    ],
+    "visualTraits": [
+      "mature",
+      "compact",
+      "high-contrast"
+    ],
+    "interactionTraits": [
+      "Selecting a span updates the detail region without route loss."
+    ],
+    "visualObservation": "Trace views connect slow or failing work across services through a readable hierarchy.",
+    "observedLayout": "Waterfall-like central visualization with filters and detail context.",
+    "observedColors": "Neutral lanes with semantic outlier emphasis.",
+    "observedComponents": [
+      "trace waterfall",
+      "span detail",
+      "filters"
+    ],
+    "observedInteraction": "Selecting a span updates the detail region without route loss.",
+    "evidence": {
+      "type": "screenshot",
+      "path": "visual-evidence/ui-001.png",
+      "blockedReason": ""
+    },
+    "whatToBorrow": "Borrow the trace hierarchy and interaction logic while applying Seigyo or MyShop tokens.",
+    "whatToAvoid": "Do not copy brand assets, exact copy, proprietary illustrations, or unnecessary decorative chrome.",
+    "designSystemAreas": [
+      "layout",
+      "interaction",
+      "trace"
+    ],
+    "fitScore": 9,
+    "notes": "Current public reference reviewed for project-specific adaptation."
+  },
+  {
+    "id": "ui-022",
+    "source": "Grafana",
+    "title": "Node Graph",
+    "url": "https://grafana.com/docs/grafana/latest/panels-visualizations/visualizations/node-graph/",
+    "urlType": "component-doc",
+    "category": "service-graph",
+    "platform": "web",
+    "screensOrAreas": [
+      "nodes",
+      "edges",
+      "node detail"
+    ],
+    "visualTraits": [
+      "mature",
+      "compact",
+      "high-contrast"
+    ],
+    "interactionTraits": [
+      "Selection and zoom reveal detail without constant force movement."
+    ],
+    "visualObservation": "A stable node-link map communicates upstream and downstream impact when labels and health remain explicit.",
+    "observedLayout": "Graph canvas with node detail and bounded navigation.",
+    "observedColors": "Dark technical surface with categorical node states.",
+    "observedComponents": [
+      "nodes",
+      "edges",
+      "node detail"
+    ],
+    "observedInteraction": "Selection and zoom reveal detail without constant force movement.",
+    "evidence": {
+      "type": "screenshot",
+      "path": "visual-evidence/ui-002.png",
+      "blockedReason": ""
+    },
+    "whatToBorrow": "Borrow the service-graph hierarchy and interaction logic while applying Seigyo or MyShop tokens.",
+    "whatToAvoid": "Do not copy brand assets, exact copy, proprietary illustrations, or unnecessary decorative chrome.",
+    "designSystemAreas": [
+      "layout",
+      "interaction",
+      "service-graph"
+    ],
+    "fitScore": 9,
+    "notes": "Current public reference reviewed for project-specific adaptation."
+  },
+  {
+    "id": "ui-023",
+    "source": "Grafana",
+    "title": "Time Series",
+    "url": "https://grafana.com/docs/grafana/latest/panels-visualizations/visualizations/time-series/",
+    "urlType": "component-doc",
+    "category": "chart",
+    "platform": "web",
+    "screensOrAreas": [
+      "time series",
+      "threshold",
+      "legend"
+    ],
+    "visualTraits": [
+      "mature",
+      "compact",
+      "high-contrast"
+    ],
+    "interactionTraits": [
+      "Hover inspection does not move the plot or surrounding layout."
+    ],
+    "visualObservation": "Time-series guidance supports deploy markers, thresholds, direct labels, and readable operational tooltips.",
+    "observedLayout": "Large plot region with compact controls and legend.",
+    "observedColors": "Dark plot with limited high-contrast series.",
+    "observedComponents": [
+      "time series",
+      "threshold",
+      "legend"
+    ],
+    "observedInteraction": "Hover inspection does not move the plot or surrounding layout.",
+    "evidence": {
+      "type": "screenshot",
+      "path": "visual-evidence/ui-003.png",
+      "blockedReason": ""
+    },
+    "whatToBorrow": "Borrow the chart hierarchy and interaction logic while applying Seigyo or MyShop tokens.",
+    "whatToAvoid": "Do not copy brand assets, exact copy, proprietary illustrations, or unnecessary decorative chrome.",
+    "designSystemAreas": [
+      "layout",
+      "interaction",
+      "chart"
+    ],
+    "fitScore": 9,
+    "notes": "Current public reference reviewed for project-specific adaptation."
+  },
+  {
+    "id": "ui-024",
+    "source": "Datadog",
+    "title": "Service Map",
+    "url": "https://docs.datadoghq.com/tracing/services/services_map/",
+    "urlType": "component-doc",
+    "category": "service-graph",
+    "platform": "web",
+    "screensOrAreas": [
+      "service nodes",
+      "dependency edges",
+      "filters"
+    ],
+    "visualTraits": [
+      "mature",
+      "compact",
+      "high-contrast"
+    ],
+    "interactionTraits": [
+      "Filtering reduces scope while preserving node placement."
+    ],
+    "visualObservation": "Service maps show how dependency health can remain scannable at system scale.",
+    "observedLayout": "Full-canvas topology with filtering and selected-node detail.",
+    "observedColors": "Dark background with status color applied to nodes and edges.",
+    "observedComponents": [
+      "service nodes",
+      "dependency edges",
+      "filters"
+    ],
+    "observedInteraction": "Filtering reduces scope while preserving node placement.",
+    "evidence": {
+      "type": "screenshot",
+      "path": "visual-evidence/ui-004.png",
+      "blockedReason": ""
+    },
+    "whatToBorrow": "Borrow the service-graph hierarchy and interaction logic while applying Seigyo or MyShop tokens.",
+    "whatToAvoid": "Do not copy brand assets, exact copy, proprietary illustrations, or unnecessary decorative chrome.",
+    "designSystemAreas": [
+      "layout",
+      "interaction",
+      "service-graph"
+    ],
+    "fitScore": 9,
+    "notes": "Current public reference reviewed for project-specific adaptation."
+  },
+  {
+    "id": "ui-025",
+    "source": "Datadog",
+    "title": "Log Explorer",
+    "url": "https://docs.datadoghq.com/logs/explorer/",
+    "urlType": "component-doc",
+    "category": "logs",
+    "platform": "web",
+    "screensOrAreas": [
+      "query bar",
+      "facets",
+      "histogram",
+      "log rows"
+    ],
+    "visualTraits": [
+      "mature",
+      "compact",
+      "high-contrast"
+    ],
+    "interactionTraits": [
+      "Queries update evidence while retaining time and filter context."
+    ],
+    "visualObservation": "A query bar, facets, histogram, and dense rows form a credible log investigation workflow.",
+    "observedLayout": "Search and facets above a time distribution and log table.",
+    "observedColors": "Neutral data layers with status-colored levels.",
+    "observedComponents": [
+      "query bar",
+      "facets",
+      "histogram",
+      "log rows"
+    ],
+    "observedInteraction": "Queries update evidence while retaining time and filter context.",
+    "evidence": {
+      "type": "screenshot",
+      "path": "visual-evidence/ui-005.png",
+      "blockedReason": ""
+    },
+    "whatToBorrow": "Borrow the logs hierarchy and interaction logic while applying Seigyo or MyShop tokens.",
+    "whatToAvoid": "Do not copy brand assets, exact copy, proprietary illustrations, or unnecessary decorative chrome.",
+    "designSystemAreas": [
+      "layout",
+      "interaction",
+      "logs"
+    ],
+    "fitScore": 9,
+    "notes": "Current public reference reviewed for project-specific adaptation."
+  },
+  {
+    "id": "ui-026",
+    "source": "Axiom",
+    "title": "Explore",
+    "url": "https://axiom.co/docs/explore",
+    "urlType": "component-doc",
+    "category": "logs",
+    "platform": "web",
+    "screensOrAreas": [
+      "query editor",
+      "chart",
+      "events table"
+    ],
+    "visualTraits": [
+      "mature",
+      "compact",
+      "high-contrast"
+    ],
+    "interactionTraits": [
+      "Query execution clearly distinguishes running, result, and failure states."
+    ],
+    "visualObservation": "Axiom keeps query, visualization, and results tightly connected with minimal chrome.",
+    "observedLayout": "Query controls above a focal chart and dense event table.",
+    "observedColors": "Near-black developer workspace with one bright accent.",
+    "observedComponents": [
+      "query editor",
+      "chart",
+      "events table"
+    ],
+    "observedInteraction": "Query execution clearly distinguishes running, result, and failure states.",
+    "evidence": {
+      "type": "screenshot",
+      "path": "visual-evidence/ui-006.png",
+      "blockedReason": ""
+    },
+    "whatToBorrow": "Borrow the logs hierarchy and interaction logic while applying Seigyo or MyShop tokens.",
+    "whatToAvoid": "Do not copy brand assets, exact copy, proprietary illustrations, or unnecessary decorative chrome.",
+    "designSystemAreas": [
+      "layout",
+      "interaction",
+      "logs"
+    ],
+    "fitScore": 8,
+    "notes": "Current public reference reviewed for project-specific adaptation."
+  },
+  {
+    "id": "ui-027",
+    "source": "Better Stack",
+    "title": "Logs",
+    "url": "https://betterstack.com/docs/logs/",
+    "urlType": "component-doc",
+    "category": "logs",
+    "platform": "web",
+    "screensOrAreas": [
+      "search",
+      "event list",
+      "event detail"
+    ],
+    "visualTraits": [
+      "mature",
+      "compact",
+      "high-contrast"
+    ],
+    "interactionTraits": [
+      "Opening an event preserves the search context."
+    ],
+    "visualObservation": "Better Stack illustrates fast search and readable event context for incident responders.",
+    "observedLayout": "Search-first logs workspace with event list and detail.",
+    "observedColors": "Dark developer-tool palette with clear syntax colors.",
+    "observedComponents": [
+      "search",
+      "event list",
+      "event detail"
+    ],
+    "observedInteraction": "Opening an event preserves the search context.",
+    "evidence": {
+      "type": "visual-note",
+      "path": "",
+      "note": "Public page observed through documentation and current product references; no stable local capture retained.",
+      "blockedReason": ""
+    },
+    "whatToBorrow": "Borrow the logs hierarchy and interaction logic while applying Seigyo or MyShop tokens.",
+    "whatToAvoid": "Do not copy brand assets, exact copy, proprietary illustrations, or unnecessary decorative chrome.",
+    "designSystemAreas": [
+      "layout",
+      "interaction",
+      "logs"
+    ],
+    "fitScore": 8,
+    "notes": "Current public reference reviewed for project-specific adaptation."
+  },
+  {
+    "id": "ui-028",
+    "source": "incident.io",
+    "title": "Incident Timeline",
+    "url": "https://incident.io/guide/incident-timeline",
+    "urlType": "screen",
+    "category": "timeline",
+    "platform": "web",
+    "screensOrAreas": [
+      "timeline event",
+      "actor",
+      "timestamp"
+    ],
+    "visualTraits": [
+      "mature",
+      "compact",
+      "high-contrast"
+    ],
+    "interactionTraits": [
+      "New events append without displacing the reader."
+    ],
+    "visualObservation": "A chronological incident narrative makes decisions, ownership, and recovery progress auditable.",
+    "observedLayout": "Vertical timeline with event identity, actor, time, and detail.",
+    "observedColors": "Neutral timeline with semantic incident milestones.",
+    "observedComponents": [
+      "timeline event",
+      "actor",
+      "timestamp"
+    ],
+    "observedInteraction": "New events append without displacing the reader.",
+    "evidence": {
+      "type": "visual-note",
+      "path": "",
+      "note": "Public page observed through documentation and current product references; no stable local capture retained.",
+      "blockedReason": ""
+    },
+    "whatToBorrow": "Borrow the timeline hierarchy and interaction logic while applying Seigyo or MyShop tokens.",
+    "whatToAvoid": "Do not copy brand assets, exact copy, proprietary illustrations, or unnecessary decorative chrome.",
+    "designSystemAreas": [
+      "layout",
+      "interaction",
+      "timeline"
+    ],
+    "fitScore": 8,
+    "notes": "Current public reference reviewed for project-specific adaptation."
+  },
+  {
+    "id": "ui-029",
+    "source": "Vercel",
+    "title": "Deployments",
+    "url": "https://vercel.com/docs/deployments",
+    "urlType": "component-doc",
+    "category": "deployment",
+    "platform": "web",
+    "screensOrAreas": [
+      "deployment row",
+      "status",
+      "detail"
+    ],
+    "visualTraits": [
+      "mature",
+      "compact",
+      "high-contrast"
+    ],
+    "interactionTraits": [
+      "Detail transitions preserve the selected deployment context."
+    ],
+    "visualObservation": "Deployment history shows version, status, actor, and timing with strong scanability.",
+    "observedLayout": "Dense deployment list leading to a focused detail view.",
+    "observedColors": "Black product shell with neutral rows and status labels.",
+    "observedComponents": [
+      "deployment row",
+      "status",
+      "detail"
+    ],
+    "observedInteraction": "Detail transitions preserve the selected deployment context.",
+    "evidence": {
+      "type": "visual-note",
+      "path": "",
+      "note": "Public page observed through documentation and current product references; no stable local capture retained.",
+      "blockedReason": ""
+    },
+    "whatToBorrow": "Borrow the deployment hierarchy and interaction logic while applying Seigyo or MyShop tokens.",
+    "whatToAvoid": "Do not copy brand assets, exact copy, proprietary illustrations, or unnecessary decorative chrome.",
+    "designSystemAreas": [
+      "layout",
+      "interaction",
+      "deployment"
+    ],
+    "fitScore": 8,
+    "notes": "Current public reference reviewed for project-specific adaptation."
+  },
+  {
+    "id": "ui-030",
+    "source": "Vercel",
+    "title": "Instant Rollback",
+    "url": "https://vercel.com/docs/instant-rollback",
+    "urlType": "component-doc",
+    "category": "recovery",
+    "platform": "web",
+    "screensOrAreas": [
+      "deployment comparison",
+      "rollback action",
+      "status"
+    ],
+    "visualTraits": [
+      "mature",
+      "compact",
+      "high-contrast"
+    ],
+    "interactionTraits": [
+      "Execution moves through explicit pending, active, and complete states."
+    ],
+    "visualObservation": "Rollback documentation emphasizes exact target state and consequence before execution.",
+    "observedLayout": "Current deployment and rollback target are compared before the action.",
+    "observedColors": "Neutral surfaces with one clear action color.",
+    "observedComponents": [
+      "deployment comparison",
+      "rollback action",
+      "status"
+    ],
+    "observedInteraction": "Execution moves through explicit pending, active, and complete states.",
+    "evidence": {
+      "type": "visual-note",
+      "path": "",
+      "note": "Public page observed through documentation and current product references; no stable local capture retained.",
+      "blockedReason": ""
+    },
+    "whatToBorrow": "Borrow the recovery hierarchy and interaction logic while applying Seigyo or MyShop tokens.",
+    "whatToAvoid": "Do not copy brand assets, exact copy, proprietary illustrations, or unnecessary decorative chrome.",
+    "designSystemAreas": [
+      "layout",
+      "interaction",
+      "recovery"
+    ],
+    "fitScore": 8,
+    "notes": "Current public reference reviewed for project-specific adaptation."
+  },
+  {
+    "id": "ui-031",
+    "source": "PagerDuty",
+    "title": "Incident Response",
+    "url": "https://support.pagerduty.com/main/docs/incidents",
+    "urlType": "component-doc",
+    "category": "incident",
+    "platform": "web",
+    "screensOrAreas": [
+      "incident list",
+      "responders",
+      "actions"
+    ],
+    "visualTraits": [
+      "mature",
+      "compact",
+      "high-contrast"
+    ],
+    "interactionTraits": [
+      "State-changing actions return immediate feedback and audit history."
+    ],
+    "visualObservation": "Incident ownership and response state stay explicit across acknowledgment and resolution.",
+    "observedLayout": "Incident list leads to a detail workflow with responders and actions.",
+    "observedColors": "High-density operational palette with semantic urgency.",
+    "observedComponents": [
+      "incident list",
+      "responders",
+      "actions"
+    ],
+    "observedInteraction": "State-changing actions return immediate feedback and audit history.",
+    "evidence": {
+      "type": "visual-note",
+      "path": "",
+      "note": "Public page observed through documentation and current product references; no stable local capture retained.",
+      "blockedReason": ""
+    },
+    "whatToBorrow": "Borrow the incident hierarchy and interaction logic while applying Seigyo or MyShop tokens.",
+    "whatToAvoid": "Do not copy brand assets, exact copy, proprietary illustrations, or unnecessary decorative chrome.",
+    "designSystemAreas": [
+      "layout",
+      "interaction",
+      "incident"
+    ],
+    "fitScore": 8,
+    "notes": "Current public reference reviewed for project-specific adaptation."
+  },
+  {
+    "id": "ui-032",
+    "source": "Atlassian",
+    "title": "Statuspage Incident",
+    "url": "https://support.atlassian.com/statuspage/docs/create-an-incident/",
+    "urlType": "component-doc",
+    "category": "status",
+    "platform": "web",
+    "screensOrAreas": [
+      "component impact",
+      "incident update",
+      "history"
+    ],
+    "visualTraits": [
+      "mature",
+      "compact",
+      "high-contrast"
+    ],
+    "interactionTraits": [
+      "Updates become durable timeline entries."
+    ],
+    "visualObservation": "Customer-facing incident communication separates internal recovery work from public status.",
+    "observedLayout": "Incident editor with component impact and update history.",
+    "observedColors": "Neutral enterprise forms with explicit severity and state.",
+    "observedComponents": [
+      "component impact",
+      "incident update",
+      "history"
+    ],
+    "observedInteraction": "Updates become durable timeline entries.",
+    "evidence": {
+      "type": "visual-note",
+      "path": "",
+      "note": "Public page observed through documentation and current product references; no stable local capture retained.",
+      "blockedReason": ""
+    },
+    "whatToBorrow": "Borrow the status hierarchy and interaction logic while applying Seigyo or MyShop tokens.",
+    "whatToAvoid": "Do not copy brand assets, exact copy, proprietary illustrations, or unnecessary decorative chrome.",
+    "designSystemAreas": [
+      "layout",
+      "interaction",
+      "status"
+    ],
+    "fitScore": 8,
+    "notes": "Current public reference reviewed for project-specific adaptation."
+  },
+  {
+    "id": "ui-033",
+    "source": "Primer",
+    "title": "Data Visualization",
+    "url": "https://primer.style/product/ui-patterns/data-visualization/",
+    "urlType": "screen",
+    "category": "chart",
+    "platform": "web",
+    "screensOrAreas": [
+      "chart",
+      "legend",
+      "data table"
+    ],
+    "visualTraits": [
+      "mature",
+      "compact",
+      "high-contrast"
+    ],
+    "interactionTraits": [
+      "Interactive values remain available to keyboard and pointer users."
+    ],
+    "visualObservation": "Primer recommends redundant encodings, direct labels, and accessible data alternatives.",
+    "observedLayout": "Charts sit within clear explanatory content and controls.",
+    "observedColors": "Neutral GitHub palette with limited semantic series.",
+    "observedComponents": [
+      "chart",
+      "legend",
+      "data table"
+    ],
+    "observedInteraction": "Interactive values remain available to keyboard and pointer users.",
+    "evidence": {
+      "type": "visual-note",
+      "path": "",
+      "note": "Public page observed through documentation and current product references; no stable local capture retained.",
+      "blockedReason": ""
+    },
+    "whatToBorrow": "Borrow the chart hierarchy and interaction logic while applying Seigyo or MyShop tokens.",
+    "whatToAvoid": "Do not copy brand assets, exact copy, proprietary illustrations, or unnecessary decorative chrome.",
+    "designSystemAreas": [
+      "layout",
+      "interaction",
+      "chart"
+    ],
+    "fitScore": 8,
+    "notes": "Current public reference reviewed for project-specific adaptation."
+  },
+  {
+    "id": "ui-034",
+    "source": "Carbon",
+    "title": "Data Table",
+    "url": "https://carbondesignsystem.com/components/data-table/usage/",
+    "urlType": "component-doc",
+    "category": "table",
+    "platform": "web",
+    "screensOrAreas": [
+      "toolbar",
+      "table rows",
+      "batch action"
+    ],
+    "visualTraits": [
+      "mature",
+      "compact",
+      "high-contrast"
+    ],
+    "interactionTraits": [
+      "Row interaction changes state without floating the surface."
+    ],
+    "visualObservation": "Carbon demonstrates enterprise density, row hierarchy, batch actions, and clear empty states.",
+    "observedLayout": "Toolbar and table form one connected full-width data region.",
+    "observedColors": "Layered dark neutrals with strong type hierarchy.",
+    "observedComponents": [
+      "toolbar",
+      "table rows",
+      "batch action"
+    ],
+    "observedInteraction": "Row interaction changes state without floating the surface.",
+    "evidence": {
+      "type": "visual-note",
+      "path": "",
+      "note": "Public page observed through documentation and current product references; no stable local capture retained.",
+      "blockedReason": ""
+    },
+    "whatToBorrow": "Borrow the table hierarchy and interaction logic while applying Seigyo or MyShop tokens.",
+    "whatToAvoid": "Do not copy brand assets, exact copy, proprietary illustrations, or unnecessary decorative chrome.",
+    "designSystemAreas": [
+      "layout",
+      "interaction",
+      "table"
+    ],
+    "fitScore": 8,
+    "notes": "Current public reference reviewed for project-specific adaptation."
+  },
+  {
+    "id": "ui-035",
+    "source": "Carbon",
+    "title": "Structured List",
+    "url": "https://carbondesignsystem.com/components/structured-list/usage/",
+    "urlType": "component-doc",
+    "category": "list",
+    "platform": "web",
+    "screensOrAreas": [
+      "structured row",
+      "selection",
+      "metadata"
+    ],
+    "visualTraits": [
+      "mature",
+      "compact",
+      "high-contrast"
+    ],
+    "interactionTraits": [
+      "Keyboard selection remains visible and deterministic."
+    ],
+    "visualObservation": "Structured lists provide compact comparison without unnecessary card borders.",
+    "observedLayout": "Column-aligned rows separated by restrained rules.",
+    "observedColors": "Opaque layers with high-contrast selected rows.",
+    "observedComponents": [
+      "structured row",
+      "selection",
+      "metadata"
+    ],
+    "observedInteraction": "Keyboard selection remains visible and deterministic.",
+    "evidence": {
+      "type": "visual-note",
+      "path": "",
+      "note": "Public page observed through documentation and current product references; no stable local capture retained.",
+      "blockedReason": ""
+    },
+    "whatToBorrow": "Borrow the list hierarchy and interaction logic while applying Seigyo or MyShop tokens.",
+    "whatToAvoid": "Do not copy brand assets, exact copy, proprietary illustrations, or unnecessary decorative chrome.",
+    "designSystemAreas": [
+      "layout",
+      "interaction",
+      "list"
+    ],
+    "fitScore": 8,
+    "notes": "Current public reference reviewed for project-specific adaptation."
+  },
+  {
+    "id": "ui-036",
+    "source": "GOV.UK",
+    "title": "Focus State",
+    "url": "https://design-system.service.gov.uk/styles/focus-states/",
+    "urlType": "screen",
+    "category": "accessibility",
+    "platform": "web",
+    "screensOrAreas": [
+      "focus ring",
+      "focused control"
+    ],
+    "visualTraits": [
+      "mature",
+      "compact",
+      "high-contrast"
+    ],
+    "interactionTraits": [
+      "No motion is required to reveal keyboard position."
+    ],
+    "visualObservation": "A high-contrast focus treatment remains visible even on dense dark operational surfaces.",
+    "observedLayout": "Focus surrounds the exact interactive target without shifting layout.",
+    "observedColors": "Strong yellow and black reference adapted to Seigyo blue and white.",
+    "observedComponents": [
+      "focus ring",
+      "focused control"
+    ],
+    "observedInteraction": "No motion is required to reveal keyboard position.",
+    "evidence": {
+      "type": "visual-note",
+      "path": "",
+      "note": "Public page observed through documentation and current product references; no stable local capture retained.",
+      "blockedReason": ""
+    },
+    "whatToBorrow": "Borrow the accessibility hierarchy and interaction logic while applying Seigyo or MyShop tokens.",
+    "whatToAvoid": "Do not copy brand assets, exact copy, proprietary illustrations, or unnecessary decorative chrome.",
+    "designSystemAreas": [
+      "layout",
+      "interaction",
+      "accessibility"
+    ],
+    "fitScore": 8,
+    "notes": "Current public reference reviewed for project-specific adaptation."
+  },
+  {
+    "id": "ui-037",
+    "source": "Shopify Polaris",
+    "title": "Index Table",
+    "url": "https://polaris.shopify.com/components/tables/index-table",
+    "urlType": "component-doc",
+    "category": "table",
+    "platform": "web",
+    "screensOrAreas": [
+      "filters",
+      "index table",
+      "bulk actions"
+    ],
+    "visualTraits": [
+      "mature",
+      "compact",
+      "high-contrast"
+    ],
+    "interactionTraits": [
+      "Selection and filters preserve task context."
+    ],
+    "visualObservation": "Commerce tables balance selection, bulk action, status, and responsive fallbacks.",
+    "observedLayout": "Filterable table with batch actions and mobile row adaptation.",
+    "observedColors": "Neutral commerce UI with restrained status chips.",
+    "observedComponents": [
+      "filters",
+      "index table",
+      "bulk actions"
+    ],
+    "observedInteraction": "Selection and filters preserve task context.",
+    "evidence": {
+      "type": "visual-note",
+      "path": "",
+      "note": "Public page observed through documentation and current product references; no stable local capture retained.",
+      "blockedReason": ""
+    },
+    "whatToBorrow": "Borrow the table hierarchy and interaction logic while applying Seigyo or MyShop tokens.",
+    "whatToAvoid": "Do not copy brand assets, exact copy, proprietary illustrations, or unnecessary decorative chrome.",
+    "designSystemAreas": [
+      "layout",
+      "interaction",
+      "table"
+    ],
+    "fitScore": 8,
+    "notes": "Current public reference reviewed for project-specific adaptation."
+  },
+  {
+    "id": "ui-038",
+    "source": "Shopify",
+    "title": "Checkout",
+    "url": "https://www.shopify.com/checkout",
+    "urlType": "screen",
+    "category": "checkout",
+    "platform": "web",
+    "screensOrAreas": [
+      "checkout form",
+      "order summary",
+      "validation"
+    ],
+    "visualTraits": [
+      "mature",
+      "compact",
+      "high-contrast"
+    ],
+    "interactionTraits": [
+      "Validation occurs inline and totals do not jump."
+    ],
+    "visualObservation": "A mature checkout keeps contact, delivery, payment, and order summary visually predictable.",
+    "observedLayout": "Primary form beside a stable order summary on wide screens.",
+    "observedColors": "High-contrast form surfaces with minimal distraction.",
+    "observedComponents": [
+      "checkout form",
+      "order summary",
+      "validation"
+    ],
+    "observedInteraction": "Validation occurs inline and totals do not jump.",
+    "evidence": {
+      "type": "visual-note",
+      "path": "",
+      "note": "Public page observed through documentation and current product references; no stable local capture retained.",
+      "blockedReason": ""
+    },
+    "whatToBorrow": "Borrow the checkout hierarchy and interaction logic while applying Seigyo or MyShop tokens.",
+    "whatToAvoid": "Do not copy brand assets, exact copy, proprietary illustrations, or unnecessary decorative chrome.",
+    "designSystemAreas": [
+      "layout",
+      "interaction",
+      "checkout"
+    ],
+    "fitScore": 8,
+    "notes": "Current public reference reviewed for project-specific adaptation."
+  },
+  {
+    "id": "ui-039",
+    "source": "Audo Copenhagen",
+    "title": "Lighting Collection",
+    "url": "https://audocph.com/collections/lighting",
+    "urlType": "screen",
+    "category": "retail",
+    "platform": "web",
+    "screensOrAreas": [
+      "collection hero",
+      "product grid",
+      "filters"
+    ],
+    "visualTraits": [
+      "mature",
+      "compact",
+      "high-contrast"
+    ],
+    "interactionTraits": [
+      "Hover changes imagery subtly without hiding product facts."
+    ],
+    "visualObservation": "Large editorial product imagery and restrained metadata create a mature home-objects storefront.",
+    "observedLayout": "Full-bleed editorial lead followed by a disciplined product grid.",
+    "observedColors": "Warm material photography against calm neutral fields.",
+    "observedComponents": [
+      "collection hero",
+      "product grid",
+      "filters"
+    ],
+    "observedInteraction": "Hover changes imagery subtly without hiding product facts.",
+    "evidence": {
+      "type": "visual-note",
+      "path": "",
+      "note": "Public page observed through documentation and current product references; no stable local capture retained.",
+      "blockedReason": ""
+    },
+    "whatToBorrow": "Borrow the retail hierarchy and interaction logic while applying Seigyo or MyShop tokens.",
+    "whatToAvoid": "Do not copy brand assets, exact copy, proprietary illustrations, or unnecessary decorative chrome.",
+    "designSystemAreas": [
+      "layout",
+      "interaction",
+      "retail"
+    ],
+    "fitScore": 8,
+    "notes": "Current public reference reviewed for project-specific adaptation."
+  },
+  {
+    "id": "ui-040",
+    "source": "Audo Copenhagen",
+    "title": "Product Detail",
+    "url": "https://audocph.com/products/hashira-table-lamp",
+    "urlType": "screen",
+    "category": "product",
+    "platform": "web",
+    "screensOrAreas": [
+      "gallery",
+      "purchase panel",
+      "specifications"
+    ],
+    "visualTraits": [
+      "mature",
+      "compact",
+      "high-contrast"
+    ],
+    "interactionTraits": [
+      "Gallery changes retain a stable purchase panel."
+    ],
+    "visualObservation": "Product details combine strong photography with dimensions, finish, price, and purchase controls.",
+    "observedLayout": "Image-led gallery beside a narrow purchase and specification column.",
+    "observedColors": "Warm neutrals and black typography with strong material focus.",
+    "observedComponents": [
+      "gallery",
+      "purchase panel",
+      "specifications"
+    ],
+    "observedInteraction": "Gallery changes retain a stable purchase panel.",
+    "evidence": {
+      "type": "visual-note",
+      "path": "",
+      "note": "Public page observed through documentation and current product references; no stable local capture retained.",
+      "blockedReason": ""
+    },
+    "whatToBorrow": "Borrow the product hierarchy and interaction logic while applying Seigyo or MyShop tokens.",
+    "whatToAvoid": "Do not copy brand assets, exact copy, proprietary illustrations, or unnecessary decorative chrome.",
+    "designSystemAreas": [
+      "layout",
+      "interaction",
+      "product"
+    ],
+    "fitScore": 8,
+    "notes": "Current public reference reviewed for project-specific adaptation."
+  },
+  {
+    "id": "ui-041",
+    "source": "Muuto",
+    "title": "New Perspectives",
+    "url": "https://www.muuto.com/",
+    "urlType": "screen",
+    "category": "retail",
+    "platform": "web",
+    "screensOrAreas": [
+      "editorial hero",
+      "collection links",
+      "product media"
+    ],
+    "visualTraits": [
+      "mature",
+      "compact",
+      "high-contrast"
+    ],
+    "interactionTraits": [
+      "Scroll reveals are slow enough to preserve image-led hierarchy."
+    ],
+    "visualObservation": "Editorial scale and real-room imagery make modern objects feel credible rather than catalog-generated.",
+    "observedLayout": "Large campaign image, compact navigation, and product discovery sections.",
+    "observedColors": "Warm interiors balanced by restrained interface chrome.",
+    "observedComponents": [
+      "editorial hero",
+      "collection links",
+      "product media"
+    ],
+    "observedInteraction": "Scroll reveals are slow enough to preserve image-led hierarchy.",
+    "evidence": {
+      "type": "visual-note",
+      "path": "",
+      "note": "Public page observed through documentation and current product references; no stable local capture retained.",
+      "blockedReason": ""
+    },
+    "whatToBorrow": "Borrow the retail hierarchy and interaction logic while applying Seigyo or MyShop tokens.",
+    "whatToAvoid": "Do not copy brand assets, exact copy, proprietary illustrations, or unnecessary decorative chrome.",
+    "designSystemAreas": [
+      "layout",
+      "interaction",
+      "retail"
+    ],
+    "fitScore": 8,
+    "notes": "Current public reference reviewed for project-specific adaptation."
+  },
+  {
+    "id": "ui-042",
+    "source": "Muuto",
+    "title": "Product Page",
+    "url": "https://www.muuto.com/product/strand-pendant-lamp--p26168/",
+    "urlType": "screen",
+    "category": "product",
+    "platform": "web",
+    "screensOrAreas": [
+      "product gallery",
+      "variant selector",
+      "details"
+    ],
+    "visualTraits": [
+      "mature",
+      "compact",
+      "high-contrast"
+    ],
+    "interactionTraits": [
+      "Variant changes update the media without moving controls."
+    ],
+    "visualObservation": "The product page prioritizes material, variations, and room context through consistent image framing.",
+    "observedLayout": "Large image area with a stable information and variation rail.",
+    "observedColors": "Light material imagery can remain vivid inside a dark surrounding shell.",
+    "observedComponents": [
+      "product gallery",
+      "variant selector",
+      "details"
+    ],
+    "observedInteraction": "Variant changes update the media without moving controls.",
+    "evidence": {
+      "type": "visual-note",
+      "path": "",
+      "note": "Public page observed through documentation and current product references; no stable local capture retained.",
+      "blockedReason": ""
+    },
+    "whatToBorrow": "Borrow the product hierarchy and interaction logic while applying Seigyo or MyShop tokens.",
+    "whatToAvoid": "Do not copy brand assets, exact copy, proprietary illustrations, or unnecessary decorative chrome.",
+    "designSystemAreas": [
+      "layout",
+      "interaction",
+      "product"
+    ],
+    "fitScore": 8,
+    "notes": "Current public reference reviewed for project-specific adaptation."
+  },
+  {
+    "id": "ui-043",
+    "source": "FRAMA",
+    "title": "Collection",
+    "url": "https://framacph.com/collections/furniture",
+    "urlType": "screen",
+    "category": "retail",
+    "platform": "web",
+    "screensOrAreas": [
+      "collection header",
+      "product imagery",
+      "category links"
+    ],
+    "visualTraits": [
+      "mature",
+      "compact",
+      "high-contrast"
+    ],
+    "interactionTraits": [
+      "Motion is limited to image reveal and hover state."
+    ],
+    "visualObservation": "Sparse editorial composition lets object silhouette and material texture carry the brand.",
+    "observedLayout": "Wide imagery and simple collection rows with generous vertical rhythm.",
+    "observedColors": "Warm stone, wood, black, and off-white dominate.",
+    "observedComponents": [
+      "collection header",
+      "product imagery",
+      "category links"
+    ],
+    "observedInteraction": "Motion is limited to image reveal and hover state.",
+    "evidence": {
+      "type": "visual-note",
+      "path": "",
+      "note": "Public page observed through documentation and current product references; no stable local capture retained.",
+      "blockedReason": ""
+    },
+    "whatToBorrow": "Borrow the retail hierarchy and interaction logic while applying Seigyo or MyShop tokens.",
+    "whatToAvoid": "Do not copy brand assets, exact copy, proprietary illustrations, or unnecessary decorative chrome.",
+    "designSystemAreas": [
+      "layout",
+      "interaction",
+      "retail"
+    ],
+    "fitScore": 8,
+    "notes": "Current public reference reviewed for project-specific adaptation."
+  },
+  {
+    "id": "ui-044",
+    "source": "HAY",
+    "title": "New Products",
+    "url": "https://www.hay.com/new-products",
+    "urlType": "screen",
+    "category": "retail",
+    "platform": "web",
+    "screensOrAreas": [
+      "category navigation",
+      "product grid",
+      "product label"
+    ],
+    "visualTraits": [
+      "mature",
+      "compact",
+      "high-contrast"
+    ],
+    "interactionTraits": [
+      "Filtering changes the grid without resizing product cards."
+    ],
+    "visualObservation": "Consistent product crops and direct category navigation support broad catalog discovery.",
+    "observedLayout": "Category-led grid with clear product image ratios and labels.",
+    "observedColors": "Bright product colors are controlled by neutral interface surfaces.",
+    "observedComponents": [
+      "category navigation",
+      "product grid",
+      "product label"
+    ],
+    "observedInteraction": "Filtering changes the grid without resizing product cards.",
+    "evidence": {
+      "type": "visual-note",
+      "path": "",
+      "note": "Public page observed through documentation and current product references; no stable local capture retained.",
+      "blockedReason": ""
+    },
+    "whatToBorrow": "Borrow the retail hierarchy and interaction logic while applying Seigyo or MyShop tokens.",
+    "whatToAvoid": "Do not copy brand assets, exact copy, proprietary illustrations, or unnecessary decorative chrome.",
+    "designSystemAreas": [
+      "layout",
+      "interaction",
+      "retail"
+    ],
+    "fitScore": 8,
+    "notes": "Current public reference reviewed for project-specific adaptation."
+  },
+  {
+    "id": "ui-045",
+    "source": "Norm Architects",
+    "title": "Projects",
+    "url": "https://normcph.com/architecture/",
+    "urlType": "screen",
+    "category": "editorial",
+    "platform": "web",
+    "screensOrAreas": [
+      "project gallery",
+      "editorial title",
+      "image sequence"
+    ],
+    "visualTraits": [
+      "mature",
+      "compact",
+      "high-contrast"
+    ],
+    "interactionTraits": [
+      "Simple fades let photography remain dominant."
+    ],
+    "visualObservation": "Architectural imagery demonstrates the mature material world MyShop should evoke.",
+    "observedLayout": "Image-led projects use sparse typography and deliberate whitespace.",
+    "observedColors": "Charcoal, limestone, oak, linen, and daylight form the palette.",
+    "observedComponents": [
+      "project gallery",
+      "editorial title",
+      "image sequence"
+    ],
+    "observedInteraction": "Simple fades let photography remain dominant.",
+    "evidence": {
+      "type": "visual-note",
+      "path": "",
+      "note": "Public page observed through documentation and current product references; no stable local capture retained.",
+      "blockedReason": ""
+    },
+    "whatToBorrow": "Borrow the editorial hierarchy and interaction logic while applying Seigyo or MyShop tokens.",
+    "whatToAvoid": "Do not copy brand assets, exact copy, proprietary illustrations, or unnecessary decorative chrome.",
+    "designSystemAreas": [
+      "layout",
+      "interaction",
+      "editorial"
+    ],
+    "fitScore": 8,
+    "notes": "Current public reference reviewed for project-specific adaptation."
+  },
+  {
+    "id": "ui-046",
+    "source": "Apple",
+    "title": "Store Product Detail",
+    "url": "https://www.apple.com/shop/buy-iphone",
+    "urlType": "screen",
+    "category": "product",
+    "platform": "web",
+    "screensOrAreas": [
+      "configuration",
+      "price",
+      "purchase action"
+    ],
+    "visualTraits": [
+      "mature",
+      "compact",
+      "high-contrast"
+    ],
+    "interactionTraits": [
+      "Selections update summaries without losing progress."
+    ],
+    "visualObservation": "Stable purchase controls and progressive configuration show how complex selection can remain understandable.",
+    "observedLayout": "Product identity and media lead into a sequential configuration flow.",
+    "observedColors": "High contrast with limited accents and strict alignment.",
+    "observedComponents": [
+      "configuration",
+      "price",
+      "purchase action"
+    ],
+    "observedInteraction": "Selections update summaries without losing progress.",
+    "evidence": {
+      "type": "visual-note",
+      "path": "",
+      "note": "Public page observed through documentation and current product references; no stable local capture retained.",
+      "blockedReason": ""
+    },
+    "whatToBorrow": "Borrow the product hierarchy and interaction logic while applying Seigyo or MyShop tokens.",
+    "whatToAvoid": "Do not copy brand assets, exact copy, proprietary illustrations, or unnecessary decorative chrome.",
+    "designSystemAreas": [
+      "layout",
+      "interaction",
+      "product"
+    ],
+    "fitScore": 8,
+    "notes": "Current public reference reviewed for project-specific adaptation."
+  },
+  {
+    "id": "ui-047",
+    "source": "Stripe",
+    "title": "Dashboard Tables",
+    "url": "https://docs.stripe.com/dashboard/basics",
+    "urlType": "component-doc",
+    "category": "table",
+    "platform": "web",
+    "screensOrAreas": [
+      "data table",
+      "filters",
+      "detail drawer"
+    ],
+    "visualTraits": [
+      "mature",
+      "compact",
+      "high-contrast"
+    ],
+    "interactionTraits": [
+      "Row selection opens context without replacing the list."
+    ],
+    "visualObservation": "Financial-style density and explicit states inform receipts, orders, and action history.",
+    "observedLayout": "Navigation, filters, table, and detail drawer share one continuous workspace.",
+    "observedColors": "Quiet dark layers with semantic badges and monospace values.",
+    "observedComponents": [
+      "data table",
+      "filters",
+      "detail drawer"
+    ],
+    "observedInteraction": "Row selection opens context without replacing the list.",
+    "evidence": {
+      "type": "visual-note",
+      "path": "",
+      "note": "Public page observed through documentation and current product references; no stable local capture retained.",
+      "blockedReason": ""
+    },
+    "whatToBorrow": "Borrow the table hierarchy and interaction logic while applying Seigyo or MyShop tokens.",
+    "whatToAvoid": "Do not copy brand assets, exact copy, proprietary illustrations, or unnecessary decorative chrome.",
+    "designSystemAreas": [
+      "layout",
+      "interaction",
+      "table"
+    ],
+    "fitScore": 8,
+    "notes": "Current public reference reviewed for project-specific adaptation."
+  },
+  {
+    "id": "ui-048",
+    "source": "GitHub",
+    "title": "Actions Run",
+    "url": "https://docs.github.com/actions/monitoring-and-troubleshooting-workflows/monitoring-workflows/viewing-workflow-run-history",
+    "urlType": "component-doc",
+    "category": "execution",
+    "platform": "web",
+    "screensOrAreas": [
+      "run summary",
+      "step list",
+      "logs"
+    ],
+    "visualTraits": [
+      "mature",
+      "compact",
+      "high-contrast"
+    ],
+    "interactionTraits": [
+      "Only active work animates; completed steps become stable records."
+    ],
+    "visualObservation": "Execution progress is broken into durable steps with logs, timing, and clear failure location.",
+    "observedLayout": "Run summary above a step list and selected-step log region.",
+    "observedColors": "Dark developer palette with explicit success and failure icons.",
+    "observedComponents": [
+      "run summary",
+      "step list",
+      "logs"
+    ],
+    "observedInteraction": "Only active work animates; completed steps become stable records.",
+    "evidence": {
+      "type": "visual-note",
+      "path": "",
+      "note": "Public page observed through documentation and current product references; no stable local capture retained.",
+      "blockedReason": ""
+    },
+    "whatToBorrow": "Borrow the execution hierarchy and interaction logic while applying Seigyo or MyShop tokens.",
+    "whatToAvoid": "Do not copy brand assets, exact copy, proprietary illustrations, or unnecessary decorative chrome.",
+    "designSystemAreas": [
+      "layout",
+      "interaction",
+      "execution"
+    ],
+    "fitScore": 8,
+    "notes": "Current public reference reviewed for project-specific adaptation."
+  },
+  {
+    "id": "ui-049",
+    "source": "GitLab Pajamas",
+    "title": "Empty State",
+    "url": "https://design.gitlab.com/components/empty-state",
+    "urlType": "component-doc",
+    "category": "empty-state",
+    "platform": "web",
+    "screensOrAreas": [
+      "empty title",
+      "support text",
+      "action"
+    ],
+    "visualTraits": [
+      "mature",
+      "compact",
+      "high-contrast"
+    ],
+    "interactionTraits": [
+      "No motion is required beyond optional first reveal."
+    ],
+    "visualObservation": "Operational empty states explain scope and offer one useful next action without decorative clutter.",
+    "observedLayout": "Centered message inside the relevant data region rather than a page-wide marketing panel.",
+    "observedColors": "Neutral illustration or icon with concise text.",
+    "observedComponents": [
+      "empty title",
+      "support text",
+      "action"
+    ],
+    "observedInteraction": "No motion is required beyond optional first reveal.",
+    "evidence": {
+      "type": "visual-note",
+      "path": "",
+      "note": "Public page observed through documentation and current product references; no stable local capture retained.",
+      "blockedReason": ""
+    },
+    "whatToBorrow": "Borrow the empty-state hierarchy and interaction logic while applying Seigyo or MyShop tokens.",
+    "whatToAvoid": "Do not copy brand assets, exact copy, proprietary illustrations, or unnecessary decorative chrome.",
+    "designSystemAreas": [
+      "layout",
+      "interaction",
+      "empty-state"
+    ],
+    "fitScore": 8,
+    "notes": "Current public reference reviewed for project-specific adaptation."
+  },
+  {
+    "id": "ui-050",
+    "source": "Adobe Spectrum",
+    "title": "Progress Circle",
+    "url": "https://spectrum.adobe.com/page/progress-circle/",
+    "urlType": "screen",
+    "category": "loading",
+    "platform": "web",
+    "screensOrAreas": [
+      "progress circle",
+      "status label"
+    ],
+    "visualTraits": [
+      "mature",
+      "compact",
+      "high-contrast"
+    ],
+    "interactionTraits": [
+      "Indeterminate motion stops when the state becomes known."
+    ],
+    "visualObservation": "Progress indicators stay appropriately sized and paired with understandable status text.",
+    "observedLayout": "Inline or region-level loader sized to the task.",
+    "observedColors": "Semantic foreground color on a quiet track.",
+    "observedComponents": [
+      "progress circle",
+      "status label"
+    ],
+    "observedInteraction": "Indeterminate motion stops when the state becomes known.",
+    "evidence": {
+      "type": "visual-note",
+      "path": "",
+      "note": "Public page observed through documentation and current product references; no stable local capture retained.",
+      "blockedReason": ""
+    },
+    "whatToBorrow": "Borrow the loading hierarchy and interaction logic while applying Seigyo or MyShop tokens.",
+    "whatToAvoid": "Do not copy brand assets, exact copy, proprietary illustrations, or unnecessary decorative chrome.",
+    "designSystemAreas": [
+      "layout",
+      "interaction",
+      "loading"
+    ],
+    "fitScore": 8,
+    "notes": "Current public reference reviewed for project-specific adaptation."
+  },
+  {
+    "id": "ui-051",
+    "source": "WAI-ARIA",
+    "title": "Dialog Pattern",
+    "url": "https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/",
+    "urlType": "screen",
+    "category": "accessibility",
+    "platform": "web",
+    "screensOrAreas": [
+      "dialog role",
+      "label",
+      "close action"
+    ],
+    "visualTraits": [
+      "mature",
+      "compact",
+      "high-contrast"
+    ],
+    "interactionTraits": [
+      "Keyboard behavior is deterministic and does not depend on animation."
+    ],
+    "visualObservation": "The modal pattern defines focus entry, trapping, escape, labeling, and focus restoration requirements.",
+    "observedLayout": "A focused semantic region layered above inert background content.",
+    "observedColors": "Visual styling is project-defined while semantics remain stable.",
+    "observedComponents": [
+      "dialog role",
+      "label",
+      "close action"
+    ],
+    "observedInteraction": "Keyboard behavior is deterministic and does not depend on animation.",
+    "evidence": {
+      "type": "visual-note",
+      "path": "",
+      "note": "Public page observed through documentation and current product references; no stable local capture retained.",
+      "blockedReason": ""
+    },
+    "whatToBorrow": "Borrow the accessibility hierarchy and interaction logic while applying Seigyo or MyShop tokens.",
+    "whatToAvoid": "Do not copy brand assets, exact copy, proprietary illustrations, or unnecessary decorative chrome.",
+    "designSystemAreas": [
+      "layout",
+      "interaction",
+      "accessibility"
+    ],
+    "fitScore": 8,
+    "notes": "Current public reference reviewed for project-specific adaptation."
+  }
+]

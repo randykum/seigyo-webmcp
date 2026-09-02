@@ -1,0 +1,38 @@
+{
+  "project": {
+    "name": "Seigyo and MyShop",
+    "type": "Agent-native incident recovery and causal commerce simulation",
+    "audience": "Incident commanders, SREs, engineering leaders, WebMCP judges, and storefront customers",
+    "platform": "Responsive web",
+    "stack": "React 19, Vite, Tailwind 4, Cloudflare Workers, Durable Objects",
+    "assumptions": [
+      "Black Vector is the chosen direction.",
+      "Seigyo is the primary product.",
+      "MyShop remains a believable independent dark retail experience."
+    ]
+  },
+  "depth": "deep",
+  "createdAt": "2026-09-01T00:00:00+01:00",
+  "counts": {
+    "sourcePlatforms": 29,
+    "uiCandidates": 51,
+    "componentLibraries": 25,
+    "designSystems": 8,
+    "visualEvidence": 26,
+    "specificScreenOrFlowUrls": 51
+  },
+  "files": {
+    "uiCandidates": "ui-inspiration-candidates.json",
+    "componentLibraries": "component-library-research.json",
+    "designSystems": "design-system-research.json",
+    "report": "research-report.html",
+    "summary": "research-summary.md",
+    "sourceMap": "source-map.csv"
+  },
+  "topRecommendations": [
+    "Use beUI agent patterns as adapted source, not as an unchanged visual kit.",
+    "Use Radix and shadcn for accessible behavior.",
+    "Use Carbon dark layering and Primer chart rules.",
+    "Keep Seigyo connected and operational; keep MyShop image-led and editorial."
+  ]
+}

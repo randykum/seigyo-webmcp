@@ -1,0 +1,480 @@
+[
+  {
+    "id": "lib-001",
+    "name": "beUI",
+    "url": "https://beui.dev/",
+    "framework": "React",
+    "stylingMethod": "Tailwind 4 source registry",
+    "bestFor": [
+      "agent components",
+      "motion patterns"
+    ],
+    "strengths": "Excellent challenge fit and copy-owned source.",
+    "weaknesses": "Requires careful local adaptation.",
+    "accessibilityNotes": "Built on semantic React controls; verify composed focus behavior.",
+    "adaptationDifficulty": "medium",
+    "designSystemAreas": [
+      "agent components",
+      "motion patterns"
+    ],
+    "fitScore": 9
+  },
+  {
+    "id": "lib-002",
+    "name": "shadcn/ui",
+    "url": "https://ui.shadcn.com/",
+    "framework": "React",
+    "stylingMethod": "Tailwind and CSS variables",
+    "bestFor": [
+      "accessible foundations",
+      "forms"
+    ],
+    "strengths": "Source-owned and easy to theme.",
+    "weaknesses": "Not a finished design language.",
+    "accessibilityNotes": "Radix-backed primitives still require page-level labels.",
+    "adaptationDifficulty": "low",
+    "designSystemAreas": [
+      "accessible foundations",
+      "forms"
+    ],
+    "fitScore": 9
+  },
+  {
+    "id": "lib-003",
+    "name": "Radix UI",
+    "url": "https://www.radix-ui.com/primitives",
+    "framework": "React",
+    "stylingMethod": "Unstyled primitives",
+    "bestFor": [
+      "dialogs",
+      "menus",
+      "popovers"
+    ],
+    "strengths": "Strong behavior and accessibility primitives.",
+    "weaknesses": "Requires full visual styling.",
+    "accessibilityNotes": "Keyboard and focus behavior are a strong base.",
+    "adaptationDifficulty": "medium",
+    "designSystemAreas": [
+      "dialogs",
+      "menus",
+      "popovers"
+    ],
+    "fitScore": 9
+  },
+  {
+    "id": "lib-004",
+    "name": "Motion",
+    "url": "https://motion.dev/",
+    "framework": "React",
+    "stylingMethod": "JavaScript animation",
+    "bestFor": [
+      "layout transitions",
+      "presence"
+    ],
+    "strengths": "High-quality restrained motion tools.",
+    "weaknesses": "Easy to overuse.",
+    "accessibilityNotes": "Reduced-motion handling must be added deliberately.",
+    "adaptationDifficulty": "low",
+    "designSystemAreas": [
+      "layout transitions",
+      "presence"
+    ],
+    "fitScore": 9
+  },
+  {
+    "id": "lib-005",
+    "name": "Recharts",
+    "url": "https://recharts.org/",
+    "framework": "React",
+    "stylingMethod": "SVG charts",
+    "bestFor": [
+      "time series",
+      "accessible chart shells"
+    ],
+    "strengths": "Composable and React-native.",
+    "weaknesses": "Complex dense charts need custom work.",
+    "accessibilityNotes": "Add summaries, labels, and tables.",
+    "adaptationDifficulty": "medium",
+    "designSystemAreas": [
+      "time series",
+      "accessible chart shells"
+    ],
+    "fitScore": 8
+  },
+  {
+    "id": "lib-006",
+    "name": "Lucide",
+    "url": "https://lucide.dev/",
+    "framework": "React and SVG",
+    "stylingMethod": "SVG icons",
+    "bestFor": [
+      "operational icons"
+    ],
+    "strengths": "Consistent, light, broad icon set.",
+    "weaknesses": "Generic if overused.",
+    "accessibilityNotes": "Icons need accessible names when controls are icon-only.",
+    "adaptationDifficulty": "low",
+    "designSystemAreas": [
+      "operational icons"
+    ],
+    "fitScore": 9
+  },
+  {
+    "id": "lib-007",
+    "name": "Magic UI",
+    "url": "https://magicui.design/",
+    "framework": "React",
+    "stylingMethod": "Tailwind source registry",
+    "bestFor": [
+      "selective effects"
+    ],
+    "strengths": "Useful modern interaction snippets.",
+    "weaknesses": "Many effects are too decorative for Seigyo.",
+    "accessibilityNotes": "Audit each copied component.",
+    "adaptationDifficulty": "medium",
+    "designSystemAreas": [
+      "selective effects"
+    ],
+    "fitScore": 6
+  },
+  {
+    "id": "lib-008",
+    "name": "Mantine",
+    "url": "https://mantine.dev/",
+    "framework": "React",
+    "stylingMethod": "CSS modules",
+    "bestFor": [
+      "complete application controls"
+    ],
+    "strengths": "Broad mature component coverage.",
+    "weaknesses": "Would introduce a competing styling system.",
+    "accessibilityNotes": "Good documented accessibility baseline.",
+    "adaptationDifficulty": "high",
+    "designSystemAreas": [
+      "complete application controls"
+    ],
+    "fitScore": 6
+  },
+  {
+    "id": "lib-009",
+    "name": "Headless UI",
+    "url": "https://headlessui.com/",
+    "framework": "React",
+    "stylingMethod": "Unstyled primitives",
+    "bestFor": [
+      "menus",
+      "dialogs"
+    ],
+    "strengths": "Small and accessible.",
+    "weaknesses": "Overlaps Radix.",
+    "accessibilityNotes": "Strong semantic foundations.",
+    "adaptationDifficulty": "medium",
+    "designSystemAreas": [
+      "menus",
+      "dialogs"
+    ],
+    "fitScore": 7
+  },
+  {
+    "id": "lib-010",
+    "name": "React Aria",
+    "url": "https://react-spectrum.adobe.com/react-aria/",
+    "framework": "React",
+    "stylingMethod": "Headless hooks and components",
+    "bestFor": [
+      "complex accessible interactions"
+    ],
+    "strengths": "Deep accessibility model.",
+    "weaknesses": "Higher adaptation cost.",
+    "accessibilityNotes": "Excellent keyboard and screen-reader behavior.",
+    "adaptationDifficulty": "high",
+    "designSystemAreas": [
+      "complex accessible interactions"
+    ],
+    "fitScore": 7
+  },
+  {
+    "id": "lib-011",
+    "name": "Tremor",
+    "url": "https://www.tremor.so/",
+    "framework": "React",
+    "stylingMethod": "Tailwind",
+    "bestFor": [
+      "operational charts",
+      "tracker"
+    ],
+    "strengths": "Fast data visualization patterns.",
+    "weaknesses": "Visual defaults need heavy reduction.",
+    "accessibilityNotes": "Requires chart summaries and focus review.",
+    "adaptationDifficulty": "medium",
+    "designSystemAreas": [
+      "operational charts",
+      "tracker"
+    ],
+    "fitScore": 7
+  },
+  {
+    "id": "lib-012",
+    "name": "TanStack Table",
+    "url": "https://tanstack.com/table/latest",
+    "framework": "React",
+    "stylingMethod": "Headless",
+    "bestFor": [
+      "dense data tables"
+    ],
+    "strengths": "Powerful state and virtualization patterns.",
+    "weaknesses": "More implementation work.",
+    "accessibilityNotes": "Semantic markup remains our responsibility.",
+    "adaptationDifficulty": "medium",
+    "designSystemAreas": [
+      "dense data tables"
+    ],
+    "fitScore": 8
+  },
+  {
+    "id": "lib-013",
+    "name": "TanStack Virtual",
+    "url": "https://tanstack.com/virtual/latest",
+    "framework": "React",
+    "stylingMethod": "Headless",
+    "bestFor": [
+      "long logs",
+      "large tables"
+    ],
+    "strengths": "Efficient large lists.",
+    "weaknesses": "Fixed measurement discipline required.",
+    "accessibilityNotes": "Virtualization needs careful screen-reader testing.",
+    "adaptationDifficulty": "medium",
+    "designSystemAreas": [
+      "long logs",
+      "large tables"
+    ],
+    "fitScore": 8
+  },
+  {
+    "id": "lib-014",
+    "name": "Shiki",
+    "url": "https://shiki.style/",
+    "framework": "JavaScript",
+    "stylingMethod": "Tokenized code highlighting",
+    "bestFor": [
+      "logs",
+      "tool payloads"
+    ],
+    "strengths": "Accurate code highlighting.",
+    "weaknesses": "Can add bundle and worker cost.",
+    "accessibilityNotes": "Highlighted output must remain text-selectable.",
+    "adaptationDifficulty": "medium",
+    "designSystemAreas": [
+      "logs",
+      "tool payloads"
+    ],
+    "fitScore": 7
+  },
+  {
+    "id": "lib-015",
+    "name": "React Hook Form",
+    "url": "https://react-hook-form.com/",
+    "framework": "React",
+    "stylingMethod": "Headless form state",
+    "bestFor": [
+      "checkout",
+      "settings"
+    ],
+    "strengths": "Efficient form behavior.",
+    "weaknesses": "Requires Zod integration conventions.",
+    "accessibilityNotes": "Works with semantic native controls.",
+    "adaptationDifficulty": "low",
+    "designSystemAreas": [
+      "checkout",
+      "settings"
+    ],
+    "fitScore": 8
+  },
+  {
+    "id": "lib-016",
+    "name": "Sonner",
+    "url": "https://sonner.emilkowal.ski/",
+    "framework": "React",
+    "stylingMethod": "Toast component",
+    "bestFor": [
+      "compact feedback"
+    ],
+    "strengths": "Polished toast behavior.",
+    "weaknesses": "Overlaps beUI toast stack.",
+    "accessibilityNotes": "Live region behavior must be tuned.",
+    "adaptationDifficulty": "low",
+    "designSystemAreas": [
+      "compact feedback"
+    ],
+    "fitScore": 7
+  },
+  {
+    "id": "lib-017",
+    "name": "Ariakit",
+    "url": "https://ariakit.org/",
+    "framework": "React",
+    "stylingMethod": "Headless primitives",
+    "bestFor": [
+      "command menu",
+      "composite widgets"
+    ],
+    "strengths": "Strong accessible widget model.",
+    "weaknesses": "Overlaps selected primitives.",
+    "accessibilityNotes": "Excellent keyboard support.",
+    "adaptationDifficulty": "medium",
+    "designSystemAreas": [
+      "command menu",
+      "composite widgets"
+    ],
+    "fitScore": 7
+  },
+  {
+    "id": "lib-018",
+    "name": "Ark UI",
+    "url": "https://ark-ui.com/",
+    "framework": "React",
+    "stylingMethod": "Headless state machines",
+    "bestFor": [
+      "complex widgets"
+    ],
+    "strengths": "Predictable state machines.",
+    "weaknesses": "Additional abstraction cost.",
+    "accessibilityNotes": "Accessible foundations.",
+    "adaptationDifficulty": "medium",
+    "designSystemAreas": [
+      "complex widgets"
+    ],
+    "fitScore": 6
+  },
+  {
+    "id": "lib-019",
+    "name": "Base UI",
+    "url": "https://base-ui.com/",
+    "framework": "React",
+    "stylingMethod": "Unstyled primitives",
+    "bestFor": [
+      "forms",
+      "overlays"
+    ],
+    "strengths": "Modern composable primitives.",
+    "weaknesses": "Overlaps Radix.",
+    "accessibilityNotes": "Good accessibility goals, still verify composition.",
+    "adaptationDifficulty": "medium",
+    "designSystemAreas": [
+      "forms",
+      "overlays"
+    ],
+    "fitScore": 7
+  },
+  {
+    "id": "lib-020",
+    "name": "React Flow",
+    "url": "https://reactflow.dev/",
+    "framework": "React",
+    "stylingMethod": "Canvas and SVG",
+    "bestFor": [
+      "service graph"
+    ],
+    "strengths": "Mature graph interactions and stable layout control.",
+    "weaknesses": "Can feel like a diagram editor without restraint.",
+    "accessibilityNotes": "Keyboard and alternative table view are required.",
+    "adaptationDifficulty": "medium",
+    "designSystemAreas": [
+      "service graph"
+    ],
+    "fitScore": 8
+  },
+  {
+    "id": "lib-021",
+    "name": "Visx",
+    "url": "https://airbnb.io/visx/",
+    "framework": "React",
+    "stylingMethod": "SVG primitives",
+    "bestFor": [
+      "custom charts"
+    ],
+    "strengths": "Maximum chart control.",
+    "weaknesses": "Higher implementation cost than Recharts.",
+    "accessibilityNotes": "Accessibility is largely manual.",
+    "adaptationDifficulty": "high",
+    "designSystemAreas": [
+      "custom charts"
+    ],
+    "fitScore": 6
+  },
+  {
+    "id": "lib-022",
+    "name": "Floating UI",
+    "url": "https://floating-ui.com/",
+    "framework": "JavaScript",
+    "stylingMethod": "Positioning primitives",
+    "bestFor": [
+      "tooltips",
+      "menus"
+    ],
+    "strengths": "Robust positioning.",
+    "weaknesses": "Radix already covers most needs.",
+    "accessibilityNotes": "Semantics remain consumer-owned.",
+    "adaptationDifficulty": "medium",
+    "designSystemAreas": [
+      "tooltips",
+      "menus"
+    ],
+    "fitScore": 6
+  },
+  {
+    "id": "lib-023",
+    "name": "Vaul",
+    "url": "https://vaul.emilkowal.ski/",
+    "framework": "React",
+    "stylingMethod": "Drawer component",
+    "bestFor": [
+      "mobile evidence drawer"
+    ],
+    "strengths": "Polished touch drawers.",
+    "weaknesses": "Another overlay dependency.",
+    "accessibilityNotes": "Verify focus and screen-reader behavior.",
+    "adaptationDifficulty": "low",
+    "designSystemAreas": [
+      "mobile evidence drawer"
+    ],
+    "fitScore": 7
+  },
+  {
+    "id": "lib-024",
+    "name": "cmdk",
+    "url": "https://cmdk.paco.me/",
+    "framework": "React",
+    "stylingMethod": "Command menu primitive",
+    "bestFor": [
+      "command palette"
+    ],
+    "strengths": "Focused command behavior.",
+    "weaknesses": "beUI command palette already includes behavior.",
+    "accessibilityNotes": "Keyboard-first design.",
+    "adaptationDifficulty": "low",
+    "designSystemAreas": [
+      "command palette"
+    ],
+    "fitScore": 7
+  },
+  {
+    "id": "lib-025",
+    "name": "Paper Shaders",
+    "url": "https://shaders.paper.design/",
+    "framework": "React",
+    "stylingMethod": "WebGL shader components",
+    "bestFor": [
+      "storefront hero ambience"
+    ],
+    "strengths": "Distinctive controlled visual field.",
+    "weaknesses": "GPU cost and license version must be pinned.",
+    "accessibilityNotes": "Disable under reduced motion and low-power contexts.",
+    "adaptationDifficulty": "medium",
+    "designSystemAreas": [
+      "storefront hero ambience"
+    ],
+    "fitScore": 5
+  }
+]

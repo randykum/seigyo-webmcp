@@ -1,0 +1,159 @@
+{
+  "project": {
+    "name": "Seigyo and MyShop",
+    "type": "Operational incident recovery plus causal commerce simulation",
+    "audience": "Incident responders, engineering teams, judges, and shoppers",
+    "stack": "React 19, Tailwind 4, beUI source, Radix, Motion, Recharts",
+    "assumptions": [
+      "The user selected Black Vector.",
+      "The user asked the implementing agent to complete the build."
+    ]
+  },
+  "selectedOptions": {
+    "personality": "personality-vector",
+    "color": "color-primary",
+    "type": "type-control",
+    "density": "density-selected",
+    "shape": "shape-vector",
+    "layering": "layering-primary",
+    "motion": "motion-control",
+    "icons": "icons-selected",
+    "imagery": "imagery-vector",
+    "layout": "layout-primary",
+    "navigation": "navigation-control",
+    "buttons": "buttons-selected",
+    "forms": "forms-vector",
+    "tables": "tables-primary",
+    "surfaces": "surfaces-control",
+    "feedback": "feedback-selected",
+    "accessibility": "accessibility-vector",
+    "voice": "voice-primary",
+    "implementation": "implementation-control",
+    "adaptation": "adaptation-selected"
+  },
+  "designPrinciples": [
+    "Evidence before action",
+    "Human authority at the consequence boundary",
+    "Connected operational regions",
+    "Editorial imagery carries MyShop",
+    "Motion explains state and never performs urgency"
+  ],
+  "tokens": {
+    "color": {
+      "canvas": {
+        "$type": "color",
+        "$value": "#0A0A0A"
+      },
+      "surface1": {
+        "$type": "color",
+        "$value": "#111111"
+      },
+      "surface2": {
+        "$type": "color",
+        "$value": "#1A1A1A"
+      },
+      "border": {
+        "$type": "color",
+        "$value": "#2E2E2E"
+      },
+      "text": {
+        "$type": "color",
+        "$value": "#FAFAFA"
+      },
+      "muted": {
+        "$type": "color",
+        "$value": "#A1A1A1"
+      },
+      "action": {
+        "$type": "color",
+        "$value": "#8AB4FF"
+      },
+      "success": {
+        "$type": "color",
+        "$value": "#79D99B"
+      },
+      "warning": {
+        "$type": "color",
+        "$value": "#F5C36A"
+      },
+      "danger": {
+        "$type": "color",
+        "$value": "#FF6B6B"
+      }
+    },
+    "radius": {
+      "sm": {
+        "$type": "dimension",
+        "$value": "4px"
+      },
+      "md": {
+        "$type": "dimension",
+        "$value": "6px"
+      },
+      "lg": {
+        "$type": "dimension",
+        "$value": "8px"
+      }
+    }
+  },
+  "accessibilityDefaults": {
+    "focus": "2px action-blue outline",
+    "mobileTarget": "44px minimum",
+    "reducedMotion": true,
+    "statusUsesText": true,
+    "chartTableFallback": true
+  },
+  "motionRules": {
+    "baseDurationMs": 170,
+    "maxRoutineDurationMs": 220,
+    "noPulsingSeverity": true
+  },
+  "contentVoice": {
+    "seigyo": "Direct operational utility copy",
+    "myshop": "Concise material-led editorial copy"
+  },
+  "implementationRules": {
+    "componentBase": "beUI source adapted over shadcn and Radix",
+    "icons": "Lucide and original SVG only",
+    "surfaces": "Opaque with hairline borders",
+    "cards": "Only when the region itself is an interaction"
+  },
+  "thirdPartyAdaptation": {
+    "preserve": [
+      "accessible semantics",
+      "keyboard behavior",
+      "license notices"
+    ],
+    "replace": [
+      "colors",
+      "radius",
+      "copy",
+      "spacing",
+      "decorative effects"
+    ]
+  },
+  "researchReferences": [
+    "ui-001",
+    "ui-008",
+    "ui-018",
+    "ui-020",
+    "ui-022",
+    "ui-025",
+    "ui-039",
+    "ui-041",
+    "lib-001",
+    "lib-002",
+    "lib-004",
+    "ds-001",
+    "ds-002",
+    "ds-004",
+    "ds-008"
+  ],
+  "rules": {
+    "layout": "Connected operational regions",
+    "components": "Accessible behavior first",
+    "motion": "Productive and reduced-motion safe",
+    "content": "Direct and specific",
+    "imagery": "Original editorial photography"
+  }
+}

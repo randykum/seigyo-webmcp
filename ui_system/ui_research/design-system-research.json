@@ -1,0 +1,142 @@
+[
+  {
+    "id": "ds-001",
+    "name": "Carbon Design System",
+    "url": "https://carbondesignsystem.com/",
+    "usedFor": [
+      "dark layering",
+      "data tables",
+      "motion"
+    ],
+    "takeaways": [
+      "Use opaque layers and productive motion.",
+      "Keep dense data connected rather than carded."
+    ],
+    "risks": [
+      "Carbon defaults can feel corporate if copied literally."
+    ],
+    "fitScore": 9
+  },
+  {
+    "id": "ds-002",
+    "name": "Primer",
+    "url": "https://primer.style/",
+    "usedFor": [
+      "data visualization",
+      "developer tools"
+    ],
+    "takeaways": [
+      "Use redundant chart encodings and direct labels.",
+      "Keep developer-tool hierarchy calm."
+    ],
+    "risks": [
+      "GitHub visual identity must not be copied."
+    ],
+    "fitScore": 9
+  },
+  {
+    "id": "ds-003",
+    "name": "Atlassian Design System",
+    "url": "https://atlassian.design/",
+    "usedFor": [
+      "status",
+      "content",
+      "accessibility"
+    ],
+    "takeaways": [
+      "Pair status colors with words and icons.",
+      "Use direct operational language."
+    ],
+    "risks": [
+      "Component styling is visually heavier than Black Vector."
+    ],
+    "fitScore": 8
+  },
+  {
+    "id": "ds-004",
+    "name": "GOV.UK Design System",
+    "url": "https://design-system.service.gov.uk/",
+    "usedFor": [
+      "focus",
+      "forms",
+      "errors"
+    ],
+    "takeaways": [
+      "Make keyboard focus impossible to miss.",
+      "Put error text next to the field and explain recovery."
+    ],
+    "risks": [
+      "Brand typography and colors are not a product fit."
+    ],
+    "fitScore": 8
+  },
+  {
+    "id": "ds-005",
+    "name": "Adobe Spectrum",
+    "url": "https://spectrum.adobe.com/",
+    "usedFor": [
+      "accessible states",
+      "progress"
+    ],
+    "takeaways": [
+      "Differentiate loading, indeterminate, and known progress.",
+      "Maintain predictable target sizes."
+    ],
+    "risks": [
+      "Broad system would compete with project tokens."
+    ],
+    "fitScore": 7
+  },
+  {
+    "id": "ds-006",
+    "name": "Shopify Polaris",
+    "url": "https://polaris.shopify.com/",
+    "usedFor": [
+      "commerce workflows",
+      "tables"
+    ],
+    "takeaways": [
+      "Keep order and checkout state explicit.",
+      "Design responsive table fallbacks."
+    ],
+    "risks": [
+      "Polaris brand language should not enter MyShop."
+    ],
+    "fitScore": 8
+  },
+  {
+    "id": "ds-007",
+    "name": "GitLab Pajamas",
+    "url": "https://design.gitlab.com/",
+    "usedFor": [
+      "empty states",
+      "content voice"
+    ],
+    "takeaways": [
+      "Use concise operational empty states with one next action.",
+      "Keep utility copy concrete."
+    ],
+    "risks": [
+      "Illustration style is not part of Black Vector."
+    ],
+    "fitScore": 7
+  },
+  {
+    "id": "ds-008",
+    "name": "WAI-ARIA APG",
+    "url": "https://www.w3.org/WAI/ARIA/apg/",
+    "usedFor": [
+      "dialogs",
+      "menus",
+      "tabs"
+    ],
+    "takeaways": [
+      "Follow standard keyboard patterns.",
+      "Restore focus after overlays close."
+    ],
+    "risks": [
+      "APG is behavior guidance, not visual direction."
+    ],
+    "fitScore": 10
+  }
+]

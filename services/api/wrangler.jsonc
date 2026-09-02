@@ -1,0 +1,26 @@
+{
+  "$schema": "../../node_modules/wrangler/config-schema.json",
+  "name": "seigyo-api",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-09-01",
+  "compatibility_flags": ["nodejs_compat"],
+  "observability": {
+    "enabled": true,
+    "head_sampling_rate": 1
+  },
+  "vars": {
+    "ENVIRONMENT": "production-simulation",
+    "ALLOWED_ORIGINS": "http://localhost:5173,http://localhost:5174,https://seigyo.destiny-scooter.workers.dev,https://myshop.destiny-scooter.workers.dev"
+  },
+  "durable_objects": {
+    "bindings": [
+      { "name": "SIMULATION", "class_name": "SimulationStateObject" }
+    ]
+  },
+  "exports": {
+    "SimulationStateObject": {
+      "type": "durable-object",
+      "storage": "sqlite"
+    }
+  }
+}

@@ -1,0 +1,28 @@
+@media (max-width: 900px) {
+  .shop-header { height: 96px; grid-template-columns: 1fr 1fr; grid-template-rows: 57px 39px; padding: 0 14px; }
+  .shop-header nav { display: flex; grid-column: 1 / -1; grid-row: 2; overflow-x: auto; gap: 20px; border-top: 1px solid #292723; scrollbar-width: none; }
+  .shop-header nav::-webkit-scrollbar { display: none; }
+  .shop-header nav a { white-space: nowrap; }
+  .hero { height: calc(100vh - 125px); }
+}
+.product-image:focus-visible .product-arrow { opacity: 1; transform: none; }
+.quantity button[disabled] { opacity: .35; cursor: not-allowed; }
+.section-count,
+.product-meta span,
+.material-story p,
+.editorial-row p,
+.collection-head p,
+.product-info .material,
+.product-info .description,
+.product-info dt,
+.product-info dd,
+.checkout-form label span,
+.payment-note,
+.order-summary span,
+footer p,
+footer a,
+.footer-line { color: #9b978f; }
+.notice-bar span,
+.shop-logo span,
+footer > div > a { color: #9b978f; }
+.collection-tools { color: #9b978f; }
