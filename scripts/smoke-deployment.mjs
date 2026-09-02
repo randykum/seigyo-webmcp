@@ -47,7 +47,7 @@ await page.screenshot({ path: "screenshots/deployed-myshop.png", fullPage: false
 await page.getByRole("link", { name: "Kuro lounge chair" }).first().click();
 await page.getByRole("button", { name: /Add to bag/ }).click();
 await page.getByRole("link", { name: /Checkout/ }).click();
-  await page.getByRole("button", { name: /Place order/ }).click();
+await page.getByRole("button", { name: /Place order/ }).click();
 await page.getByRole("alert").waitFor();
 
 await page.goto(`${seigyoUrl}/incidents/INC-042`, { waitUntil: "networkidle" });
@@ -60,7 +60,7 @@ await page.getByRole("button", { name: "Verify outcome" }).click();
 await page.getByText(/Observed outcome: recovered/).waitFor();
 
 await page.goto(`${myshopUrl}/checkout`, { waitUntil: "networkidle" });
-  await page.getByRole("button", { name: /Place order/ }).click();
+await page.getByRole("button", { name: /Place order/ }).click();
 await page.getByRole("heading", { name: /Thank you/ }).waitFor();
 
 await browser.close();
