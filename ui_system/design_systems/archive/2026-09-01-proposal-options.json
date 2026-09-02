@@ -1,7 +1,7 @@
 {
   "project": {
     "name": "Seigyo and MyShop",
-    "type": "Operational incident recovery plus causal commerce simulation",
+    "type": "Operational incident recovery plus causal commerce environment",
     "audience": "Incident responders, engineering teams, judges, and shoppers",
     "stack": "React 19, Tailwind 4, beUI source, Radix, Motion, Recharts",
     "assumptions": [
@@ -147,7 +147,7 @@
       "options": [
         {
           "id": "color-primary",
-          "name": "Near-black control",
+          "name": "Balanced charcoal",
           "status": "recommended",
           "recommendationReason": "Matches the approved Black Vector brief and the strongest research evidence.",
           "description": "The approved Black Vector palette with one blue action accent.",

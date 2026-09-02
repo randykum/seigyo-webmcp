@@ -1,7 +1,7 @@
 {
   "project": {
     "name": "Seigyo and MyShop",
-    "type": "Agent-native incident recovery and causal commerce simulation",
+    "type": "Agent-native incident recovery and causal commerce environment",
     "audience": "Incident commanders, SREs, engineering leaders, WebMCP judges, and storefront customers",
     "platform": "Responsive web",
     "stack": "React 19, Vite, Tailwind 4, Cloudflare Workers, Durable Objects",

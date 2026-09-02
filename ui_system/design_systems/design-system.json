@@ -1,7 +1,7 @@
 {
   "project": {
     "name": "Seigyo and MyShop",
-    "type": "Operational incident recovery plus causal commerce simulation",
+    "type": "Operational incident recovery plus causal commerce environment",
     "audience": "Incident responders, engineering teams, judges, and shoppers",
     "stack": "React 19, Tailwind 4, beUI source, Radix, Motion, Recharts",
     "assumptions": [
@@ -42,43 +42,55 @@
     "color": {
       "canvas": {
         "$type": "color",
-        "$value": "#0A0A0A"
+        "$value": "#101318"
       },
       "surface1": {
         "$type": "color",
-        "$value": "#111111"
+        "$value": "#151A21"
       },
       "surface2": {
         "$type": "color",
-        "$value": "#1A1A1A"
+        "$value": "#1B212A"
+      },
+      "interactive": {
+        "$type": "color",
+        "$value": "#222A34"
       },
       "border": {
         "$type": "color",
-        "$value": "#2E2E2E"
+        "$value": "#343D49"
       },
       "text": {
         "$type": "color",
-        "$value": "#FAFAFA"
+        "$value": "#F4F7FA"
+      },
+      "supporting": {
+        "$type": "color",
+        "$value": "#C8D0DA"
       },
       "muted": {
         "$type": "color",
-        "$value": "#A1A1A1"
+        "$value": "#A6B0BD"
+      },
+      "tertiary": {
+        "$type": "color",
+        "$value": "#8793A3"
       },
       "action": {
         "$type": "color",
-        "$value": "#8AB4FF"
+        "$value": "#86AEF8"
       },
       "success": {
         "$type": "color",
-        "$value": "#79D99B"
+        "$value": "#77D59A"
       },
       "warning": {
         "$type": "color",
-        "$value": "#F5C36A"
+        "$value": "#F1C06A"
       },
       "danger": {
         "$type": "color",
-        "$value": "#FF6B6B"
+        "$value": "#FF7A77"
       }
     },
     "radius": {
@@ -99,6 +111,7 @@
   "accessibilityDefaults": {
     "focus": "2px action-blue outline",
     "mobileTarget": "44px minimum",
+    "minimumText": "11px",
     "reducedMotion": true,
     "statusUsesText": true,
     "chartTableFallback": true
@@ -114,7 +127,7 @@
   },
   "implementationRules": {
     "componentBase": "beUI source adapted over shadcn and Radix",
-    "icons": "Lucide and original SVG only",
+    "icons": "Lucide, Simple Icons, and original SVG only",
     "surfaces": "Opaque with hairline borders",
     "cards": "Only when the region itself is an interaction"
   },
@@ -149,11 +162,40 @@
     "ds-004",
     "ds-008"
   ],
+  "myshopTokens": {
+    "color": {
+      "canvas": "#15120F",
+      "surface1": "#1B1713",
+      "surface2": "#231E19",
+      "interactive": "#2B251F",
+      "border": "#40382F",
+      "text": "#F5F0E8",
+      "supporting": "#D5CDC1",
+      "muted": "#B5AB9E",
+      "tertiary": "#9D9285",
+      "accent": "#D2B48A"
+    }
+  },
+  "typography": {
+    "seigyo": {
+      "base": "14px",
+      "operational": "12px to 13px",
+      "minimum": "11px",
+      "pageHeading": "28px"
+    },
+    "myshop": {
+      "base": "15px",
+      "body": "14px to 15px",
+      "controls": "12px",
+      "minimum": "11px"
+    }
+  },
   "rules": {
     "layout": "Connected operational regions",
     "components": "Accessible behavior first",
     "motion": "Productive and reduced-motion safe",
     "content": "Direct and specific",
-    "imagery": "Original editorial photography"
+    "imagery": "Original editorial photography",
+    "disabledControls": "Use explicit foreground, background, and border colors instead of whole-control opacity"
   }
 }

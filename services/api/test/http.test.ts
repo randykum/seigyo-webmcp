@@ -22,10 +22,19 @@ describe("HTTP security boundary", () => {
     expect(response.status).toBe(400);
   });
 
+  it("rejects invalid and unbounded query values", async () => {
+    for (const path of ["/api/metrics?limit=-1", "/api/metrics?limit=301", "/api/logs?limit=51", `/api/logs?query=${"x".repeat(101)}`]) {
+      const response = await SELF.fetch(`https://worker.test${path}`);
+      expect(response.status, path).toBe(400);
+      const body = await response.json() as { error: { code: string } };
+      expect(body.error.code, path).toBe("INVALID_ARGUMENT");
+    }
+  });
+
   it("rejects an oversized mutating request", async () => {
     const response = await SELF.fetch("https://worker.test/api/proposals", {
       method: "POST",
-      headers: { "Content-Type": "application/json", "Content-Length": "70000", "X-Session-Id": "seigyo-demo-operator" },
+      headers: { "Content-Type": "application/json", "Content-Length": "70000", "X-Session-Id": "seigyo-operator-session" },
       body: JSON.stringify({ value: "small" })
     });
     expect(response.status).toBe(400);
@@ -36,7 +45,7 @@ describe("HTTP security boundary", () => {
   it("rejects an oversized body when content length is missing", async () => {
     const response = await SELF.fetch("https://worker.test/api/proposals", {
       method: "POST",
-      headers: { "Content-Type": "application/json", "X-Session-Id": "seigyo-demo-operator" },
+      headers: { "Content-Type": "application/json", "X-Session-Id": "seigyo-operator-session" },
       body: JSON.stringify({ value: "x".repeat(70_000) })
     });
     expect(response.status).toBe(400);

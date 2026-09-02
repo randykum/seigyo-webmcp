@@ -14,8 +14,8 @@ const page = await browser.newPage({ viewport: { width: 1440, height: 1000 } });
 const resetScenario = async () => {
   const response = await fetch(`${apiUrl}/api/scenario/reset`, {
     method: "POST",
-    headers: { "Content-Type": "application/json", "X-Session-Id": "seigyo-demo-operator", Origin: seigyoUrl },
-    body: JSON.stringify({ scenario: "checkout-regression", confirmation: "RESET SIMULATION" }),
+    headers: { "Content-Type": "application/json", "X-Session-Id": "seigyo-operator-session", Origin: seigyoUrl },
+    body: JSON.stringify({ scenario: "checkout-regression", confirmation: "RESET ENVIRONMENT" }),
   });
   if (!response.ok) throw new Error(`Scenario reset failed with ${response.status}`);
 };
@@ -25,7 +25,7 @@ await resetScenario();
 await page.goto(seigyoUrl, { waitUntil: "networkidle" });
 await page.getByRole("heading", { name: "Recovery control" }).waitFor();
 const snapshot = await page.evaluate(async apiBase => {
-  const response = await fetch(`${apiBase}/api/snapshot`, { headers: { "X-Session-Id": "seigyo-demo-operator" } });
+  const response = await fetch(`${apiBase}/api/snapshot`, { headers: { "X-Session-Id": "seigyo-operator-session" } });
   return { status: response.status, cors: response.headers.get("access-control-allow-origin"), body: await response.json() };
 }, apiUrl);
 if (snapshot.status !== 200 || !snapshot.body.ok) {
@@ -47,7 +47,7 @@ await page.screenshot({ path: "screenshots/deployed-myshop.png", fullPage: false
 await page.getByRole("link", { name: "Kuro lounge chair" }).first().click();
 await page.getByRole("button", { name: /Add to bag/ }).click();
 await page.getByRole("link", { name: /Checkout/ }).click();
-await page.getByRole("button", { name: /Place simulated order/ }).click();
+  await page.getByRole("button", { name: /Place order/ }).click();
 await page.getByRole("alert").waitFor();
 
 await page.goto(`${seigyoUrl}/incidents/INC-042`, { waitUntil: "networkidle" });
@@ -60,7 +60,7 @@ await page.getByRole("button", { name: "Verify outcome" }).click();
 await page.getByText(/Observed outcome: recovered/).waitFor();
 
 await page.goto(`${myshopUrl}/checkout`, { waitUntil: "networkidle" });
-await page.getByRole("button", { name: /Place simulated order/ }).click();
+  await page.getByRole("button", { name: /Place order/ }).click();
 await page.getByRole("heading", { name: /Thank you/ }).waitFor();
 
 await browser.close();

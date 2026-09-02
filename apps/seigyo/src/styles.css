@@ -1,6 +1,6 @@
 @import "tailwindcss";
 
-:root { color-scheme: dark; font-family: Inter, Geist, "Segoe UI", sans-serif; background: #0a0a0a; color: #fafafa; font-synthesis: none; --canvas:#0a0a0a; --surface:#111; --surface-2:#1a1a1a; --border:#2e2e2e; --muted:#a1a1a1; --blue:#8ab4ff; --green:#79d99b; --amber:#f5c36a; --red:#ff6b6b; }
+:root { color-scheme: dark; font-family: Inter, Geist, "Segoe UI", sans-serif; background: #101318; color: #f4f7fa; font-synthesis: none; --canvas:#101318; --surface:#151a21; --surface-2:#1b212a; --interactive:#222a34; --border:#343d49; --text:#f4f7fa; --supporting:#c8d0da; --muted:#a6b0bd; --tertiary:#8793a3; --blue:#86aef8; --green:#77d59a; --amber:#f1c06a; --red:#ff7a77; }
 * { box-sizing: border-box; }
 body { margin:0; min-width:320px; min-height:100vh; background:var(--canvas); }
 button,input,select { font:inherit; }

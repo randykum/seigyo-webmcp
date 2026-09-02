@@ -1,6 +1,6 @@
 {
   "$schema": "../../node_modules/wrangler/config-schema.json",
-  "name": "seigyo-api",
+  "name": "seigyo-operations-api",
   "main": "src/index.ts",
   "compatibility_date": "2026-09-01",
   "compatibility_flags": ["nodejs_compat"],
@@ -9,16 +9,16 @@
     "head_sampling_rate": 1
   },
   "vars": {
-    "ENVIRONMENT": "production-simulation",
+    "ENVIRONMENT": "production",
     "ALLOWED_ORIGINS": "http://localhost:5173,http://localhost:5174,https://seigyo.cord-pail.workers.dev,https://myshop.cord-pail.workers.dev"
   },
   "durable_objects": {
     "bindings": [
-      { "name": "SIMULATION", "class_name": "SimulationStateObject" }
+      { "name": "OPERATIONS_STATE", "class_name": "OperationsStateObject" }
     ]
   },
   "exports": {
-    "SimulationStateObject": {
+    "OperationsStateObject": {
       "type": "durable-object",
       "storage": "sqlite"
     }

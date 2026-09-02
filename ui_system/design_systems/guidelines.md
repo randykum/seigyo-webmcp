@@ -6,7 +6,7 @@ Seigyo is precise, calm, and authoritative. MyShop is warm, material, and editor
 
 ## Color and type
 
-Use near-black opaque layers and one blue action accent. Semantic colors always include a label or icon. Geist Sans is the interface face and Geist Mono is limited to evidence, IDs, timestamps, values, and code.
+Use distinct charcoal opaque layers and one blue action accent. Semantic colors always include a label or icon. Geist Sans is the interface face and Geist Mono is limited to evidence, IDs, timestamps, values, and code.
 
 ## Layout
 

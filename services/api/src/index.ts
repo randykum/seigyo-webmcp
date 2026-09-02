@@ -1,7 +1,7 @@
 import { Hono } from "hono";
 import { CartItemInputSchema, CheckoutInputSchema, ExecutionInputSchema, ProposalInputSchema, ResetInputSchema, ServiceIdSchema, VerifyInputSchema, type ApiResult, type ErrorCode } from "@seigyo/contracts";
-import { createTraceId } from "@seigyo/simulation";
-export { SimulationStateObject } from "./state";
+import { createTraceId } from "@seigyo/environment";
+export { OperationsStateObject } from "./state";
 
 type AppEnv = { Bindings: Env };
 const app = new Hono<AppEnv>();
@@ -18,8 +18,20 @@ app.use("*", async (context, next) => {
   context.header("Referrer-Policy", "strict-origin-when-cross-origin");
 });
 
-const stub = (env: Env) => env.SIMULATION.getByName("seigyo-production-simulation");
-const sessionId = (header?: string): string => { if (header !== "seigyo-demo-operator") throw new Error("AUTH_REQUIRED:An operator session is required."); return header; };
+const stub = (env: Env) => env.OPERATIONS_STATE.getByName("seigyo-production");
+const sessionId = (header?: string): string => { if (header !== "seigyo-operator-session") throw new Error("AUTH_REQUIRED:An operator session is required."); return header; };
+const boundedLimit = (raw: string | undefined, fallback: number, maximum: number): number => {
+  if (raw === undefined) return fallback;
+  if (!/^\d+$/.test(raw)) throw new Error(`INVALID_ARGUMENT:limit must be an integer from 1 to ${maximum}.`);
+  const value = Number(raw);
+  if (value < 1 || value > maximum) throw new Error(`INVALID_ARGUMENT:limit must be an integer from 1 to ${maximum}.`);
+  return value;
+};
+const boundedQuery = (raw: string | undefined): string => {
+  const value = raw ?? "";
+  if (value.length > 100) throw new Error("INVALID_ARGUMENT:query must contain at most 100 characters.");
+  return value;
+};
 const success = <T>(data: T, stateVersion = 0): ApiResult<T> => ({ ok: true, data, stateVersion, traceId: createTraceId() });
 const errorCode = (message: string): ErrorCode => message.includes("IDEMPOTENCY_CONFLICT") ? "CONFLICT" : message.includes("INVALID_ACTION") ? "INVALID_ARGUMENT" : message.includes("NOT_FOUND") ? "NOT_FOUND" : message.includes("AUTH_REQUIRED") ? "AUTH_REQUIRED" : message.includes("APPROVAL_REQUIRED") ? "APPROVAL_REQUIRED" : message.includes("STALE_STATE") ? "STALE_STATE" : message.includes("PRECONDITION_FAILED") ? "PRECONDITION_FAILED" : message.includes("IRREVERSIBLE") ? "IRREVERSIBLE" : message.includes("UPSTREAM_UNAVAILABLE") ? "UPSTREAM_UNAVAILABLE" : "INVALID_ARGUMENT";
 const failure = (caught: unknown, stateVersion = 0): ApiResult<never> => { const message = caught instanceof Error ? caught.message : "Unexpected request failure"; const code = errorCode(message); return { ok: false, error: { code, message: message.includes(":") ? message.slice(message.indexOf(":") + 1) : message.replaceAll("_", " ").toLowerCase(), retryable: code === "UPSTREAM_UNAVAILABLE" || code === "RATE_LIMITED", requiresHuman: code === "APPROVAL_REQUIRED" }, stateVersion, traceId: createTraceId() }; };
@@ -50,8 +62,8 @@ app.get("/api/incidents/:id", async context => { const data = await stub(context
 app.get("/api/services", async context => context.json(success(await stub(context.env).listServices())));
 app.get("/api/deployments", async context => { const raw = context.req.query("serviceId"); const serviceId = raw ? ServiceIdSchema.parse(raw) : undefined; return context.json(success(await stub(context.env).listDeployments(serviceId))); });
 app.get("/api/dependencies", async context => { const raw = context.req.query("serviceId"); const serviceId = raw ? ServiceIdSchema.parse(raw) : undefined; return context.json(success(await stub(context.env).listDependencies(serviceId))); });
-app.get("/api/metrics", async context => { const raw = context.req.query("serviceId"); const serviceId = raw ? ServiceIdSchema.parse(raw) : undefined; const limit = Math.min(300, Number(context.req.query("limit") ?? 180)); return context.json(success(await stub(context.env).getMetrics(serviceId, limit))); });
-app.get("/api/logs", async context => { const raw = context.req.query("serviceId"); const serviceId = raw ? ServiceIdSchema.parse(raw) : undefined; return context.json(success(await stub(context.env).getLogs(serviceId, context.req.query("query") ?? "", Math.min(50, Number(context.req.query("limit") ?? 50))))); });
+app.get("/api/metrics", async context => { const raw = context.req.query("serviceId"); const serviceId = raw ? ServiceIdSchema.parse(raw) : undefined; return context.json(success(await stub(context.env).getMetrics(serviceId, boundedLimit(context.req.query("limit"), 180, 300)))); });
+app.get("/api/logs", async context => { const raw = context.req.query("serviceId"); const serviceId = raw ? ServiceIdSchema.parse(raw) : undefined; return context.json(success(await stub(context.env).getLogs(serviceId, boundedQuery(context.req.query("query")), boundedLimit(context.req.query("limit"), 50, 50)))); });
 app.get("/api/runbooks", async context => context.json(success(await stub(context.env).getRunbooks())));
 app.get("/api/receipts", async context => context.json(success(await stub(context.env).getReceipts())));
 app.get("/api/agent-activity", async context => context.json(success(await stub(context.env).getAgentActivity())));
@@ -75,10 +87,10 @@ app.get("/api/store/health", async context => context.json(success(await stub(co
 
 app.get("/ws", async context => {
   const origin = context.req.header("Origin");
-  if (!origin || !allowedOrigins(context.env).includes(origin) || context.req.query("session") !== "seigyo-demo-operator") return new Response("Forbidden", { status: 403 });
+  if (!origin || !allowedOrigins(context.env).includes(origin) || context.req.query("session") !== "seigyo-operator-session") return new Response("Forbidden", { status: 403 });
   return stub(context.env).fetch(context.req.raw);
 });
 
-app.onError((caught, context) => { console.error(JSON.stringify({ event: "request.error", message: caught.message, path: context.req.path })); return context.json(failure(caught), caught.name === "ZodError" ? 400 : 500); });
+app.onError((caught, context) => { console.error(JSON.stringify({ event: "request.error", message: caught.message, path: context.req.path })); const code = errorCode(caught.message); const status = caught.name === "ZodError" || code === "INVALID_ARGUMENT" ? 400 : code === "AUTH_REQUIRED" ? 403 : code === "NOT_FOUND" ? 404 : 500; return context.json(failure(caught), status); });
 
 export default app;

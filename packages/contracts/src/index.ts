@@ -38,7 +38,7 @@ export const VerifyInputSchema = z.object({
   checks: z.array(z.enum(["service_health", "error_rate", "latency", "deployment", "dependency"])).min(1).max(5)
 }).strict();
 
-export const ResetInputSchema = z.object({ scenario: ScenarioSchema, confirmation: z.literal("RESET SIMULATION") });
+export const ResetInputSchema = z.object({ scenario: ScenarioSchema, confirmation: z.literal("RESET ENVIRONMENT") });
 
 export const CartItemInputSchema = z.object({ productId: z.string().trim().min(1).max(64), quantity: z.number().int().min(0).max(10) }).strict();
 export const CheckoutInputSchema = z.object({
@@ -53,6 +53,14 @@ export const CheckoutInputSchema = z.object({
 export type ErrorCode = "INVALID_ARGUMENT" | "NOT_FOUND" | "AUTH_REQUIRED" | "APPROVAL_REQUIRED" | "STALE_STATE" | "PRECONDITION_FAILED" | "CONFLICT" | "RATE_LIMITED" | "UPSTREAM_UNAVAILABLE" | "USER_REJECTED" | "IRREVERSIBLE";
 export type ApiResult<T> = { ok: true; data: T; stateVersion: number; traceId: string } | { ok: false; error: { code: ErrorCode; message: string; retryable: boolean; requiresHuman?: boolean }; stateVersion: number; traceId: string };
 
+export interface HostingMetadata {
+  providerId: "cloudflare" | "render" | "supabase" | "stripe";
+  providerName: string;
+  product: string;
+  region: string;
+  resourceId: string;
+}
+
 export interface ServiceRuntime {
   id: ServiceId;
   name: string;
@@ -65,6 +73,7 @@ export interface ServiceRuntime {
   enabled: boolean;
   restartUntil: number | null;
   featureFlags: Record<string, boolean>;
+  hosting: HostingMetadata;
   provider?: "primary" | "fallback";
 }
 
@@ -83,7 +92,7 @@ export interface Product { id: string; slug: string; name: string; category: "Fu
 export interface Cart { id: string; items: Array<{ productId: string; quantity: number }>; updatedAt: number; }
 export interface Order { id: string; cartId: string; email: string; name: string; address: string; total: number; status: "confirmed" | "processing" | "failed"; createdAt: number; items: Array<{ productId: string; quantity: number; unitPrice: number }>; }
 export interface AgentActivity { id: string; timestamp: number; tool: string; purpose: string; state: "running" | "complete" | "failed"; summary: string; }
-export interface SimulationSnapshot { epoch: number; causalRevision: number; observabilityRevision: number; virtualNow: number; scenario: ScenarioId; scenarioLabel: string; services: ServiceRuntime[]; health: ServiceHealth[]; activeIncident: Incident; incidents: Incident[]; deployments: Deployment[]; proposals: Proposal[]; executions: Execution[]; verifications: Verification[]; receipts: Receipt[]; agentActivity: AgentActivity[]; products: Product[]; }
+export interface EnvironmentSnapshot { epoch: number; causalRevision: number; observabilityRevision: number; virtualNow: number; scenario: ScenarioId; scenarioLabel: string; services: ServiceRuntime[]; health: ServiceHealth[]; activeIncident: Incident; incidents: Incident[]; deployments: Deployment[]; proposals: Proposal[]; executions: Execution[]; verifications: Verification[]; receipts: Receipt[]; agentActivity: AgentActivity[]; products: Product[]; }
 
 export const parseToolInput = <T>(input: unknown, schema: z.ZodType<T>): T => {
   const normalized = typeof input === "string" ? JSON.parse(input) as unknown : input;

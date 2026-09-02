@@ -13,7 +13,7 @@
   },
   "dependencies": {
     "@seigyo/contracts": "workspace:*",
-    "@seigyo/simulation": "workspace:*",
+    "@seigyo/environment": "workspace:*",
     "hono": "4.13.5",
     "zod": "4.5.4"
   },

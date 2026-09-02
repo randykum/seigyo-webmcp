@@ -1,5 +1,5 @@
 {
-  "name": "@seigyo/simulation",
+  "name": "@seigyo/environment",
   "private": true,
   "version": "0.1.0",
   "type": "module",

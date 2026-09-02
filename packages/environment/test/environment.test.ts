@@ -1,15 +1,23 @@
 import { describe, expect, it } from "vitest";
-import { approveProposal, checkout, computeHealth, executeProposal, proposeAction, queryMetrics, resetSimulation, seedSimulation, undoExecution, updateCart, verifyExecution } from "../src/index";
+import { approveProposal, checkout, computeHealth, executeProposal, proposeAction, queryMetrics, resetEnvironment, seedEnvironment, undoExecution, updateCart, verifyExecution } from "../src/index";
 
-describe("causal simulation", () => {
+describe("causal environment", () => {
   it("produces identical health for the same seed and time", () => {
-    const first = seedSimulation("checkout-regression");
-    const second = seedSimulation("checkout-regression");
+    const first = seedEnvironment("checkout-regression");
+    const second = seedEnvironment("checkout-regression");
     expect(computeHealth(first)).toEqual(computeHealth(second));
   });
 
+  it("seeds provider ownership for every service", () => {
+    const state = seedEnvironment("checkout-regression");
+    expect(Object.values(state.services).every(service => Boolean(service.hosting.resourceId))).toBe(true);
+    expect(new Set(Object.values(state.services).map(service => service.hosting.providerId))).toEqual(new Set(["cloudflare", "render", "stripe", "supabase"]));
+    expect(state.services["payment-gateway"].provider).toBe("primary");
+    expect(state.services["payment-gateway"].hosting.providerId).toBe("stripe");
+  });
+
   it("rollback removes the checkout deployment fault after approval", async () => {
-    const state = seedSimulation("checkout-regression");
+    const state = seedEnvironment("checkout-regression");
     const before = computeHealth(state).find(item => item.serviceId === "checkout-api")?.errorRate ?? 0;
     const proposal = await proposeAction(state, { incidentId: "INC-042", action: { type: "rollback_deployment", targetService: "checkout-api", parameters: {} }, rationale: "The error increase follows the current deployment.", evidenceRefs: ["deployment:DEP-160"], idempotencyKey: "proposal-rollback-001" });
     const approval = await approveProposal(state, proposal.id, "test-session");
@@ -21,7 +29,7 @@ describe("causal simulation", () => {
   });
 
   it("restarting payment does not fix a provider outage", async () => {
-    const state = seedSimulation("payment-outage");
+    const state = seedEnvironment("payment-outage");
     const proposal = await proposeAction(state, { incidentId: "INC-043", action: { type: "restart_service", targetService: "payment-gateway", parameters: {} }, rationale: "Restart the local payment adapter and clear its queue.", evidenceRefs: ["metric:payment-gateway"], idempotencyKey: "proposal-restart-001" });
     const approval = await approveProposal(state, proposal.id, "test-session");
     const execution = await executeProposal(state, proposal.id, approval.token, "execution-restart-001", "test-session");
@@ -30,7 +38,7 @@ describe("causal simulation", () => {
   });
 
   it("scaling inventory to four replicas resolves saturation", async () => {
-    const state = seedSimulation("inventory-saturation");
+    const state = seedEnvironment("inventory-saturation");
     const proposal = await proposeAction(state, { incidentId: "INC-044", action: { type: "scale_service", targetService: "inventory-db", parameters: { replicas: 4 } }, rationale: "Provision enough database capacity for current inventory demand.", evidenceRefs: ["metric:inventory-db"], idempotencyKey: "proposal-scale-004" });
     const approval = await approveProposal(state, proposal.id, "test-session");
     const execution = await executeProposal(state, proposal.id, approval.token, "execution-scale-004", "test-session");
@@ -39,15 +47,15 @@ describe("causal simulation", () => {
   });
 
   it("reset invalidates an approved proposal", async () => {
-    const state = seedSimulation("checkout-regression");
+    const state = seedEnvironment("checkout-regression");
     const proposal = await proposeAction(state, { incidentId: "INC-042", action: { type: "rollback_deployment", targetService: "checkout-api", parameters: {} }, rationale: "Rollback the correlated checkout deployment safely.", evidenceRefs: ["deployment:DEP-160"], idempotencyKey: "proposal-reset-001" });
     const approval = await approveProposal(state, proposal.id, "test-session");
-    const reset = resetSimulation(state, "payment-outage");
+    const reset = resetEnvironment(state, "payment-outage");
     await expect(executeProposal(reset, proposal.id, approval.token, "execution-reset-001", "test-session")).rejects.toThrow("NOT_FOUND");
   });
 
   it("successful checkout creates one order and clears the cart", async () => {
-    const state = seedSimulation("checkout-regression");
+    const state = seedEnvironment("checkout-regression");
     state.services["checkout-api"].version = state.services["checkout-api"].previousVersion;
     state.services["checkout-api"].featureFlags["new-tax-rounding"] = false;
     updateCart(state, "cart-test", "PRD-001", 1);
@@ -58,7 +66,7 @@ describe("causal simulation", () => {
   });
 
   it("blocks expired, mismatched, and replayed approvals", async () => {
-    const state = seedSimulation("checkout-regression");
+    const state = seedEnvironment("checkout-regression");
     const proposal = await proposeAction(state, { incidentId: "INC-042", action: { type: "rollback_deployment", targetService: "checkout-api", parameters: {} }, rationale: "The current deployment is the correlated cause.", evidenceRefs: ["deployment:DEP-160"], idempotencyKey: "proposal-security-001" });
     const approval = await approveProposal(state, proposal.id, "session-a");
     await expect(executeProposal(state, proposal.id, approval.token, "execute-session-b", "session-b")).rejects.toThrow("APPROVAL_REQUIRED");
@@ -67,7 +75,7 @@ describe("causal simulation", () => {
   });
 
   it("returns one execution for duplicate idempotent requests", async () => {
-    const state = seedSimulation("checkout-regression");
+    const state = seedEnvironment("checkout-regression");
     const proposal = await proposeAction(state, { incidentId: "INC-042", action: { type: "rollback_deployment", targetService: "checkout-api", parameters: {} }, rationale: "The current deployment is the correlated cause.", evidenceRefs: ["deployment:DEP-160"], idempotencyKey: "proposal-idempotent-001" });
     const approval = await approveProposal(state, proposal.id, "session-a");
     const first = await executeProposal(state, proposal.id, approval.token, "execute-idempotent-001", "session-a");
@@ -77,7 +85,7 @@ describe("causal simulation", () => {
   });
 
   it("restores the exact service state once during undo", async () => {
-    const state = seedSimulation("inventory-saturation");
+    const state = seedEnvironment("inventory-saturation");
     const originalReplicas = state.services["inventory-db"].replicas;
     const proposal = await proposeAction(state, { incidentId: "INC-044", action: { type: "scale_service", targetService: "inventory-db", parameters: { replicas: 5 } }, rationale: "Capacity is below the observed inventory demand.", evidenceRefs: ["metric:inventory-db"], idempotencyKey: "proposal-undo-001" });
     const approval = await approveProposal(state, proposal.id, "session-a");
@@ -89,7 +97,7 @@ describe("causal simulation", () => {
   });
 
   it("makes an undo retry idempotent and rejects a conflicting key", async () => {
-    const state = seedSimulation("inventory-saturation");
+    const state = seedEnvironment("inventory-saturation");
     const proposal = await proposeAction(state, { incidentId: "INC-044", action: { type: "scale_service", targetService: "inventory-db", parameters: { replicas: 5 } }, rationale: "Capacity is below the observed inventory demand.", evidenceRefs: ["metric:inventory-db"], idempotencyKey: "proposal-undo-retry" });
     const approval = await approveProposal(state, proposal.id, "session-a");
     const execution = await executeProposal(state, proposal.id, approval.token, "execute-undo-retry", "session-a");
@@ -100,7 +108,7 @@ describe("causal simulation", () => {
   });
 
   it("rejects undo after a newer causal action", async () => {
-    const state = seedSimulation("inventory-saturation");
+    const state = seedEnvironment("inventory-saturation");
     const firstProposal = await proposeAction(state, { incidentId: "INC-044", action: { type: "scale_service", targetService: "inventory-db", parameters: { replicas: 4 } }, rationale: "Restore database headroom.", evidenceRefs: ["metric:inventory-db"], idempotencyKey: "proposal-stale-undo-1" });
     const firstApproval = await approveProposal(state, firstProposal.id, "session-a");
     const firstExecution = await executeProposal(state, firstProposal.id, firstApproval.token, "execute-stale-undo-1", "session-a");
@@ -111,11 +119,11 @@ describe("causal simulation", () => {
   });
 
   it("keeps execution and receipt identifiers unique across resets", async () => {
-    let state = seedSimulation("checkout-regression");
+    let state = seedEnvironment("checkout-regression");
     const proposal = await proposeAction(state, { incidentId: "INC-042", action: { type: "rollback_deployment", targetService: "checkout-api", parameters: {} }, rationale: "Rollback the correlated deployment.", evidenceRefs: ["deployment:DEP-160"], idempotencyKey: "proposal-before-reset" });
     const approval = await approveProposal(state, proposal.id, "session-a");
     const firstExecution = await executeProposal(state, proposal.id, approval.token, "execute-before-reset", "session-a");
-    state = resetSimulation(state, "checkout-regression");
+    state = resetEnvironment(state, "checkout-regression");
     const nextProposal = await proposeAction(state, { incidentId: "INC-042", action: { type: "rollback_deployment", targetService: "checkout-api", parameters: {} }, rationale: "Rollback the correlated deployment again.", evidenceRefs: ["deployment:DEP-160"], idempotencyKey: "proposal-after-reset" });
     const nextApproval = await approveProposal(state, nextProposal.id, "session-a");
     const nextExecution = await executeProposal(state, nextProposal.id, nextApproval.token, "execute-after-reset", "session-a");
@@ -124,7 +132,7 @@ describe("causal simulation", () => {
   });
 
   it("bounds invalid metric limits and cart quantities", () => {
-    const state = seedSimulation("checkout-regression");
+    const state = seedEnvironment("checkout-regression");
     expect(queryMetrics(state, undefined, Number.NaN)).toHaveLength(180);
     expect(queryMetrics(state, undefined, -1)).toHaveLength(0);
     expect(() => updateCart(state, "cart-safe", "PRD-001", -1)).toThrow("INVALID_ARGUMENT");

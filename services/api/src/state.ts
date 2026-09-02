@@ -1,38 +1,38 @@
 import { DurableObject } from "cloudflare:workers";
 import type { ProposalInput, RecoveryAction, ScenarioId, ServiceId } from "@seigyo/contracts";
-import { approveProposal, checkout, executeProposal, getCart, investigate, queryMetrics, rejectProposal, resetSimulation, searchLogs, seedSimulation, snapshot, tick, undoExecution, updateCart, verifyExecution, proposeAction, computeHealth, type SimulationState } from "@seigyo/simulation";
+import { approveProposal, checkout, executeProposal, getCart, investigate, queryMetrics, rejectProposal, resetEnvironment, searchLogs, seedEnvironment, snapshot, tick, undoExecution, updateCart, verifyExecution, proposeAction, computeHealth, type EnvironmentState } from "@seigyo/environment";
 
 type CheckoutRequest = { cartId: string; email: string; name: string; address: string; requestId: string; idempotencyKey: string };
 
-export class SimulationStateObject extends DurableObject<Env> {
+export class OperationsStateObject extends DurableObject<Env> {
   private mutationQueue: Promise<void> = Promise.resolve();
   constructor(ctx: DurableObjectState, env: Env) {
     super(ctx, env);
     ctx.blockConcurrencyWhile(async () => {
-      this.ctx.storage.sql.exec("CREATE TABLE IF NOT EXISTS simulation_state (id INTEGER PRIMARY KEY CHECK (id = 1), body TEXT NOT NULL, updated_at INTEGER NOT NULL)");
-      const existing = this.ctx.storage.sql.exec<{ count: number }>("SELECT COUNT(*) AS count FROM simulation_state").one();
+      this.ctx.storage.sql.exec("CREATE TABLE IF NOT EXISTS environment_state (id INTEGER PRIMARY KEY CHECK (id = 1), body TEXT NOT NULL, updated_at INTEGER NOT NULL)");
+      const existing = this.ctx.storage.sql.exec<{ count: number }>("SELECT COUNT(*) AS count FROM environment_state").one();
       if (existing.count === 0) {
-        const initial = seedSimulation("checkout-regression");
-        this.ctx.storage.sql.exec("INSERT INTO simulation_state (id, body, updated_at) VALUES (1, ?, ?)", JSON.stringify(initial), Date.now());
+        const initial = seedEnvironment("checkout-regression");
+        this.ctx.storage.sql.exec("INSERT INTO environment_state (id, body, updated_at) VALUES (1, ?, ?)", JSON.stringify(initial), Date.now());
         await this.ctx.storage.setAlarm(Date.now() + 30_000);
       }
     });
   }
 
-  private read(): SimulationState {
-    const row = this.ctx.storage.sql.exec<{ body: string }>("SELECT body FROM simulation_state WHERE id = 1").one();
-    const state = JSON.parse(row.body) as SimulationState;
-    state.undoSnapshots ??= Object.create(null) as SimulationState["undoSnapshots"];
+  private read(): EnvironmentState {
+    const row = this.ctx.storage.sql.exec<{ body: string }>("SELECT body FROM environment_state WHERE id = 1").one();
+    const state = JSON.parse(row.body) as EnvironmentState;
+    state.undoSnapshots ??= Object.create(null) as EnvironmentState["undoSnapshots"];
     return state;
   }
 
-  private write(state: SimulationState, eventType = "state.updated"): void {
+  private write(state: EnvironmentState, eventType = "state.updated"): void {
     state.observabilityRevision += 1;
-    this.ctx.storage.sql.exec("UPDATE simulation_state SET body = ?, updated_at = ? WHERE id = 1", JSON.stringify(state), Date.now());
+    this.ctx.storage.sql.exec("UPDATE environment_state SET body = ?, updated_at = ? WHERE id = 1", JSON.stringify(state), Date.now());
     this.broadcast({ type: eventType, sequence: state.observabilityRevision, payload: { epoch: state.epoch, causalRevision: state.causalRevision, observabilityRevision: state.observabilityRevision } });
   }
 
-  private async mutate<T>(operation: (state: SimulationState) => Promise<T> | T, eventType: string): Promise<T> {
+  private async mutate<T>(operation: (state: EnvironmentState) => Promise<T> | T, eventType: string): Promise<T> {
     let release: () => void = () => undefined;
     const previous = this.mutationQueue;
     this.mutationQueue = new Promise<void>(resolve => { release = resolve; });
@@ -86,7 +86,13 @@ export class SimulationStateObject extends DurableObject<Env> {
   listDeployments(serviceId?: ServiceId) { return this.read().deployments.filter(item => !serviceId || item.serviceId === serviceId); }
   listDependencies(serviceId?: ServiceId) {
     const edges = [{ from: "storefront-edge", to: "catalog-api" }, { from: "storefront-edge", to: "cart-api" }, { from: "storefront-edge", to: "checkout-api" }, { from: "catalog-api", to: "inventory-db" }, { from: "cart-api", to: "inventory-db" }, { from: "checkout-api", to: "inventory-db" }, { from: "checkout-api", to: "payment-gateway" }, { from: "checkout-api", to: "order-worker" }, { from: "order-worker", to: "inventory-db" }];
-    return serviceId ? edges.filter(edge => edge.from === serviceId || edge.to === serviceId) : edges;
+    const selectedEdges = serviceId ? edges.filter(edge => edge.from === serviceId || edge.to === serviceId) : edges;
+    const selectedIds = new Set(selectedEdges.flatMap(edge => [edge.from, edge.to]));
+    if (serviceId) selectedIds.add(serviceId);
+    const nodes = Object.values(this.read().services)
+      .filter(service => !serviceId || selectedIds.has(service.id))
+      .map(service => ({ id: service.id, name: service.name, owner: service.owner, hosting: service.hosting }));
+    return { nodes, edges: selectedEdges };
   }
   getMetrics(serviceId?: ServiceId, limit = 180) { return queryMetrics(this.read(), serviceId, limit); }
   getLogs(serviceId?: ServiceId, query = "", limit = 50) { return searchLogs(this.read(), serviceId, query, limit); }
@@ -101,7 +107,7 @@ export class SimulationStateObject extends DurableObject<Env> {
   async execute(proposalId: string, approvalToken: string, idempotencyKey: string, sessionId: string) { return this.mutate(state => executeProposal(state, proposalId, approvalToken, idempotencyKey, sessionId), "execution.updated"); }
   async verify(executionId: string, incidentId: string) { return this.mutate(state => verifyExecution(state, executionId, incidentId), "receipt.created"); }
   async undo(executionId: string, idempotencyKey: string) { return this.mutate(state => undoExecution(state, executionId, idempotencyKey), "execution.updated"); }
-  async reset(scenario: ScenarioId) { return this.mutate(state => { const next = resetSimulation(state, scenario); Object.assign(state, next); return snapshot(state); }, "scenario.reset"); }
+  async reset(scenario: ScenarioId) { return this.mutate(state => { const next = resetEnvironment(state, scenario); Object.assign(state, next); return snapshot(state); }, "scenario.reset"); }
 
   getProducts(query = "", category = "") { return this.read().products.filter(product => (!query || `${product.name} ${product.material} ${product.category}`.toLowerCase().includes(query.toLowerCase())) && (!category || product.category === category)); }
   getProduct(slug: string) { return this.read().products.find(product => product.slug === slug || product.id === slug); }

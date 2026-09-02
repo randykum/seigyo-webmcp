@@ -1,8 +1,8 @@
-import type { ActionType, AgentActivity, Approval, Cart, Deployment, Execution, Incident, LogEvent, MetricPoint, Order, Product, Proposal, ProposalInput, Receipt, RecoveryAction, ScenarioId, ServiceHealth, ServiceId, ServiceRuntime, SimulationSnapshot, Verification, VerificationOutcome } from "@seigyo/contracts";
+import type { ActionType, AgentActivity, Approval, Cart, Deployment, Execution, Incident, LogEvent, MetricPoint, Order, Product, Proposal, ProposalInput, Receipt, RecoveryAction, ScenarioId, ServiceHealth, ServiceId, ServiceRuntime, EnvironmentSnapshot, Verification, VerificationOutcome } from "@seigyo/contracts";
 
 type IdempotencyRecord = { fingerprint: string; result: unknown };
 type UndoSnapshot = { version: string; previousVersion: string; replicas: number; enabled: boolean; restartUntil: number | null; featureFlags: Record<string, boolean>; provider?: "primary" | "fallback" };
-export interface SimulationState {
+export interface EnvironmentState {
   seed: string;
   epoch: number;
   causalRevision: number;
@@ -59,6 +59,16 @@ const names: Record<ServiceId, [string, string]> = {
   "order-worker": ["Order worker", "Fulfillment"]
 };
 
+const hosting: Record<ServiceId, ServiceRuntime["hosting"]> = {
+  "storefront-edge": { providerId: "cloudflare", providerName: "Cloudflare", product: "Workers", region: "Global", resourceId: "myshop-edge-prod" },
+  "catalog-api": { providerId: "render", providerName: "Render", product: "Web Service", region: "Frankfurt", resourceId: "catalog-api-prod" },
+  "cart-api": { providerId: "render", providerName: "Render", product: "Web Service", region: "Frankfurt", resourceId: "cart-api-prod" },
+  "checkout-api": { providerId: "render", providerName: "Render", product: "Web Service", region: "Frankfurt", resourceId: "checkout-api-prod" },
+  "payment-gateway": { providerId: "stripe", providerName: "Stripe", product: "Payments", region: "Global", resourceId: "stripe-primary" },
+  "inventory-db": { providerId: "supabase", providerName: "Supabase", product: "PostgreSQL", region: "Frankfurt", resourceId: "inventory-prod-eu" },
+  "order-worker": { providerId: "render", providerName: "Render", product: "Background Worker", region: "Frankfurt", resourceId: "order-worker-prod" }
+};
+
 export const hash01 = (value: string): number => {
   let hash = 2166136261;
   for (let index = 0; index < value.length; index += 1) {
@@ -96,7 +106,7 @@ const scopedId = (prefix: string, epoch: number, number: number): string => `${p
 const createServices = (): Record<ServiceId, ServiceRuntime> => Object.fromEntries((Object.keys(base) as ServiceId[]).map((serviceId) => {
   const [name, owner] = names[serviceId];
   const version = serviceId === "checkout-api" ? "checkout-2026.08.30.4" : `${serviceId}-2026.08.29.3`;
-  return [serviceId, { id: serviceId, name, owner, version, previousVersion: serviceId === "checkout-api" ? "checkout-2026.08.29.7" : `${serviceId}-2026.08.29.2`, replicas: serviceId === "inventory-db" ? 2 : 1, minReplicas: 1, maxReplicas: 8, enabled: true, restartUntil: null, featureFlags: serviceId === "checkout-api" ? { "new-tax-rounding": true } : {}, ...(serviceId === "payment-gateway" ? { provider: "primary" as const } : {}) }];
+  return [serviceId, { id: serviceId, name, owner, version, previousVersion: serviceId === "checkout-api" ? "checkout-2026.08.29.7" : `${serviceId}-2026.08.29.2`, replicas: serviceId === "inventory-db" ? 2 : 1, minReplicas: 1, maxReplicas: 8, enabled: true, restartUntil: null, featureFlags: serviceId === "checkout-api" ? { "new-tax-rounding": true } : {}, hosting: hosting[serviceId], ...(serviceId === "payment-gateway" ? { provider: "primary" as const } : {}) }];
 })) as Record<ServiceId, ServiceRuntime>;
 
 const productSpecs: Array<[string, Product["category"], string, number, string]> = [
@@ -128,9 +138,9 @@ const createDeployments = (now: number): Deployment[] => Array.from({ length: 60
   return { id: id("DEP", 160 - index), serviceId: isRegression ? "checkout-api" : serviceId, version: isRegression ? "checkout-2026.08.30.4" : `${serviceId}-2026.08.${String(29 - (index % 20)).padStart(2, "0")}.${index % 6}`, previousVersion: isRegression ? "checkout-2026.08.29.7" : `${serviceId}-2026.08.20.2`, status: "success", actor: ["Maya Chen", "Randy B.", "Release Bot", "Idris Cole"][index % 4] ?? "Release Bot", commitSha: shortHash(`commit-${index}`), createdAt: isRegression ? now - 28 * 60_000 : now - (index + 2) * 5_400_000, summary: isRegression ? "Tax rounding and checkout validation changes" : "Routine reliability and dependency update" };
 });
 
-export const seedSimulation = (scenario: ScenarioId = "checkout-regression", epoch = 1): SimulationState => {
+export const seedEnvironment = (scenario: ScenarioId = "checkout-regression", epoch = 1): EnvironmentState => {
   const now = Date.UTC(2026, 8, 1, 13, 20, 0);
-  const state: SimulationState = { seed: `seigyo-${scenario}`, epoch, causalRevision: 1, observabilityRevision: 1, virtualNow: now, scenario, primaryProviderAvailable: scenario !== "payment-outage", inventoryDemandBoost: scenario === "inventory-saturation" ? 130 : 0, services: createServices(), incidents: createIncidents(scenario, now), deployments: createDeployments(now), metrics: [], logs: [], proposals: [], approvals: [], executions: [], verifications: [], receipts: [], agentActivity: [], products: createProducts(), carts: Object.create(null) as Record<string, Cart>, orders: [], idempotency: Object.create(null) as Record<string, IdempotencyRecord>, undoSnapshots: Object.create(null) as Record<string, UndoSnapshot> };
+  const state: EnvironmentState = { seed: `seigyo-${scenario}`, epoch, causalRevision: 1, observabilityRevision: 1, virtualNow: now, scenario, primaryProviderAvailable: scenario !== "payment-outage", inventoryDemandBoost: scenario === "inventory-saturation" ? 130 : 0, services: createServices(), incidents: createIncidents(scenario, now), deployments: createDeployments(now), metrics: [], logs: [], proposals: [], approvals: [], executions: [], verifications: [], receipts: [], agentActivity: [], products: createProducts(), carts: Object.create(null) as Record<string, Cart>, orders: [], idempotency: Object.create(null) as Record<string, IdempotencyRecord>, undoSnapshots: Object.create(null) as Record<string, UndoSnapshot> };
   if (scenario !== "checkout-regression") {
     state.services["checkout-api"].version = "checkout-2026.08.29.7";
     state.services["checkout-api"].featureFlags["new-tax-rounding"] = false;
@@ -150,7 +160,7 @@ export const seedSimulation = (scenario: ScenarioId = "checkout-regression", epo
   return state;
 };
 
-const directHealth = (state: SimulationState, serviceId: ServiceId, timestamp: number): ServiceHealth => {
+const directHealth = (state: EnvironmentState, serviceId: ServiceId, timestamp: number): ServiceHealth => {
   const service = state.services[serviceId];
   const config = base[serviceId];
   const restarting = service.restartUntil !== null && service.restartUntil > timestamp;
@@ -174,7 +184,7 @@ const directHealth = (state: SimulationState, serviceId: ServiceId, timestamp: n
   return { serviceId, status: !service.enabled ? "maintenance" : errorRate > 0.2 ? "critical" : errorRate > 0.02 || p95Ms > config.p95 * 2 ? "degraded" : "healthy", requestRate: round(demand, 1), errorRate: round(errorRate, 4), p95Ms: round(p95Ms, 1), queueDepth: Math.round(Math.max(0, utilization - 0.65) * 42), utilization: round(utilization, 3), availability: round(1 - errorRate, 4) };
 };
 
-export const computeHealth = (state: SimulationState, timestamp = state.virtualNow): ServiceHealth[] => {
+export const computeHealth = (state: EnvironmentState, timestamp = state.virtualNow): ServiceHealth[] => {
   const order: ServiceId[] = ["inventory-db", "payment-gateway", "order-worker", "catalog-api", "cart-api", "checkout-api", "storefront-edge"];
   const map = new Map<ServiceId, ServiceHealth>();
   for (const serviceId of order) {
@@ -189,9 +199,9 @@ export const computeHealth = (state: SimulationState, timestamp = state.virtualN
 };
 
 const scenarioLabel = (scenario: ScenarioId): string => ({ "checkout-regression": "Checkout deployment regression", "payment-outage": "Payment provider outage", "inventory-saturation": "Inventory saturation" })[scenario];
-export const snapshot = (state: SimulationState): SimulationSnapshot => ({ epoch: state.epoch, causalRevision: state.causalRevision, observabilityRevision: state.observabilityRevision, virtualNow: state.virtualNow, scenario: state.scenario, scenarioLabel: scenarioLabel(state.scenario), services: Object.values(state.services), health: computeHealth(state), activeIncident: state.incidents[0] as Incident, incidents: state.incidents, deployments: state.deployments.slice(0, 60), proposals: state.proposals.slice(-20).reverse(), executions: state.executions.slice(-20).reverse(), verifications: state.verifications.slice(-20).reverse(), receipts: state.receipts.slice(-30).reverse(), agentActivity: state.agentActivity.slice(-40).reverse(), products: state.products });
+export const snapshot = (state: EnvironmentState): EnvironmentSnapshot => ({ epoch: state.epoch, causalRevision: state.causalRevision, observabilityRevision: state.observabilityRevision, virtualNow: state.virtualNow, scenario: state.scenario, scenarioLabel: scenarioLabel(state.scenario), services: Object.values(state.services), health: computeHealth(state), activeIncident: state.incidents[0] as Incident, incidents: state.incidents, deployments: state.deployments.slice(0, 60), proposals: state.proposals.slice(-20).reverse(), executions: state.executions.slice(-20).reverse(), verifications: state.verifications.slice(-20).reverse(), receipts: state.receipts.slice(-30).reverse(), agentActivity: state.agentActivity.slice(-40).reverse(), products: state.products });
 
-export const tick = (state: SimulationState, seconds = 30): SimulationState => {
+export const tick = (state: EnvironmentState, seconds = 30): EnvironmentState => {
   if (!Number.isFinite(seconds) || seconds < 0 || seconds > 3600) throw new Error("INVALID_ARGUMENT:Tick duration must be from 0 to 3600 seconds.");
   state.virtualNow += seconds * 1000;
   state.observabilityRevision += 1;
@@ -204,11 +214,11 @@ export const tick = (state: SimulationState, seconds = 30): SimulationState => {
   return state;
 };
 
-const stateFingerprint = async (state: SimulationState): Promise<string> => sha256(canonical({ epoch: state.epoch, causalRevision: state.causalRevision, scenario: state.scenario, provider: state.services["payment-gateway"].provider, primaryProviderAvailable: state.primaryProviderAvailable, inventoryDemandBoost: state.inventoryDemandBoost, services: Object.values(state.services).map(service => ({ id: service.id, version: service.version, replicas: service.replicas, enabled: service.enabled, restartUntil: service.restartUntil, featureFlags: service.featureFlags, provider: service.provider })) }));
+const stateFingerprint = async (state: EnvironmentState): Promise<string> => sha256(canonical({ epoch: state.epoch, causalRevision: state.causalRevision, scenario: state.scenario, provider: state.services["payment-gateway"].provider, primaryProviderAvailable: state.primaryProviderAvailable, inventoryDemandBoost: state.inventoryDemandBoost, services: Object.values(state.services).map(service => ({ id: service.id, version: service.version, replicas: service.replicas, enabled: service.enabled, restartUntil: service.restartUntil, featureFlags: service.featureFlags, provider: service.provider })) }));
 const actionFingerprint = async (action: RecoveryAction): Promise<string> => sha256(canonical(action));
-const recordActivity = (state: SimulationState, tool: string, purpose: string, summary: string, activityState: AgentActivity["state"] = "complete"): void => { state.agentActivity.push({ id: id("ACT", state.agentActivity.length + 1), timestamp: state.virtualNow, tool, purpose, state: activityState, summary }); };
+const recordActivity = (state: EnvironmentState, tool: string, purpose: string, summary: string, activityState: AgentActivity["state"] = "complete"): void => { state.agentActivity.push({ id: id("ACT", state.agentActivity.length + 1), timestamp: state.virtualNow, tool, purpose, state: activityState, summary }); };
 
-const isCorrectAction = (state: SimulationState, action: RecoveryAction): "recovery" | "partial" | "containment" | "unlikely" => {
+const isCorrectAction = (state: EnvironmentState, action: RecoveryAction): "recovery" | "partial" | "containment" | "unlikely" => {
   if (action.type === "maintenance_mode" && ["storefront-edge", "checkout-api"].includes(action.targetService)) return "containment";
   if (state.scenario === "checkout-regression") {
     if (action.targetService === "checkout-api" && (action.type === "rollback_deployment" || action.type === "shift_traffic")) return "recovery";
@@ -220,7 +230,7 @@ const isCorrectAction = (state: SimulationState, action: RecoveryAction): "recov
   return "unlikely";
 };
 
-const validateAction = (state: SimulationState, action: RecoveryAction): string | null => {
+const validateAction = (state: EnvironmentState, action: RecoveryAction): string | null => {
   const service = state.services[action.targetService];
   if (!service) return "Target service does not exist.";
   if (action.type === "scale_service" && (typeof action.parameters.replicas !== "number" || !Number.isInteger(action.parameters.replicas) || action.parameters.replicas < service.minReplicas || action.parameters.replicas > service.maxReplicas)) return `Replicas must be an integer from ${service.minReplicas} to ${service.maxReplicas}.`;
@@ -231,7 +241,7 @@ const validateAction = (state: SimulationState, action: RecoveryAction): string 
   return null;
 };
 
-const applyAction = (state: SimulationState, action: RecoveryAction): void => {
+const applyAction = (state: EnvironmentState, action: RecoveryAction): void => {
   const service = state.services[action.targetService];
   if (action.type === "rollback_deployment") { const current = service.version; const deployment = state.deployments.find(item => item.serviceId === service.id && item.version === current); service.version = deployment?.previousVersion ?? service.previousVersion; service.previousVersion = current; if (deployment) deployment.status = "rolled_back"; if (service.id === "checkout-api") service.featureFlags["new-tax-rounding"] = false; }
   if (action.type === "restart_service") service.restartUntil = state.virtualNow + 5000;
@@ -243,7 +253,7 @@ const applyAction = (state: SimulationState, action: RecoveryAction): void => {
   if (action.type === "maintenance_mode") service.enabled = false;
 };
 
-export const investigate = (state: SimulationState, incidentId: string) => {
+export const investigate = (state: EnvironmentState, incidentId: string) => {
   const incident = state.incidents.find(item => item.id === incidentId);
   if (!incident) return null;
   if (incident.status === "investigating") incident.status = "identified";
@@ -255,7 +265,7 @@ export const investigate = (state: SimulationState, incidentId: string) => {
   return result;
 };
 
-export const proposeAction = async (state: SimulationState, input: ProposalInput): Promise<Proposal> => {
+export const proposeAction = async (state: EnvironmentState, input: ProposalInput): Promise<Proposal> => {
   validatePublicKey(input.idempotencyKey, "idempotencyKey");
   const duplicate = Object.hasOwn(state.idempotency, input.idempotencyKey) ? state.idempotency[input.idempotencyKey] : undefined;
   const fingerprint = await sha256(canonical(input));
@@ -290,7 +300,7 @@ export const proposeAction = async (state: SimulationState, input: ProposalInput
   return proposal;
 };
 
-export const approveProposal = async (state: SimulationState, proposalId: string, sessionId: string): Promise<Approval> => {
+export const approveProposal = async (state: EnvironmentState, proposalId: string, sessionId: string): Promise<Approval> => {
   validatePublicKey(sessionId, "sessionId");
   const proposal = state.proposals.find(item => item.id === proposalId);
   if (!proposal) throw new Error("NOT_FOUND");
@@ -303,7 +313,7 @@ export const approveProposal = async (state: SimulationState, proposalId: string
   return approval;
 };
 
-export const rejectProposal = (state: SimulationState, proposalId: string): Proposal => {
+export const rejectProposal = (state: EnvironmentState, proposalId: string): Proposal => {
   const proposal = state.proposals.find(item => item.id === proposalId);
   if (!proposal) throw new Error("NOT_FOUND");
   if (proposal.status !== "pending") throw new Error("PRECONDITION_FAILED");
@@ -311,7 +321,7 @@ export const rejectProposal = (state: SimulationState, proposalId: string): Prop
   return proposal;
 };
 
-export const executeProposal = async (state: SimulationState, proposalId: string, approvalToken: string, idempotencyKey: string, sessionId: string): Promise<Execution> => {
+export const executeProposal = async (state: EnvironmentState, proposalId: string, approvalToken: string, idempotencyKey: string, sessionId: string): Promise<Execution> => {
   validatePublicKey(idempotencyKey, "idempotencyKey"); validatePublicKey(sessionId, "sessionId");
   const fingerprint = await sha256(canonical({ proposalId, approvalToken, sessionId }));
   const duplicate = Object.hasOwn(state.idempotency, idempotencyKey) ? state.idempotency[idempotencyKey] : undefined;
@@ -346,7 +356,7 @@ export const executeProposal = async (state: SimulationState, proposalId: string
   return execution;
 };
 
-export const verifyExecution = async (state: SimulationState, executionId: string, incidentId: string): Promise<Verification> => {
+export const verifyExecution = async (state: EnvironmentState, executionId: string, incidentId: string): Promise<Verification> => {
   const execution = state.executions.find(item => item.id === executionId);
   if (!execution || execution.incidentId !== incidentId) throw new Error("NOT_FOUND");
   const existing = state.verifications.find(item => item.executionId === executionId);
@@ -379,7 +389,7 @@ export const verifyExecution = async (state: SimulationState, executionId: strin
   return verification;
 };
 
-export const undoExecution = async (state: SimulationState, executionId: string, idempotencyKey: string): Promise<Execution> => {
+export const undoExecution = async (state: EnvironmentState, executionId: string, idempotencyKey: string): Promise<Execution> => {
   validatePublicKey(idempotencyKey, "idempotencyKey");
   const fingerprint = await sha256(canonical({ operation: "undo", executionId }));
   const duplicate = Object.hasOwn(state.idempotency, idempotencyKey) ? state.idempotency[idempotencyKey] : undefined;
@@ -407,9 +417,9 @@ export const undoExecution = async (state: SimulationState, executionId: string,
   return undo;
 };
 
-export const resetSimulation = (state: SimulationState, scenario: ScenarioId): SimulationState => {
+export const resetEnvironment = (state: EnvironmentState, scenario: ScenarioId): EnvironmentState => {
   const receipts = state.receipts;
-  const next = seedSimulation(scenario, state.epoch + 1);
+  const next = seedEnvironment(scenario, state.epoch + 1);
   next.receipts = receipts;
   next.causalRevision = state.causalRevision + 1;
   next.observabilityRevision = state.observabilityRevision + 1;
@@ -417,12 +427,12 @@ export const resetSimulation = (state: SimulationState, scenario: ScenarioId): S
 };
 
 const boundedLimit = (value: number, fallback: number, max: number): number => Number.isFinite(value) ? Math.max(0, Math.min(Math.trunc(value), max)) : fallback;
-export const queryMetrics = (state: SimulationState, serviceId?: ServiceId, limit = 180): MetricPoint[] => { const count = boundedLimit(limit, 180, 300); return count === 0 ? [] : state.metrics.filter(point => !serviceId || point.serviceId === serviceId).slice(-count); };
-export const searchLogs = (state: SimulationState, serviceId?: ServiceId, query = "", limit = 50): LogEvent[] => { const count = boundedLimit(limit, 50, 50); return count === 0 ? [] : state.logs.filter(log => (!serviceId || log.serviceId === serviceId) && (!query || `${log.message} ${log.eventName}`.toLowerCase().includes(query.toLowerCase()))).slice(-count).reverse(); };
+export const queryMetrics = (state: EnvironmentState, serviceId?: ServiceId, limit = 180): MetricPoint[] => { const count = boundedLimit(limit, 180, 300); return count === 0 ? [] : state.metrics.filter(point => !serviceId || point.serviceId === serviceId).slice(-count); };
+export const searchLogs = (state: EnvironmentState, serviceId?: ServiceId, query = "", limit = 50): LogEvent[] => { const count = boundedLimit(limit, 50, 50); return count === 0 ? [] : state.logs.filter(log => (!serviceId || log.serviceId === serviceId) && (!query || `${log.message} ${log.eventName}`.toLowerCase().includes(query.toLowerCase()))).slice(-count).reverse(); };
 
 const validatePublicKey = (value: string, field: string): void => { if (!/^[a-zA-Z0-9_-]{1,100}$/.test(value) || ["__proto__", "prototype", "constructor"].includes(value)) throw new Error(`INVALID_ARGUMENT:${field} is invalid.`); };
-export const getCart = (state: SimulationState, cartId: string): Cart => { validatePublicKey(cartId, "cartId"); return Object.hasOwn(state.carts, cartId) ? state.carts[cartId] as Cart : { id: cartId, items: [], updatedAt: state.virtualNow }; };
-export const updateCart = (state: SimulationState, cartId: string, productId: string, quantity: number): Cart => {
+export const getCart = (state: EnvironmentState, cartId: string): Cart => { validatePublicKey(cartId, "cartId"); return Object.hasOwn(state.carts, cartId) ? state.carts[cartId] as Cart : { id: cartId, items: [], updatedAt: state.virtualNow }; };
+export const updateCart = (state: EnvironmentState, cartId: string, productId: string, quantity: number): Cart => {
   validatePublicKey(cartId, "cartId");
   if (!Number.isInteger(quantity) || quantity < 0 || quantity > 10) throw new Error("INVALID_ARGUMENT:Quantity must be an integer from 0 to 10.");
   if (!state.products.some(product => product.id === productId)) throw new Error("NOT_FOUND");
@@ -435,7 +445,7 @@ export const updateCart = (state: SimulationState, cartId: string, productId: st
   return cart;
 };
 
-export const checkout = async (state: SimulationState, input: { cartId: string; email: string; name: string; address: string; requestId: string; idempotencyKey: string }): Promise<Order> => {
+export const checkout = async (state: EnvironmentState, input: { cartId: string; email: string; name: string; address: string; requestId: string; idempotencyKey: string }): Promise<Order> => {
   validatePublicKey(input.cartId, "cartId"); validatePublicKey(input.idempotencyKey, "idempotencyKey");
   const fingerprint = await sha256(canonical(input));
   const duplicate = Object.hasOwn(state.idempotency, input.idempotencyKey) ? state.idempotency[input.idempotencyKey] : undefined;

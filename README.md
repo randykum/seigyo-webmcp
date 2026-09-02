@@ -1,14 +1,15 @@
 # Seigyo
 
-Seigyo is an agent-native incident investigation and controlled-recovery product built for the OpenAI WebMCP Challenge. MyShop is a separate modern-home storefront connected to the same causal production simulation.
+Seigyo is an agent-native incident investigation and controlled-recovery product built for the OpenAI WebMCP Challenge. MyShop is a separate modern-home storefront connected to the same deterministic causal operations environment.
 
 ## Live applications
 
 - Seigyo: https://seigyo.cord-pail.workers.dev
 - MyShop: https://myshop.cord-pail.workers.dev
-- Shared API: https://seigyo-api.cord-pail.workers.dev
+- Operations API: https://seigyo-operations-api.cord-pail.workers.dev
+- Rollback API: https://seigyo-api.cord-pail.workers.dev
 
-The live deployment uses a temporary Cloudflare preview account until its claim link is completed. The application URLs remain the intended public URLs after the account is claimed.
+The active applications run on the claimed Cloudflare account. The rollback API remains deployed and unchanged for release recovery.
 
 ## Applications
 
@@ -16,9 +17,9 @@ The live deployment uses a temporary Cloudflare preview account until its claim 
 - `apps/myshop`: customer storefront
 - `services/api`: Cloudflare Worker API and SQLite Durable Object
 - `packages/contracts`: shared schemas and public types
-- `packages/simulation`: deterministic causal state engine
+- `packages/environment`: deterministic causal state engine
 
-## What makes the demo real
+## Environment behavior
 
 - Seven causally connected services with persistent Durable Object state
 - Three independently modeled incidents and multiple effective or ineffective interventions
@@ -28,16 +29,18 @@ The live deployment uses a temporary Cloudflare preview account until its claim 
 - Page-scoped WebMCP tools for both incident operations and customer shopping
 - Normal MyShop and Seigyo interfaces that remain fully usable when WebMCP is unavailable
 
+The architecture inventory identifies seven service boundaries across Cloudflare Workers, Render Web Services and Background Workers, Stripe Payments, and Supabase PostgreSQL. The current challenge deployment runs the causal state engine in one Cloudflare Durable Object so the complete environment is deterministic and repeatable.
+
 ## Judge flow
 
 1. Open MyShop, add the Kuro lounge chair, and attempt checkout.
-2. Observe the safe checkout failure while the cart remains intact.
+2. Observe the checkout failure while the cart remains intact.
 3. Open incident `INC-042` in Seigyo.
 4. Investigate, propose the evidence-backed rollback, and approve the exact action.
 5. Execute and verify recovery.
-6. Return to MyShop checkout and complete the simulated order.
+6. Return to MyShop checkout and complete the order.
 
-Scenario selection and reset are available in Seigyo under Environment.
+Operating-condition selection and reset are available in Seigyo under Environment.
 
 ## Local development
 
@@ -58,17 +61,13 @@ pnpm audit --prod
 
 ## Deployment
 
-Each application deploys independently to Cloudflare Workers. Deploy the API first, add its HTTPS URL to `VITE_API_BASE_URL`, add the final frontend origins to the API allowlist, then deploy both frontends. The frontend deployment scripts fail closed when the API URL is missing.
-
-For a permanent account:
+Each application deploys independently to Cloudflare Workers. Deploy the operations API first, add its HTTPS URL to `VITE_API_BASE_URL`, add the final frontend origins to the API allowlist, then deploy both frontends. The frontend deployment scripts fail closed when the API URL is missing.
 
 ```powershell
 pnpm deploy:api
-$env:VITE_API_BASE_URL="https://seigyo-api.your-account.workers.dev"
+$env:VITE_API_BASE_URL="https://seigyo-operations-api.your-account.workers.dev"
 pnpm deploy:seigyo
 pnpm deploy:myshop
 ```
 
-For an unauthenticated temporary preview, add `--temporary` to the underlying Wrangler commands. Cloudflare deletes an unclaimed preview account after 60 minutes. Use the claim link printed by Wrangler to preserve its Workers and Durable Object.
-
-This environment is a production simulation. Checkout never charges real money.
+The checkout flow records payment outcomes inside the causal state engine. It does not connect to an external payment processor or collect payment credentials.

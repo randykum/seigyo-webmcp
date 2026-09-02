@@ -1,7 +1,7 @@
 import type { ApiResult, ProposalInput, ScenarioId, ServiceId } from "@seigyo/contracts";
 
 const API_BASE = (import.meta.env.VITE_API_BASE_URL as string | undefined)?.replace(/\/$/, "") ?? "";
-const SESSION_ID = "seigyo-demo-operator";
+const SESSION_ID = "seigyo-operator-session";
 
 export class ApiError extends Error {
   constructor(public code: string, message: string) { super(message); }
@@ -36,7 +36,7 @@ export const api = {
   execute: <T>(proposalId: string, approvalToken: string, idempotencyKey: string) => request<T>("/api/executions", { method: "POST", body: JSON.stringify({ proposalId, approvalToken, idempotencyKey }) }),
   verify: <T>(executionId: string, incidentId: string) => request<T>("/api/verifications", { method: "POST", body: JSON.stringify({ executionId, incidentId, checks: ["service_health", "error_rate", "latency", "deployment", "dependency"] }) }),
   undo: <T>(executionId: string) => request<T>("/api/undo", { method: "POST", body: JSON.stringify({ executionId, idempotencyKey: crypto.randomUUID() }) }),
-  reset: <T>(scenario: ScenarioId) => request<T>("/api/scenario/reset", { method: "POST", body: JSON.stringify({ scenario, confirmation: "RESET SIMULATION" }) })
+  reset: <T>(scenario: ScenarioId) => request<T>("/api/scenario/reset", { method: "POST", body: JSON.stringify({ scenario, confirmation: "RESET ENVIRONMENT" }) })
 };
 
 export const websocketUrl = (): string => {
