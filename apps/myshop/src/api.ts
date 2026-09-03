@@ -1,10 +1,37 @@
-import type { ApiResult } from "@seigyo/contracts";
+import {
+  SessionIdSchema,
+  type ApiResult,
+} from "@seigyo/contracts";
 
 const API_BASE = (import.meta.env.VITE_API_BASE_URL as string | undefined)?.replace(/\/$/, "") ?? "";
-const SESSION_ID = "seigyo-operator-session";
+const SESSION_STORAGE_KEY = "myshop.seigyo-session";
+
+const validSession = (value: string | null | undefined): string | undefined => {
+  const parsed = SessionIdSchema.safeParse(value);
+  return parsed.success ? parsed.data : undefined;
+};
+
+const resolveSessionId = (): string => {
+  const fromUrl = validSession(new URLSearchParams(location.search).get("session"));
+  let stored: string | undefined;
+  try {
+    stored = validSession(sessionStorage.getItem(SESSION_STORAGE_KEY));
+  } catch {
+    stored = undefined;
+  }
+  const resolved = fromUrl ?? stored ?? `judge-${crypto.randomUUID().replaceAll("-", "")}`;
+  try {
+    sessionStorage.setItem(SESSION_STORAGE_KEY, resolved);
+  } catch {
+    // A blocked session store does not prevent the current tab from working.
+  }
+  return resolved;
+};
+
+export const SESSION_ID = resolveSessionId();
 
 async function request<T>(path: string, init?: RequestInit): Promise<T> {
-  const response = await fetch(`${API_BASE}${path}`, { ...init, headers: { "Content-Type": "application/json", ...init?.headers } });
+  const response = await fetch(`${API_BASE}${path}`, { ...init, headers: { "Content-Type": "application/json", "X-Session-Id": SESSION_ID, ...init?.headers } });
   const result = await response.json() as ApiResult<T>;
   if (!result.ok) { const error = new Error(result.error.message); Object.assign(error, { code: result.error.code }); throw error; }
   return result.data;
@@ -20,7 +47,7 @@ export const shopApi = {
   health: <T>() => request<T>("/api/store/health")
 };
 
-export const CART_ID = "myshop-judging-cart";
+export const CART_ID = `myshop-${SESSION_ID}`;
 
 export const shopWebsocketUrl = (): string => {
   if (API_BASE)

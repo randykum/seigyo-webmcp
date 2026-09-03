@@ -31,6 +31,23 @@ describe("OperationsStateObject", () => {
     ).toBe("Render");
   });
 
+  it("keeps carts and operating conditions isolated by session object", async () => {
+    const first = env.OPERATIONS_STATE.getByName("seigyo-session-isolation-a");
+    const second = env.OPERATIONS_STATE.getByName("seigyo-session-isolation-b");
+    await first.reset("checkout-regression");
+    await second.reset("payment-outage");
+    await first.setCartItem("session-cart", "PRD-001", 2);
+
+    const firstSnapshot = await first.getSnapshot();
+    const secondSnapshot = await second.getSnapshot();
+    expect(firstSnapshot.scenario).toBe("checkout-regression");
+    expect(secondSnapshot.scenario).toBe("payment-outage");
+    expect((await first.getCart("session-cart")).items).toEqual([
+      { productId: "PRD-001", quantity: 2 },
+    ]);
+    expect((await second.getCart("session-cart")).items).toEqual([]);
+  });
+
   it("invalidates proposals after reset", async () => {
     const state = env.OPERATIONS_STATE.getByName("reset-workspace");
     const before = await state.getSnapshot();

@@ -13,19 +13,19 @@
   },
   "depth": "deep",
   "createdAt": "2026-09-01T00:00:00+01:00",
+  "evidencePolicy": "Text-only source records with links. No third-party screenshots, logos, or other visual assets are redistributed.",
   "counts": {
     "sourcePlatforms": 29,
     "uiCandidates": 51,
     "componentLibraries": 25,
     "designSystems": 8,
-    "visualEvidence": 26,
+    "visualEvidence": 0,
     "specificScreenOrFlowUrls": 51
   },
   "files": {
     "uiCandidates": "ui-inspiration-candidates.json",
     "componentLibraries": "component-library-research.json",
     "designSystems": "design-system-research.json",
-    "report": "research-report.html",
     "summary": "research-summary.md",
     "sourceMap": "source-map.csv"
   },

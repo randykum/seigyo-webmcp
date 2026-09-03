@@ -1,5 +1,9 @@
 # Seigyo UI Research Summary
 
+## Evidence policy
+
+This library contains text-only research records and source links. It does not redistribute third-party screenshots, logos, source code, or other visual assets.
+
 ## Visual thesis
 
 Seigyo is a near-black technical workspace where evidence, human authority, and verified recovery remain connected in one continuous operational surface. MyShop is a dark editorial home-objects store whose warm material photography creates contrast with the control product.

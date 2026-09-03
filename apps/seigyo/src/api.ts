@@ -1,3 +1,4 @@
+import { SessionIdSchema } from "@seigyo/contracts";
 import type {
   ApiResult,
   DeployCheckoutRevisionResult,
@@ -11,7 +12,40 @@ const API_BASE =
     /\/$/,
     "",
   ) ?? "";
-const SESSION_ID = "seigyo-operator-session";
+const SESSION_STORAGE_KEY = "seigyo.session-id";
+
+const validSession = (value: string | null | undefined): string | undefined => {
+  const parsed = SessionIdSchema.safeParse(value);
+  return parsed.success ? parsed.data : undefined;
+};
+
+const resolveSessionId = (): string => {
+  const fromUrl = validSession(new URLSearchParams(location.search).get("session"));
+  let stored: string | undefined;
+  try {
+    stored = validSession(sessionStorage.getItem(SESSION_STORAGE_KEY));
+  } catch {
+    stored = undefined;
+  }
+  const resolved = fromUrl ?? stored ?? `judge-${crypto.randomUUID().replaceAll("-", "")}`;
+  try {
+    sessionStorage.setItem(SESSION_STORAGE_KEY, resolved);
+  } catch {
+    // A blocked session store does not prevent the current tab from working.
+  }
+  return resolved;
+};
+
+export const SESSION_ID = resolveSessionId();
+
+const storefrontBase =
+  (import.meta.env.VITE_MYSHOP_URL as string | undefined)?.replace(/\/$/, "") ??
+  (location.hostname === "localhost"
+    ? "http://localhost:5174"
+    : "https://myshop.cord-pail.workers.dev");
+
+export const storefrontUrl = (): string =>
+  `${storefrontBase}/?session=${encodeURIComponent(SESSION_ID)}`;
 
 export class ApiError extends Error {
   constructor(

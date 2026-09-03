@@ -33,12 +33,15 @@ The architecture inventory identifies seven service boundaries across Cloudflare
 
 ## Judge flow
 
-1. Open MyShop, add the Kuro lounge chair, and attempt checkout.
-2. Observe the checkout failure while the cart remains intact.
-3. Open incident `INC-042` in Seigyo.
-4. Investigate, propose the evidence-backed rollback, and approve the exact action.
-5. Execute and verify recovery.
-6. Return to MyShop checkout and complete the order.
+1. Open Seigyo first and go to Environment.
+2. Click Open storefront and use the linked MyShop tab for all storefront actions. Independently opening an app URL creates a separate browser session, so it will not share the same cart or environment state.
+3. If the environment is healthy, return to Seigyo Environment and use Release control to deploy a new revision. In the linked MyShop tab, add the Kuro lounge chair and attempt checkout.
+4. Observe the customer-path error while the cart remains intact, then return to the Seigyo tab and select the current active incident from the Active incidents list.
+5. Ask the browser agent to investigate the current incident, collect evidence, propose the safest evidence-backed action, wait for approval, execute it, and verify recovery.
+6. Approve the exact action in the Agent Console when the human checkpoint appears. The agent continues with execution and verification after approval.
+7. Return to the linked MyShop tab and complete the order.
+
+The flow uses the current active incident and does not depend on a fixed incident identifier or a preselected cause. The Seigyo Environment page also provides the operator controls needed to restore the starting condition between judging sessions.
 
 Operating-condition selection and reset are available in Seigyo under Environment.
 
@@ -58,6 +61,8 @@ pnpm verify
 pnpm test:e2e
 pnpm audit --prod
 ```
+
+`pnpm verify` uses only validators stored in this repository, so it works after a fresh clone without any private workstation paths. UI research is documented as a text-only source map with links. No third-party screenshots are redistributed in the repository.
 
 ## Deployment
 

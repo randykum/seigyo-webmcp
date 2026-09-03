@@ -65,7 +65,7 @@ import type {
   ServiceRuntime,
   EnvironmentSnapshot,
 } from "@seigyo/contracts";
-import { api, ApiError, websocketUrl } from "./api";
+import { api, ApiError, storefrontUrl, websocketUrl } from "./api";
 import { ProviderMark } from "./ProviderMark";
 import { registerSeigyoTools } from "./webmcp";
 import { AgentConsole } from "./AgentConsoleView";
@@ -1257,6 +1257,14 @@ function Environment({
             )}
             {releaseBusy ? "Deploying revision" : "Deploy new revision"}
           </button>
+          <a
+            className="button button-ghost"
+            href={storefrontUrl()}
+            target="_blank"
+            rel="noreferrer"
+          >
+            Open storefront
+          </a>
           {!releaseAvailable && (
             <p className="release-control-disabled" role="status">
               Resolve the current operating issue before deploying another

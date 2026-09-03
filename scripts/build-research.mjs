@@ -1,8 +1,7 @@
-import { mkdir, writeFile } from "node:fs/promises";
+import { writeFile } from "node:fs/promises";
 import path from "node:path";
 
 const root = path.resolve("ui_system/ui_research");
-await mkdir(path.join(root, "visual-evidence"), { recursive: true });
 
 const rows = [
   ["beUI", "Approval Card", "https://beui.dev/components/agents/approval-card", "approval", "A compact bordered decision surface keeps the requested action, risk, and response controls in one scan.", "Single-column decision region with action detail above a firm action footer.", "Near-black surfaces, quiet gray borders, semantic action color.", ["disclosure", "approval footer", "risk label"], "Progressively reveals details while keeping the decision visible."],
@@ -60,9 +59,7 @@ const rows = [
 
 const candidates = rows.map((row, index) => {
   const n = index + 1;
-  const evidence = n <= 26
-    ? { type: "screenshot", path: `visual-evidence/ui-${String(((n - 1) % 10) + 1).padStart(3, "0")}.png`, blockedReason: "" }
-    : { type: "visual-note", path: "", note: "Public page observed through documentation and current product references; no stable local capture retained.", blockedReason: "" };
+  const evidence = { type: "visual-note", path: "", note: "Public page reviewed through the linked source and documented observations; no local capture is retained.", blockedReason: "" };
   return {
     id: `ui-${String(n).padStart(3, "0")}`,
     source: row[0], title: row[1], url: row[2],
@@ -120,14 +117,47 @@ const dsRows = [
 const designSystems=dsRows.map((r,i)=>({id:`ds-${String(i+1).padStart(3,"0")}`,name:r[0],url:r[1],usedFor:r[2],takeaways:r[3],risks:r[4],fitScore:r[5]}));
 
 const sources=[...new Set(candidates.map(c=>c.source))];
-const index={project:{name:"Seigyo and MyShop",type:"Agent-native incident recovery and causal commerce environment",audience:"Incident commanders, SREs, engineering leaders, WebMCP judges, and storefront customers",platform:"Responsive web",stack:"React 19, Vite, Tailwind 4, Cloudflare Workers, Durable Objects",assumptions:["Black Vector is the chosen direction.","Seigyo is the primary product.","MyShop remains a believable independent dark retail experience."]},depth:"deep",createdAt:"2026-09-01T00:00:00+01:00",counts:{sourcePlatforms:sources.length,uiCandidates:candidates.length,componentLibraries:libraries.length,designSystems:designSystems.length,visualEvidence:candidates.filter(c=>c.evidence.type==="screenshot"||c.evidence.type==="image-url").length,specificScreenOrFlowUrls:candidates.filter(c=>c.urlType!=="homepage").length},files:{uiCandidates:"ui-inspiration-candidates.json",componentLibraries:"component-library-research.json",designSystems:"design-system-research.json",report:"research-report.html",summary:"research-summary.md",sourceMap:"source-map.csv"},topRecommendations:["Use beUI agent patterns as adapted source, not as an unchanged visual kit.","Use Radix and shadcn for accessible behavior.","Use Carbon dark layering and Primer chart rules.","Keep Seigyo connected and operational; keep MyShop image-led and editorial."]};
+const index={project:{name:"Seigyo and MyShop",type:"Agent-native incident recovery and causal commerce environment",audience:"Incident commanders, SREs, engineering leaders, WebMCP judges, and storefront customers",platform:"Responsive web",stack:"React 19, Vite, Tailwind 4, Cloudflare Workers, Durable Objects",assumptions:["Black Vector is the chosen direction.","Seigyo is the primary product.","MyShop remains a believable independent dark retail experience."]},depth:"deep",createdAt:"2026-09-01T00:00:00+01:00",evidencePolicy:"Text-only source records with links. No third-party screenshots, logos, or other visual assets are redistributed.",counts:{sourcePlatforms:sources.length,uiCandidates:candidates.length,componentLibraries:libraries.length,designSystems:designSystems.length,visualEvidence:0,specificScreenOrFlowUrls:candidates.filter(c=>c.urlType!=="homepage").length},files:{uiCandidates:"ui-inspiration-candidates.json",componentLibraries:"component-library-research.json",designSystems:"design-system-research.json",summary:"research-summary.md",sourceMap:"source-map.csv"},topRecommendations:["Use beUI agent patterns as adapted source, not as an unchanged visual kit.","Use Radix and shadcn for accessible behavior.","Use Carbon dark layering and Primer chart rules.","Keep Seigyo connected and operational; keep MyShop image-led and editorial."]};
 
 const csv=["id,type,source,title,url,category,fit_score,used_for",...candidates.map(c=>`${c.id},ui,${c.source},\"${c.title}\",${c.url},${c.category},${c.fitScore},\"${c.designSystemAreas.join(" | ")}\"`),...libraries.map(l=>`${l.id},library,${l.name},\"${l.name}\",${l.url},component-library,${l.fitScore},\"${l.bestFor.join(" | ")}\"`),...designSystems.map(d=>`${d.id},design-system,${d.name},\"${d.name}\",${d.url},design-system,${d.fitScore},\"${d.usedFor.join(" | ")}\"`)].join("\n");
 
-const summary=`# Seigyo UI Research Summary\n\n## Visual thesis\n\nSeigyo is a near-black technical workspace where evidence, human authority, and verified recovery remain connected in one continuous operational surface. MyShop is a dark editorial home-objects store whose warm material photography creates contrast with the control product.\n\n## Content plan\n\n- Seigyo starts with system status, active incidents, a focal chart, and clear next actions.\n- Incident detail follows impact, evidence, proposal, approval, execution, verification, and receipt.\n- MyShop starts with one full-bleed lifestyle image, then collection discovery, product depth, and checkout.\n\n## Interaction thesis\n\n- Route and panel transitions use 150 to 180ms movement with stable geometry.\n- Streaming evidence follows the newest event only until the operator scrolls away.\n- Approval and execution changes are visible, explicit, and never represented by decorative motion alone.\n\n## Decisions\n\n- Black Vector palette and Geist typography.\n- beUI source patterns for approvals, activity, streaming evidence, command palette, side navigation, and feedback.\n- Radix and shadcn behavior foundations.\n- Recharts with Primer accessibility rules.\n- Hairline connected regions instead of floating card mosaics.\n- Original generated product photography for MyShop.\n\n## Avoid\n\n- Generic SaaS cards, glass effects, gradient-heavy heroes, pulsing severity, hidden hover-only facts, mixed icon styles, and ambiguous approval controls.\n`;
+const summary=`# Seigyo UI Research Summary
 
-const cards=candidates.map(c=>`<article class="candidate" data-source="${c.source}" data-category="${c.category}"><div class="eyebrow">${c.id} · ${c.source}</div><h3>${c.title}</h3>${c.evidence.type==="screenshot"?`<img src="${c.evidence.path}" alt="Captured visual evidence for ${c.title}">`:""}<p>${c.visualObservation}</p><dl><dt>Layout</dt><dd>${c.observedLayout}</dd><dt>Borrow</dt><dd>${c.whatToBorrow}</dd><dt>Avoid</dt><dd>${c.whatToAvoid}</dd></dl><a href="${c.url}">Open source</a></article>`).join("");
-const report=`<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Seigyo UI research</title><style>:root{color-scheme:dark;--bg:#101318;--s1:#111;--s2:#1B212A;--line:#343D49;--text:#F4F7FA;--muted:#A6B0BD;--blue:#86AEF8}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:14px/1.5 Arial,sans-serif;background-image:linear-gradient(#ffffff05 1px,transparent 1px),linear-gradient(90deg,#ffffff05 1px,transparent 1px);background-size:32px 32px}header{min-height:48vh;padding:72px 6vw;border-bottom:1px solid var(--line);display:grid;align-content:end;background:radial-gradient(circle at 72% 20%,#86AEF818,transparent 30%)}h1{font-size:clamp(48px,8vw,112px);letter-spacing:-.06em;margin:0;line-height:.9}header p{max-width:720px;color:var(--muted);font-size:18px}.toolbar{position:sticky;top:0;z-index:5;display:flex;gap:10px;padding:14px 6vw;background:#101318f5;border-bottom:1px solid var(--line)}button{background:var(--s1);color:var(--text);border:1px solid var(--line);padding:8px 12px;border-radius:6px}button:focus-visible,a:focus-visible{outline:2px solid var(--blue);outline-offset:2px}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));border-left:1px solid var(--line);margin:0 6vw 80px}.candidate{padding:24px;border-right:1px solid var(--line);border-bottom:1px solid var(--line);min-height:420px;background:#111c}.candidate img{width:100%;height:180px;object-fit:cover;border:1px solid var(--line);margin:16px 0}.eyebrow,dt{font:11px monospace;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}h2{font-size:28px;margin:64px 6vw 24px}h3{font-size:20px;margin:8px 0}.candidate p,.candidate dd{color:#C8D0DA}.candidate dl{display:grid;grid-template-columns:64px 1fr;gap:8px;margin:20px 0}.candidate dd{margin:0}.candidate a{color:var(--blue)}.tables{margin:0 6vw 80px;border:1px solid var(--line);overflow:auto}table{border-collapse:collapse;width:100%}th,td{text-align:left;padding:12px;border-bottom:1px solid var(--line)}th{color:var(--muted);font:11px monospace;text-transform:uppercase}@media(max-width:640px){header{padding:48px 20px}.toolbar{padding:12px 20px;overflow:auto}.grid,.tables{margin-left:20px;margin-right:20px}}</style></head><body><header><div><div class="eyebrow">Deep research · ${candidates.length} UI candidates · ${libraries.length} libraries · ${designSystems.length} systems</div><h1>Black Vector</h1><p>Evidence-backed interface research for Seigyo and MyShop. The direction combines operational density, human approval, restrained motion, and editorial product imagery.</p></div></header><nav class="toolbar"><button data-filter="all">All</button><button data-filter="approval">Approval</button><button data-filter="incident">Incidents</button><button data-filter="chart">Charts</button><button data-filter="retail">Retail</button><button data-filter="product">Products</button></nav><h2>UI candidates</h2><main class="grid">${cards}</main><h2>Component libraries</h2><section class="tables"><table><thead><tr><th>Library</th><th>Best for</th><th>Fit</th><th>Adaptation</th></tr></thead><tbody>${libraries.map(l=>`<tr><td><a href="${l.url}">${l.name}</a></td><td>${l.bestFor.join(", ")}</td><td>${l.fitScore}/10</td><td>${l.adaptationDifficulty}</td></tr>`).join("")}</tbody></table></section><h2>How this feeds the design system</h2><section class="tables"><table><thead><tr><th>System</th><th>Use</th><th>Takeaway</th></tr></thead><tbody>${designSystems.map(d=>`<tr><td><a href="${d.url}">${d.name}</a></td><td>${d.usedFor.join(", ")}</td><td>${d.takeaways[0]}</td></tr>`).join("")}</tbody></table></section><script>document.querySelectorAll("button[data-filter]").forEach(button=>button.addEventListener("click",()=>{const value=button.dataset.filter;document.querySelectorAll(".candidate").forEach(card=>card.hidden=value!=="all"&&card.dataset.category!==value)}));</script></body></html>`;
+## Evidence policy
+
+This library contains text-only research records and source links. It does not redistribute third-party screenshots, logos, source code, or other visual assets.
+
+## Visual thesis
+
+Seigyo is a near-black technical workspace where evidence, human authority, and verified recovery remain connected in one continuous operational surface. MyShop is a dark editorial home-objects store whose warm material photography creates contrast with the control product.
+
+## Content plan
+
+- Seigyo starts with system status, active incidents, a focal chart, and clear next actions.
+- Incident detail follows impact, evidence, proposal, approval, execution, verification, and receipt.
+- MyShop starts with one full-bleed lifestyle image, then collection discovery, product depth, and checkout.
+
+## Interaction thesis
+
+- Route and panel transitions use 150 to 180ms movement with stable geometry.
+- Streaming evidence follows the newest event only until the operator scrolls away.
+- Approval and execution changes are visible, explicit, and never represented by decorative motion alone.
+
+## Decisions
+
+- Black Vector palette and Geist typography.
+- beUI source patterns for approvals, activity, streaming evidence, command palette, side navigation, and feedback.
+- Radix and shadcn behavior foundations.
+- Recharts with Primer accessibility rules.
+- Hairline connected regions instead of floating card mosaics.
+- Original generated product photography for MyShop.
+
+## Avoid
+
+- Generic SaaS cards, glass effects, gradient-heavy heroes, pulsing severity, hidden hover-only facts, mixed icon styles, and ambiguous approval controls.
+`;
+
+const cards=candidates.map(c=>`<article class="candidate" data-source="${c.source}" data-category="${c.category}"><div class="eyebrow">${c.id} · ${c.source}</div><h3>${c.title}</h3><p class="research-reference">Text-only research record. Open the linked source for the reference.</p><p>${c.visualObservation}</p><dl><dt>Layout</dt><dd>${c.observedLayout}</dd><dt>Borrow</dt><dd>${c.whatToBorrow}</dd><dt>Avoid</dt><dd>${c.whatToAvoid}</dd></dl><a href="${c.url}">Open source</a></article>`).join("");
 
 await Promise.all([
   writeFile(path.join(root,"research-index.json"),JSON.stringify(index,null,2)),
@@ -135,8 +165,7 @@ await Promise.all([
   writeFile(path.join(root,"component-library-research.json"),JSON.stringify(libraries,null,2)),
   writeFile(path.join(root,"design-system-research.json"),JSON.stringify(designSystems,null,2)),
   writeFile(path.join(root,"source-map.csv"),csv),
-  writeFile(path.join(root,"research-summary.md"),summary),
-  writeFile(path.join(root,"research-report.html"),report)
+  writeFile(path.join(root,"research-summary.md"),summary)
 ]);
 
 console.log(`Generated ${candidates.length} candidates, ${libraries.length} libraries, and ${designSystems.length} design systems.`);

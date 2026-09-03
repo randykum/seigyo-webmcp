@@ -22,6 +22,10 @@ const essentialTextSelectors = [
   "footer",
 ].join(",");
 
+const E2E_SESSION = "e2e-judge-session";
+const scoped = (url: string) =>
+  `${url}${url.includes("?") ? "&" : "?"}session=${E2E_SESSION}`;
+
 async function textBelowMinimum(page: import("@playwright/test").Page) {
   return page.locator(essentialTextSelectors).evaluateAll((elements) =>
     elements.flatMap((element) => {
@@ -49,7 +53,7 @@ async function textBelowMinimum(page: import("@playwright/test").Page) {
 test.beforeEach(async ({ request }) => {
   await request.post("http://localhost:8787/api/scenario/reset", {
     headers: {
-      "X-Session-Id": "seigyo-operator-session",
+      "X-Session-Id": E2E_SESSION,
       Origin: "http://localhost:5173",
     },
     data: {
@@ -63,7 +67,7 @@ test("customer failure, controlled recovery, and successful checkout", async ({
   page,
   context,
 }) => {
-  await page.goto("http://localhost:5174/");
+  await page.goto(scoped("http://localhost:5174/"));
   await expect(
     page.getByRole("heading", { name: /Objects that hold/ }),
   ).toBeVisible();
@@ -91,7 +95,7 @@ test("customer failure, controlled recovery, and successful checkout", async ({
       },
     });
   });
-  await page.goto("http://localhost:5173/incidents/INC-042");
+  await page.goto(scoped("http://localhost:5173/incidents/INC-042"));
   await expect(
     page.getByRole("heading", { name: "Checkout errors after deployment" }),
   ).toBeVisible();
@@ -207,7 +211,7 @@ test("customer failure, controlled recovery, and successful checkout", async ({
     { executionId },
   );
   expect(verificationResult?.structuredContent.outcome).toBe("recovered");
-  await page.goto("http://localhost:5173/incidents");
+  await page.goto(scoped("http://localhost:5173/incidents"));
   await expect(page.getByRole("tab", { name: /Active 0/ })).toHaveAttribute(
     "aria-selected",
     "true",
@@ -216,20 +220,23 @@ test("customer failure, controlled recovery, and successful checkout", async ({
   await page.getByRole("tab", { name: /History/ }).click();
   await expect(page.getByText("INC-042")).toBeVisible();
 
-  await page.goto("http://localhost:5173/");
+  await page.goto(scoped("http://localhost:5173/"));
   await expect(page.locator(".status-strip-operational")).toBeVisible();
   await expect(page.locator(".status-strip-operational")).toHaveCSS(
     "box-shadow",
     /rgb\(119, 213, 154\)/,
   );
 
-  await page.goto("http://localhost:5174/checkout");
+  await page.goto(scoped("http://localhost:5174/checkout"));
   await page.getByRole("button", { name: /Place order/ }).click();
   await expect(page.getByRole("heading", { name: /Thank you/ })).toBeVisible();
   await expect(page.getByText(/Order confirmed/).first()).toBeVisible();
 
   const operationsPage = await context.newPage();
-  await operationsPage.goto("http://localhost:5173/settings");
+  await operationsPage.goto(scoped("http://localhost:5173/settings"));
+  await expect(
+    operationsPage.getByRole("link", { name: "Open storefront" }),
+  ).toHaveAttribute("href", /session=e2e-judge-session/);
   const deployButton = operationsPage.getByRole("button", {
     name: "Deploy new revision",
   });
@@ -242,7 +249,7 @@ test("customer failure, controlled recovery, and successful checkout", async ({
   await expect(page.locator(".service-note")).toContainText(
     "Checkout is currently unavailable",
   );
-  await operationsPage.goto("http://localhost:5173/");
+  await operationsPage.goto(scoped("http://localhost:5173/"));
   await expect(operationsPage.locator(".status-strip-investigating")).toHaveCSS(
     "box-shadow",
     /rgb\(241, 192, 106\)/,
@@ -255,7 +262,7 @@ test("incident navigation and measured topology remain correct across widths", a
 }) => {
   for (const width of [320, 390, 768, 1186, 1440, 1920]) {
     await page.setViewportSize({ width, height: 900 });
-    await page.goto("http://localhost:5173/services");
+    await page.goto(scoped("http://localhost:5173/services"));
     await expect(page.locator(".dependency-edge")).toHaveCount(9);
     const errors = await page.locator(".dependency-map").evaluate((map) => {
       const mapRect = map.getBoundingClientRect();
@@ -294,7 +301,7 @@ test("incident navigation and measured topology remain correct across widths", a
     });
     expect(errors, `${width}px topology`).toEqual([]);
   }
-  await page.goto("http://localhost:5173/incidents/INC-042");
+  await page.goto(scoped("http://localhost:5173/incidents/INC-042"));
   await expect(
     page.getByRole("link", { name: "Back to incidents" }),
   ).toHaveAttribute("href", "/incidents");
@@ -306,22 +313,22 @@ test("primary pages have no serious automated accessibility violations", async (
   page,
 }) => {
   for (const url of [
-    "http://localhost:5173/",
-    "http://localhost:5173/incidents",
-    "http://localhost:5173/incidents/INC-042",
-    "http://localhost:5173/services",
-    "http://localhost:5173/deployments",
-    "http://localhost:5173/evidence",
-    "http://localhost:5173/runbooks",
-    "http://localhost:5173/receipts",
-    "http://localhost:5173/settings",
-    "http://localhost:5174/",
-    "http://localhost:5174/collections/all",
-    "http://localhost:5174/product/kuro-lounge-chair",
-    "http://localhost:5174/search",
-    "http://localhost:5174/cart",
-    "http://localhost:5174/order",
-    "http://localhost:5174/about",
+    scoped("http://localhost:5173/"),
+    scoped("http://localhost:5173/incidents"),
+    scoped("http://localhost:5173/incidents/INC-042"),
+    scoped("http://localhost:5173/services"),
+    scoped("http://localhost:5173/deployments"),
+    scoped("http://localhost:5173/evidence"),
+    scoped("http://localhost:5173/runbooks"),
+    scoped("http://localhost:5173/receipts"),
+    scoped("http://localhost:5173/settings"),
+    scoped("http://localhost:5174/"),
+    scoped("http://localhost:5174/collections/all"),
+    scoped("http://localhost:5174/product/kuro-lounge-chair"),
+    scoped("http://localhost:5174/search"),
+    scoped("http://localhost:5174/cart"),
+    scoped("http://localhost:5174/order"),
+    scoped("http://localhost:5174/about"),
   ]) {
     await page.goto(url);
     const retry = page.getByRole("button", { name: "Try again" });
@@ -341,7 +348,7 @@ test("primary pages have no serious automated accessibility violations", async (
 test("service architecture names every provider and remains readable", async ({
   page,
 }) => {
-  await page.goto("http://localhost:5173/services");
+  await page.goto(scoped("http://localhost:5173/services"));
   await expect(page.getByText("4 providers")).toBeVisible();
   for (const provider of ["Cloudflare", "Render", "Stripe", "Supabase"])
     await expect(page.getByText(provider).first()).toBeVisible();
@@ -350,22 +357,83 @@ test("service architecture names every provider and remains readable", async ({
   expect(await textBelowMinimum(page)).toEqual([]);
 });
 
+test("fresh browser sessions receive distinct keys and carts", async ({
+  browser,
+}) => {
+  const firstContext = await browser.newContext();
+  const secondContext = await browser.newContext();
+  await firstContext.addInitScript(() => {
+    const tools: Record<string, { inputSchema?: unknown }> = {};
+    Object.defineProperty(document, "modelContext", {
+      configurable: true,
+      value: {
+        registerTool(tool: { name: string; inputSchema?: unknown }) {
+          tools[tool.name] = tool;
+          Object.assign(globalThis, { __myshopTools: tools });
+        },
+      },
+    });
+  });
+  const firstPage = await firstContext.newPage();
+  const secondPage = await secondContext.newPage();
+  await firstPage.goto("http://localhost:5174/");
+  await secondPage.goto("http://localhost:5174/");
+  const firstSession = await firstPage.evaluate(() =>
+    sessionStorage.getItem("myshop.seigyo-session"),
+  );
+  const secondSession = await secondPage.evaluate(() =>
+    sessionStorage.getItem("myshop.seigyo-session"),
+  );
+  expect(firstSession).toMatch(/^judge-[a-f0-9]{32}$/);
+  expect(secondSession).toMatch(/^judge-[a-f0-9]{32}$/);
+  expect(firstSession).not.toBe(secondSession);
+  const schemas = await firstPage.evaluate(() => {
+    const tools = (
+      globalThis as typeof globalThis & {
+        __myshopTools: Record<
+          string,
+          { inputSchema?: { properties?: Record<string, unknown> } }
+        >;
+      }
+    ).__myshopTools;
+    return {
+      cartId: tools["myshop.get_cart"]?.inputSchema?.properties?.cartId,
+      slug: tools["myshop.get_product"]?.inputSchema?.properties?.slug,
+      orderId: tools["myshop.get_order"]?.inputSchema?.properties?.orderId,
+    };
+  });
+  expect(schemas.cartId).toMatchObject({ maxLength: 80 });
+  expect(schemas.slug).toMatchObject({ maxLength: 80 });
+  expect(schemas.orderId).toMatchObject({ maxLength: 80 });
+
+  await firstPage.getByRole("link", { name: "Kuro lounge chair" }).first().click();
+  await firstPage.getByRole("button", { name: /Add to bag/ }).click();
+  await expect(
+    firstPage.getByRole("button", { name: "Open bag with 1 items" }),
+  ).toBeVisible();
+  await expect(
+    secondPage.getByRole("button", { name: "Open bag with 0 items" }),
+  ).toBeVisible();
+  await firstContext.close();
+  await secondContext.close();
+});
+
 test("invalid routes and orders show clear not-found states", async ({
   page,
 }) => {
-  await page.goto("http://localhost:5173/incidents/DOES-NOT-EXIST");
+  await page.goto(scoped("http://localhost:5173/incidents/DOES-NOT-EXIST"));
   await expect(
     page.getByRole("heading", { name: "Incident not found" }),
   ).toBeVisible();
-  await page.goto("http://localhost:5173/DOES-NOT-EXIST");
+  await page.goto(scoped("http://localhost:5173/DOES-NOT-EXIST"));
   await expect(
     page.getByRole("heading", { name: "Page not found" }),
   ).toBeVisible();
-  await page.goto("http://localhost:5174/DOES-NOT-EXIST");
+  await page.goto(scoped("http://localhost:5174/DOES-NOT-EXIST"));
   await expect(
     page.getByRole("heading", { name: "Page not found" }),
   ).toBeVisible();
-  await page.goto("http://localhost:5174/confirmation/ORD-DOES-NOT-EXIST");
+  await page.goto(scoped("http://localhost:5174/confirmation/ORD-DOES-NOT-EXIST"));
   await expect(
     page.getByRole("heading", { name: "Order not found" }),
   ).toBeVisible();

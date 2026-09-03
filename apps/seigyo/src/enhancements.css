@@ -80,11 +80,6 @@ td { color: var(--supporting); font-size: 12px; }
 .provider-compact { gap: 5px; }
 .provider-compact svg { width: 12px; height: 12px; }
 .provider-compact .provider-copy strong { color: var(--muted); font-size: 11px; font-weight: 500; }
-.provider-cloudflare { color: #f2a35a; }
-.provider-render { color: #c8d0da; }
-.provider-supabase { color: #74d8aa; }
-.provider-stripe { color: #a7a9ff; }
-
 .empty-inline { color: var(--muted); font-size: 11px; }
 .receipt dt, .settings-dl dt { color: var(--muted); font-size: 11px; }
 .receipt dd, .settings-dl dd { color: var(--supporting); font-size: 12px; }

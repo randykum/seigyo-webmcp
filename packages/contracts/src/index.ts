@@ -19,6 +19,22 @@ export const ScenarioSchema = z.enum([
 ]);
 export type ScenarioId = z.infer<typeof ScenarioSchema>;
 
+export const PublicKeySchema = z
+  .string()
+  .trim()
+  .regex(/^[a-zA-Z0-9_-]{1,80}$/);
+export type PublicKey = z.infer<typeof PublicKeySchema>;
+
+// Session identifiers are intentionally short, URL-safe, and opaque. They are
+// routing keys, not credentials, so authorization still happens at the API
+// boundary for state-changing operations.
+export const SessionIdSchema = z
+  .string()
+  .trim()
+  .regex(/^[a-z][a-z0-9_-]{7,47}$/);
+export type SessionId = z.infer<typeof SessionIdSchema>;
+export const DEFAULT_SESSION_ID = "seigyo-operator-session";
+
 export const ActionTypeSchema = z.enum([
   "rollback_deployment",
   "restart_service",
@@ -110,10 +126,7 @@ export const CartItemInputSchema = z
   .strict();
 export const CheckoutInputSchema = z
   .object({
-    cartId: z
-      .string()
-      .trim()
-      .regex(/^[a-zA-Z0-9_-]{1,80}$/),
+    cartId: PublicKeySchema,
     email: z.string().email().max(160),
     name: z.string().trim().min(2).max(120),
     address: z.string().trim().min(8).max(240),

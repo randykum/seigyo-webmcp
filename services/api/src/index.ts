@@ -5,7 +5,10 @@ import {
   DeployCheckoutRevisionInputSchema,
   ExecutionInputSchema,
   ProposalInputSchema,
+  PublicKeySchema,
   ResetInputSchema,
+  DEFAULT_SESSION_ID,
+  SessionIdSchema,
   ServiceIdSchema,
   VerifyInputSchema,
   type ApiResult,
@@ -58,12 +61,22 @@ app.use("*", async (context, next) => {
   context.header("Referrer-Policy", "strict-origin-when-cross-origin");
 });
 
-const stub = (env: Env) => env.OPERATIONS_STATE.getByName("seigyo-production");
+const stub = (env: Env, session: string) =>
+  env.OPERATIONS_STATE.getByName(
+    session === DEFAULT_SESSION_ID ? "seigyo-production" : `seigyo-${session}`,
+  );
 const sessionId = (header?: string): string => {
-  if (header !== "seigyo-operator-session")
-    throw new Error("AUTH_REQUIRED:An operator session is required.");
-  return header;
+  const parsed = SessionIdSchema.safeParse(header);
+  if (!parsed.success)
+    throw new Error(
+      "AUTH_REQUIRED:An operator session is required. Open Seigyo to create one.",
+    );
+  return parsed.data;
 };
+const readSessionId = (header?: string): string =>
+  header === undefined ? DEFAULT_SESSION_ID : sessionId(header);
+const requestStub = (env: Env, header?: string) =>
+  stub(env, readSessionId(header));
 const boundedLimit = (
   raw: string | undefined,
   fallback: number,
@@ -88,6 +101,15 @@ const boundedQuery = (raw: string | undefined): string => {
       "INVALID_ARGUMENT:query must contain at most 100 characters.",
     );
   return value;
+};
+const publicRouteKey = (value: string, field: string): string => {
+  const parsed = PublicKeySchema.safeParse(value);
+  if (
+    !parsed.success ||
+    ["__proto__", "prototype", "constructor"].includes(parsed.data)
+  )
+    throw new Error(`INVALID_ARGUMENT:${field} is invalid.`);
+  return parsed.data;
 };
 const success = <T>(data: T, stateVersion = 0): ApiResult<T> => ({
   ok: true,
@@ -171,33 +193,33 @@ app.get("/", (context) =>
   }),
 );
 app.get("/api/snapshot", async (context) => {
-  const data = await stub(context.env).getSnapshot();
+  const data = await requestStub(context.env, context.req.header("X-Session-Id")).getSnapshot();
   return context.json(success(data, data.causalRevision));
 });
 app.get("/api/incidents", async (context) =>
-  context.json(success(await stub(context.env).listIncidents())),
+  context.json(success(await requestStub(context.env, context.req.header("X-Session-Id")).listIncidents())),
 );
 app.get("/api/incidents/:id", async (context) => {
-  const data = await stub(context.env).getIncident(context.req.param("id"));
+  const data = await requestStub(context.env, context.req.header("X-Session-Id")).getIncident(context.req.param("id"));
   return data.incident
     ? context.json(success(data))
     : context.json(failure(new Error("NOT_FOUND")), 404);
 });
 app.get("/api/services", async (context) =>
-  context.json(success(await stub(context.env).listServices())),
+  context.json(success(await requestStub(context.env, context.req.header("X-Session-Id")).listServices())),
 );
 app.get("/api/deployments", async (context) => {
   const raw = context.req.query("serviceId");
   const serviceId = raw ? ServiceIdSchema.parse(raw) : undefined;
   return context.json(
-    success(await stub(context.env).listDeployments(serviceId)),
+    success(await requestStub(context.env, context.req.header("X-Session-Id")).listDeployments(serviceId)),
   );
 });
 app.post("/api/deployments/checkout/revisions", async (context) => {
   try {
     sessionId(context.req.header("X-Session-Id"));
     const input = DeployCheckoutRevisionInputSchema.parse(await json(context));
-    const data = await stub(context.env).deployCheckoutRevision(input);
+    const data = await requestStub(context.env, context.req.header("X-Session-Id")).deployCheckoutRevision(input);
     return context.json(success(data, data.causalRevision), 201);
   } catch (caught) {
     const code = errorCode(caught instanceof Error ? caught.message : "");
@@ -215,7 +237,7 @@ app.get("/api/dependencies", async (context) => {
   const raw = context.req.query("serviceId");
   const serviceId = raw ? ServiceIdSchema.parse(raw) : undefined;
   return context.json(
-    success(await stub(context.env).listDependencies(serviceId)),
+    success(await requestStub(context.env, context.req.header("X-Session-Id")).listDependencies(serviceId)),
   );
 });
 app.get("/api/metrics", async (context) => {
@@ -223,7 +245,7 @@ app.get("/api/metrics", async (context) => {
   const serviceId = raw ? ServiceIdSchema.parse(raw) : undefined;
   return context.json(
     success(
-      await stub(context.env).getMetrics(
+      await requestStub(context.env, context.req.header("X-Session-Id")).getMetrics(
         serviceId,
         boundedLimit(context.req.query("limit"), 180, 300),
       ),
@@ -235,7 +257,7 @@ app.get("/api/logs", async (context) => {
   const serviceId = raw ? ServiceIdSchema.parse(raw) : undefined;
   return context.json(
     success(
-      await stub(context.env).getLogs(
+      await requestStub(context.env, context.req.header("X-Session-Id")).getLogs(
         serviceId,
         boundedQuery(context.req.query("query")),
         boundedLimit(context.req.query("limit"), 50, 50),
@@ -244,13 +266,13 @@ app.get("/api/logs", async (context) => {
   );
 });
 app.get("/api/runbooks", async (context) =>
-  context.json(success(await stub(context.env).getRunbooks())),
+  context.json(success(await requestStub(context.env, context.req.header("X-Session-Id")).getRunbooks())),
 );
 app.get("/api/receipts", async (context) =>
-  context.json(success(await stub(context.env).getReceipts())),
+  context.json(success(await requestStub(context.env, context.req.header("X-Session-Id")).getReceipts())),
 );
 app.get("/api/agent-activity", async (context) =>
-  context.json(success(await stub(context.env).getAgentActivity())),
+  context.json(success(await requestStub(context.env, context.req.header("X-Session-Id")).getAgentActivity())),
 );
 
 app.post("/api/investigate", async (context) => {
@@ -259,7 +281,7 @@ app.post("/api/investigate", async (context) => {
     const body = (await json(context)) as { incidentId?: string };
     if (!body.incidentId)
       throw new Error("INVALID_ARGUMENT:incidentId is required.");
-    const data = await stub(context.env).investigateIncident(body.incidentId);
+    const data = await requestStub(context.env, context.req.header("X-Session-Id")).investigateIncident(body.incidentId);
     return data
       ? context.json(success(data))
       : context.json(failure(new Error("NOT_FOUND")), 404);
@@ -277,7 +299,7 @@ app.post("/api/proposals", async (context) => {
   try {
     sessionId(context.req.header("X-Session-Id"));
     const input = ProposalInputSchema.parse(await json(context));
-    const data = await stub(context.env).createProposal(input);
+    const data = await requestStub(context.env, context.req.header("X-Session-Id")).createProposal(input);
     return context.json(success(data, data.causalRevision), 201);
   } catch (caught) {
     const code = errorCode(caught instanceof Error ? caught.message : "");
@@ -289,7 +311,7 @@ app.post("/api/proposals", async (context) => {
 });
 app.post("/api/proposals/:id/approve", async (context) => {
   try {
-    const data = await stub(context.env).approve(
+    const data = await requestStub(context.env, context.req.header("X-Session-Id")).approve(
       context.req.param("id"),
       sessionId(context.req.header("X-Session-Id")),
     );
@@ -308,7 +330,7 @@ app.post("/api/proposals/:id/reject", async (context) => {
   try {
     sessionId(context.req.header("X-Session-Id"));
     return context.json(
-      success(await stub(context.env).reject(context.req.param("id"))),
+      success(await requestStub(context.env, context.req.header("X-Session-Id")).reject(context.req.param("id"))),
     );
   } catch (caught) {
     return context.json(
@@ -323,7 +345,7 @@ app.post("/api/proposals/:id/reject", async (context) => {
 app.post("/api/executions", async (context) => {
   try {
     const input = ExecutionInputSchema.parse(await json(context));
-    const data = await stub(context.env).execute(
+    const data = await requestStub(context.env, context.req.header("X-Session-Id")).execute(
       input.proposalId,
       input.approvalToken,
       input.idempotencyKey,
@@ -338,7 +360,7 @@ app.post("/api/verifications", async (context) => {
   try {
     sessionId(context.req.header("X-Session-Id"));
     const input = VerifyInputSchema.parse(await json(context));
-    const data = await stub(context.env).verify(
+    const data = await requestStub(context.env, context.req.header("X-Session-Id")).verify(
       input.executionId,
       input.incidentId,
     );
@@ -366,7 +388,7 @@ app.post("/api/undo", async (context) => {
       );
     return context.json(
       success(
-        await stub(context.env).undo(body.executionId, body.idempotencyKey),
+        await requestStub(context.env, context.req.header("X-Session-Id")).undo(body.executionId, body.idempotencyKey),
       ),
     );
   } catch (caught) {
@@ -383,7 +405,7 @@ app.post("/api/scenario/reset", async (context) => {
   try {
     sessionId(context.req.header("X-Session-Id"));
     const input = ResetInputSchema.parse(await json(context));
-    const data = await stub(context.env).reset(input.scenario);
+    const data = await requestStub(context.env, context.req.header("X-Session-Id")).reset(input.scenario);
     return context.json(success(data, data.causalRevision));
   } catch (caught) {
     return context.json(
@@ -399,7 +421,7 @@ app.post("/api/scenario/reset", async (context) => {
 app.get("/api/store/products", async (context) =>
   context.json(
     success(
-      await stub(context.env).getProducts(
+      await requestStub(context.env, context.req.header("X-Session-Id")).getProducts(
         context.req.query("q") ?? "",
         context.req.query("category") ?? "",
       ),
@@ -407,68 +429,73 @@ app.get("/api/store/products", async (context) =>
   ),
 );
 app.get("/api/store/products/:slug", async (context) => {
-  const product = await stub(context.env).getProduct(context.req.param("slug"));
+  const product = await requestStub(context.env, context.req.header("X-Session-Id")).getProduct(publicRouteKey(context.req.param("slug"), "slug"));
   return product
     ? context.json(success(product))
     : context.json(failure(new Error("NOT_FOUND")), 404);
 });
 app.get("/api/store/carts/:id", async (context) =>
   context.json(
-    success(await stub(context.env).getCart(context.req.param("id"))),
+    success(await requestStub(context.env, context.req.header("X-Session-Id")).getCart(publicRouteKey(context.req.param("id"), "cartId"))),
   ),
 );
 app.put("/api/store/carts/:id/items", async (context) => {
   try {
+    sessionId(context.req.header("X-Session-Id"));
     const input = CartItemInputSchema.parse(await json(context));
     return context.json(
       success(
-        await stub(context.env).setCartItem(
-          context.req.param("id"),
+        await requestStub(context.env, context.req.header("X-Session-Id")).setCartItem(
+          publicRouteKey(context.req.param("id"), "cartId"),
           input.productId,
           input.quantity,
         ),
       ),
     );
   } catch (caught) {
-    return context.json(failure(caught), 400);
+    const code = errorCode(caught instanceof Error ? caught.message : "");
+    return context.json(failure(caught), code === "AUTH_REQUIRED" ? 401 : 400);
   }
 });
 app.post("/api/store/checkout", async (context) => {
   try {
+    sessionId(context.req.header("X-Session-Id"));
     const input = CheckoutInputSchema.parse(await json(context));
     return context.json(
-      success(await stub(context.env).createOrder(input)),
+      success(await requestStub(context.env, context.req.header("X-Session-Id")).createOrder(input)),
       201,
     );
   } catch (caught) {
     return context.json(
       failure(caught),
       errorCode(caught instanceof Error ? caught.message : "") ===
-        "UPSTREAM_UNAVAILABLE"
-        ? 503
-        : 400,
+        "AUTH_REQUIRED"
+        ? 401
+        : errorCode(caught instanceof Error ? caught.message : "") ===
+            "UPSTREAM_UNAVAILABLE"
+          ? 503
+          : 400,
     );
   }
 });
 app.get("/api/store/orders/:id", async (context) => {
-  const order = await stub(context.env).getOrder(context.req.param("id"));
+  const order = await requestStub(context.env, context.req.header("X-Session-Id")).getOrder(publicRouteKey(context.req.param("id"), "orderId"));
   return order
     ? context.json(success(order))
     : context.json(failure(new Error("NOT_FOUND")), 404);
 });
 app.get("/api/store/health", async (context) =>
-  context.json(success(await stub(context.env).getStoreHealth())),
+  context.json(success(await requestStub(context.env, context.req.header("X-Session-Id")).getStoreHealth())),
 );
 
 app.get("/ws", async (context) => {
   const origin = context.req.header("Origin");
-  if (
-    !origin ||
-    !allowedOrigins(context.env).includes(origin) ||
-    context.req.query("session") !== "seigyo-operator-session"
-  )
+  const requestedSession = SessionIdSchema.safeParse(
+    context.req.query("session"),
+  );
+  if (!origin || !allowedOrigins(context.env).includes(origin) || !requestedSession.success)
     return new Response("Forbidden", { status: 403 });
-  return stub(context.env).fetch(context.req.raw);
+  return stub(context.env, requestedSession.data).fetch(context.req.raw);
 });
 
 app.onError((caught, context) => {

@@ -3,7 +3,7 @@
     "name": "Seigyo and MyShop",
     "type": "Operational incident recovery plus causal commerce environment",
     "audience": "Incident responders, engineering teams, judges, and shoppers",
-    "stack": "React 19, Tailwind 4, beUI source, Radix, Motion, Recharts",
+    "stack": "React 19, Tailwind 4, Radix, Motion, Recharts",
     "assumptions": [
       "The user selected Black Vector.",
       "The user asked the implementing agent to complete the build."
@@ -53,8 +53,7 @@
           ],
           "visualPreview": {
             "sample": "personality",
-            "image": "../ui_research/visual-evidence/ui-001.png",
-            "notes": "Preview reference for product personality."
+            "notes": "Text-only research record; see source-map.csv for the source link."
           },
           "tokens": {}
         },
@@ -73,8 +72,7 @@
           ],
           "visualPreview": {
             "sample": "personality",
-            "image": "../ui_research/visual-evidence/ui-001.png",
-            "notes": "Preview reference for product personality."
+            "notes": "Text-only research record; see source-map.csv for the source link."
           },
           "tokens": {}
         },
@@ -93,8 +91,7 @@
           ],
           "visualPreview": {
             "sample": "personality",
-            "image": "../ui_research/visual-evidence/ui-001.png",
-            "notes": "Preview reference for product personality."
+            "notes": "Text-only research record; see source-map.csv for the source link."
           },
           "tokens": {}
         },
@@ -113,8 +110,7 @@
           ],
           "visualPreview": {
             "sample": "personality",
-            "image": "../ui_research/visual-evidence/ui-001.png",
-            "notes": "Preview reference for product personality."
+            "notes": "Text-only research record; see source-map.csv for the source link."
           },
           "tokens": {}
         },
@@ -133,8 +129,7 @@
           ],
           "visualPreview": {
             "sample": "personality",
-            "image": "../ui_research/visual-evidence/ui-001.png",
-            "notes": "Agent choice preview."
+            "notes": "Text-only research record; see source-map.csv for the source link."
           },
           "tokens": {}
         }
@@ -160,8 +155,7 @@
           ],
           "visualPreview": {
             "sample": "color",
-            "image": "../ui_research/visual-evidence/ui-002.png",
-            "notes": "Preview reference for color palettes."
+            "notes": "Text-only research record; see source-map.csv for the source link."
           },
           "tokens": {}
         },
@@ -180,8 +174,7 @@
           ],
           "visualPreview": {
             "sample": "color",
-            "image": "../ui_research/visual-evidence/ui-002.png",
-            "notes": "Preview reference for color palettes."
+            "notes": "Text-only research record; see source-map.csv for the source link."
           },
           "tokens": {}
         },
@@ -200,8 +193,7 @@
           ],
           "visualPreview": {
             "sample": "color",
-            "image": "../ui_research/visual-evidence/ui-002.png",
-            "notes": "Preview reference for color palettes."
+            "notes": "Text-only research record; see source-map.csv for the source link."
           },
           "tokens": {}
         },
@@ -220,8 +212,7 @@
           ],
           "visualPreview": {
             "sample": "color",
-            "image": "../ui_research/visual-evidence/ui-002.png",
-            "notes": "Preview reference for color palettes."
+            "notes": "Text-only research record; see source-map.csv for the source link."
           },
           "tokens": {}
         },
@@ -240,8 +231,7 @@
           ],
           "visualPreview": {
             "sample": "color",
-            "image": "../ui_research/visual-evidence/ui-002.png",
-            "notes": "Agent choice preview."
+            "notes": "Text-only research record; see source-map.csv for the source link."
           },
           "tokens": {}
         }
@@ -267,8 +257,7 @@
           ],
           "visualPreview": {
             "sample": "type",
-            "image": "../ui_research/visual-evidence/ui-003.png",
-            "notes": "Preview reference for typography systems."
+            "notes": "Text-only research record; see source-map.csv for the source link."
           },
           "tokens": {}
         },
@@ -287,8 +276,7 @@
           ],
           "visualPreview": {
             "sample": "type",
-            "image": "../ui_research/visual-evidence/ui-003.png",
-            "notes": "Preview reference for typography systems."
+            "notes": "Text-only research record; see source-map.csv for the source link."
           },
           "tokens": {}
         },
@@ -307,8 +295,7 @@
           ],
           "visualPreview": {
             "sample": "type",
-            "image": "../ui_research/visual-evidence/ui-003.png",
-            "notes": "Preview reference for typography systems."
+            "notes": "Text-only research record; see source-map.csv for the source link."
           },
           "tokens": {}
         },
@@ -327,8 +314,7 @@
           ],
           "visualPreview": {
             "sample": "type",
-            "image": "../ui_research/visual-evidence/ui-003.png",
-            "notes": "Preview reference for typography systems."
+            "notes": "Text-only research record; see source-map.csv for the source link."
           },
           "tokens": {}
         },
@@ -347,8 +333,7 @@
           ],
           "visualPreview": {
             "sample": "type",
-            "image": "../ui_research/visual-evidence/ui-003.png",
-            "notes": "Agent choice preview."
+            "notes": "Text-only research record; see source-map.csv for the source link."
           },
           "tokens": {}
         }
@@ -374,8 +359,7 @@
           ],
           "visualPreview": {
             "sample": "density",
-            "image": "../ui_research/visual-evidence/ui-004.png",
-            "notes": "Preview reference for spacing and density."
+            "notes": "Text-only research record; see source-map.csv for the source link."
           },
           "tokens": {}
         },
@@ -394,8 +378,7 @@
           ],
           "visualPreview": {
             "sample": "density",
-            "image": "../ui_research/visual-evidence/ui-004.png",
-            "notes": "Preview reference for spacing and density."
+            "notes": "Text-only research record; see source-map.csv for the source link."
           },
           "tokens": {}
         },
@@ -414,8 +397,7 @@
           ],
           "visualPreview": {
             "sample": "density",
-            "image": "../ui_research/visual-evidence/ui-004.png",
-            "notes": "Preview reference for spacing and density."
+            "notes": "Text-only research record; see source-map.csv for the source link."
           },
           "tokens": {}
         },
@@ -434,8 +416,7 @@
           ],
           "visualPreview": {
             "sample": "density",
-            "image": "../ui_research/visual-evidence/ui-004.png",
-            "notes": "Preview reference for spacing and density."
+            "notes": "Text-only research record; see source-map.csv for the source link."
           },
           "tokens": {}
         },
@@ -454,8 +435,7 @@
           ],
           "visualPreview": {
             "sample": "density",
-            "image": "../ui_research/visual-evidence/ui-004.png",
-            "notes": "Agent choice preview."
+            "notes": "Text-only research record; see source-map.csv for the source link."
           },
           "tokens": {}
         }
@@ -481,8 +461,7 @@
           ],
           "visualPreview": {
             "sample": "shape",
-            "image": "../ui_research/visual-evidence/ui-005.png",
-            "notes": "Preview reference for shape and radius."
+            "notes": "Text-only research record; see source-map.csv for the source link."
           },
           "tokens": {}
         },
@@ -501,8 +480,7 @@
           ],
           "visualPreview": {
             "sample": "shape",
-            "image": "../ui_research/visual-evidence/ui-005.png",
-            "notes": "Preview reference for shape and radius."
+            "notes": "Text-only research record; see source-map.csv for the source link."
           },
           "tokens": {}
         },
@@ -521,8 +499,7 @@
           ],
           "visualPreview": {
             "sample": "shape",
-            "image": "../ui_research/visual-evidence/ui-005.png",
-            "notes": "Preview reference for shape and radius."
+            "notes": "Text-only research record; see source-map.csv for the source link."
           },
           "tokens": {}
         },
@@ -541,8 +518,7 @@
           ],
           "visualPreview": {
             "sample": "shape",
-            "image": "../ui_research/visual-evidence/ui-005.png",
-            "notes": "Preview reference for shape and radius."
+            "notes": "Text-only research record; see source-map.csv for the source link."
           },
           "tokens": {}
         },
@@ -561,8 +537,7 @@
           ],
           "visualPreview": {
             "sample": "shape",
-            "image": "../ui_research/visual-evidence/ui-005.png",
-            "notes": "Agent choice preview."
+            "notes": "Text-only research record; see source-map.csv for the source link."
           },
           "tokens": {}
         }
@@ -588,8 +563,7 @@
           ],
           "visualPreview": {
             "sample": "layering",
-            "image": "../ui_research/visual-evidence/ui-006.png",
-            "notes": "Preview reference for elevation and borders."
+            "notes": "Text-only research record; see source-map.csv for the source link."
           },
           "tokens": {}
         },
@@ -608,8 +582,7 @@
           ],
           "visualPreview": {
             "sample": "layering",
-            "image": "../ui_research/visual-evidence/ui-006.png",
-            "notes": "Preview reference for elevation and borders."
+            "notes": "Text-only research record; see source-map.csv for the source link."
           },
           "tokens": {}
         },
@@ -628,8 +601,7 @@
           ],
           "visualPreview": {
             "sample": "layering",
-            "image": "../ui_research/visual-evidence/ui-006.png",
-            "notes": "Preview reference for elevation and borders."
+            "notes": "Text-only research record; see source-map.csv for the source link."
           },
           "tokens": {}
         },
@@ -648,8 +620,7 @@
           ],
           "visualPreview": {
             "sample": "layering",
-            "image": "../ui_research/visual-evidence/ui-006.png",
-            "notes": "Preview reference for elevation and borders."
+            "notes": "Text-only research record; see source-map.csv for the source link."
           },
           "tokens": {}
         },
@@ -668,8 +639,7 @@
           ],
           "visualPreview": {
             "sample": "layering",
-            "image": "../ui_research/visual-evidence/ui-006.png",
-            "notes": "Agent choice preview."
+            "notes": "Text-only research record; see source-map.csv for the source link."
           },
           "tokens": {}
         }
@@ -695,8 +665,7 @@
           ],
           "visualPreview": {
             "sample": "motion",
-            "image": "../ui_research/visual-evidence/ui-007.png",
-            "notes": "Preview reference for motion language."
+            "notes": "Text-only research record; see source-map.csv for the source link."
           },
           "tokens": {}
         },
@@ -715,8 +684,7 @@
           ],
           "visualPreview": {
             "sample": "motion",
-            "image": "../ui_research/visual-evidence/ui-007.png",
-            "notes": "Preview reference for motion language."
+            "notes": "Text-only research record; see source-map.csv for the source link."
           },
           "tokens": {}
         },
@@ -735,8 +703,7 @@
           ],
           "visualPreview": {
             "sample": "motion",
-            "image": "../ui_research/visual-evidence/ui-007.png",
-            "notes": "Preview reference for motion language."
+            "notes": "Text-only research record; see source-map.csv for the source link."
           },
           "tokens": {}
         },
@@ -755,8 +722,7 @@
           ],
           "visualPreview": {
             "sample": "motion",
-            "image": "../ui_research/visual-evidence/ui-007.png",
-            "notes": "Preview reference for motion language."
+            "notes": "Text-only research record; see source-map.csv for the source link."
           },
           "tokens": {}
         },
@@ -775,8 +741,7 @@
           ],
           "visualPreview": {
             "sample": "motion",
-            "image": "../ui_research/visual-evidence/ui-007.png",
-            "notes": "Agent choice preview."
+            "notes": "Text-only research record; see source-map.csv for the source link."
           },
           "tokens": {}
         }
@@ -802,8 +767,7 @@
           ],
           "visualPreview": {
             "sample": "icons",
-            "image": "../ui_research/visual-evidence/ui-008.png",
-            "notes": "Preview reference for icon style."
+            "notes": "Text-only research record; see source-map.csv for the source link."
           },
           "tokens": {}
         },
@@ -822,8 +786,7 @@
           ],
           "visualPreview": {
             "sample": "icons",
-            "image": "../ui_research/visual-evidence/ui-008.png",
-            "notes": "Preview reference for icon style."
+            "notes": "Text-only research record; see source-map.csv for the source link."
           },
           "tokens": {}
         },
@@ -842,8 +805,7 @@
           ],
           "visualPreview": {
             "sample": "icons",
-            "image": "../ui_research/visual-evidence/ui-008.png",
-            "notes": "Preview reference for icon style."
+            "notes": "Text-only research record; see source-map.csv for the source link."
           },
           "tokens": {}
         },
@@ -862,8 +824,7 @@
           ],
           "visualPreview": {
             "sample": "icons",
-            "image": "../ui_research/visual-evidence/ui-008.png",
-            "notes": "Preview reference for icon style."
+            "notes": "Text-only research record; see source-map.csv for the source link."
           },
           "tokens": {}
         },
@@ -882,8 +843,7 @@
           ],
           "visualPreview": {
             "sample": "icons",
-            "image": "../ui_research/visual-evidence/ui-008.png",
-            "notes": "Agent choice preview."
+            "notes": "Text-only research record; see source-map.csv for the source link."
           },
           "tokens": {}
         }
@@ -909,8 +869,7 @@
           ],
           "visualPreview": {
             "sample": "imagery",
-            "image": "../ui_research/visual-evidence/ui-009.png",
-            "notes": "Preview reference for imagery direction."
+            "notes": "Text-only research record; see source-map.csv for the source link."
           },
           "tokens": {}
         },
@@ -929,8 +888,7 @@
           ],
           "visualPreview": {
             "sample": "imagery",
-            "image": "../ui_research/visual-evidence/ui-009.png",
-            "notes": "Preview reference for imagery direction."
+            "notes": "Text-only research record; see source-map.csv for the source link."
           },
           "tokens": {}
         },
@@ -949,8 +907,7 @@
           ],
           "visualPreview": {
             "sample": "imagery",
-            "image": "../ui_research/visual-evidence/ui-009.png",
-            "notes": "Preview reference for imagery direction."
+            "notes": "Text-only research record; see source-map.csv for the source link."
           },
           "tokens": {}
         },
@@ -969,8 +926,7 @@
           ],
           "visualPreview": {
             "sample": "imagery",
-            "image": "../ui_research/visual-evidence/ui-009.png",
-            "notes": "Preview reference for imagery direction."
+            "notes": "Text-only research record; see source-map.csv for the source link."
           },
           "tokens": {}
         },
@@ -989,8 +945,7 @@
           ],
           "visualPreview": {
             "sample": "imagery",
-            "image": "../ui_research/visual-evidence/ui-009.png",
-            "notes": "Agent choice preview."
+            "notes": "Text-only research record; see source-map.csv for the source link."
           },
           "tokens": {}
         }
@@ -1016,8 +971,7 @@
           ],
           "visualPreview": {
             "sample": "layout",
-            "image": "../ui_research/visual-evidence/ui-010.png",
-            "notes": "Preview reference for page layout and grid."
+            "notes": "Text-only research record; see source-map.csv for the source link."
           },
           "tokens": {}
         },
@@ -1036,8 +990,7 @@
           ],
           "visualPreview": {
             "sample": "layout",
-            "image": "../ui_research/visual-evidence/ui-010.png",
-            "notes": "Preview reference for page layout and grid."
+            "notes": "Text-only research record; see source-map.csv for the source link."
           },
           "tokens": {}
         },
@@ -1056,8 +1009,7 @@
           ],
           "visualPreview": {
             "sample": "layout",
-            "image": "../ui_research/visual-evidence/ui-010.png",
-            "notes": "Preview reference for page layout and grid."
+            "notes": "Text-only research record; see source-map.csv for the source link."
           },
           "tokens": {}
         },
@@ -1076,8 +1028,7 @@
           ],
           "visualPreview": {
             "sample": "layout",
-            "image": "../ui_research/visual-evidence/ui-010.png",
-            "notes": "Preview reference for page layout and grid."
+            "notes": "Text-only research record; see source-map.csv for the source link."
           },
           "tokens": {}
         },
@@ -1096,8 +1047,7 @@
           ],
           "visualPreview": {
             "sample": "layout",
-            "image": "../ui_research/visual-evidence/ui-010.png",
-            "notes": "Agent choice preview."
+            "notes": "Text-only research record; see source-map.csv for the source link."
           },
           "tokens": {}
         }
@@ -1123,8 +1073,7 @@
           ],
           "visualPreview": {
             "sample": "navigation",
-            "image": "../ui_research/visual-evidence/ui-001.png",
-            "notes": "Preview reference for navigation patterns."
+            "notes": "Text-only research record; see source-map.csv for the source link."
           },
           "tokens": {}
         },
@@ -1143,8 +1092,7 @@
           ],
           "visualPreview": {
             "sample": "navigation",
-            "image": "../ui_research/visual-evidence/ui-001.png",
-            "notes": "Preview reference for navigation patterns."
+            "notes": "Text-only research record; see source-map.csv for the source link."
           },
           "tokens": {}
         },
@@ -1163,8 +1111,7 @@
           ],
           "visualPreview": {
             "sample": "navigation",
-            "image": "../ui_research/visual-evidence/ui-001.png",
-            "notes": "Preview reference for navigation patterns."
+            "notes": "Text-only research record; see source-map.csv for the source link."
           },
           "tokens": {}
         },
@@ -1183,8 +1130,7 @@
           ],
           "visualPreview": {
             "sample": "navigation",
-            "image": "../ui_research/visual-evidence/ui-001.png",
-            "notes": "Preview reference for navigation patterns."
+            "notes": "Text-only research record; see source-map.csv for the source link."
           },
           "tokens": {}
         },
@@ -1203,8 +1149,7 @@
           ],
           "visualPreview": {
             "sample": "navigation",
-            "image": "../ui_research/visual-evidence/ui-001.png",
-            "notes": "Agent choice preview."
+            "notes": "Text-only research record; see source-map.csv for the source link."
           },
           "tokens": {}
         }
@@ -1230,8 +1175,7 @@
           ],
           "visualPreview": {
             "sample": "buttons",
-            "image": "../ui_research/visual-evidence/ui-002.png",
-            "notes": "Preview reference for buttons and actions."
+            "notes": "Text-only research record; see source-map.csv for the source link."
           },
           "tokens": {}
         },
@@ -1250,8 +1194,7 @@
           ],
           "visualPreview": {
             "sample": "buttons",
-            "image": "../ui_research/visual-evidence/ui-002.png",
-            "notes": "Preview reference for buttons and actions."
+            "notes": "Text-only research record; see source-map.csv for the source link."
           },
           "tokens": {}
         },
@@ -1270,8 +1213,7 @@
           ],
           "visualPreview": {
             "sample": "buttons",
-            "image": "../ui_research/visual-evidence/ui-002.png",
-            "notes": "Preview reference for buttons and actions."
+            "notes": "Text-only research record; see source-map.csv for the source link."
           },
           "tokens": {}
         },
@@ -1290,8 +1232,7 @@
           ],
           "visualPreview": {
             "sample": "buttons",
-            "image": "../ui_research/visual-evidence/ui-002.png",
-            "notes": "Preview reference for buttons and actions."
+            "notes": "Text-only research record; see source-map.csv for the source link."
           },
           "tokens": {}
         },
@@ -1310,8 +1251,7 @@
           ],
           "visualPreview": {
             "sample": "buttons",
-            "image": "../ui_research/visual-evidence/ui-002.png",
-            "notes": "Agent choice preview."
+            "notes": "Text-only research record; see source-map.csv for the source link."
           },
           "tokens": {}
         }
@@ -1337,8 +1277,7 @@
           ],
           "visualPreview": {
             "sample": "forms",
-            "image": "../ui_research/visual-evidence/ui-003.png",
-            "notes": "Preview reference for forms and inputs."
+            "notes": "Text-only research record; see source-map.csv for the source link."
           },
           "tokens": {}
         },
@@ -1357,8 +1296,7 @@
           ],
           "visualPreview": {
             "sample": "forms",
-            "image": "../ui_research/visual-evidence/ui-003.png",
-            "notes": "Preview reference for forms and inputs."
+            "notes": "Text-only research record; see source-map.csv for the source link."
           },
           "tokens": {}
         },
@@ -1377,8 +1315,7 @@
           ],
           "visualPreview": {
             "sample": "forms",
-            "image": "../ui_research/visual-evidence/ui-003.png",
-            "notes": "Preview reference for forms and inputs."
+            "notes": "Text-only research record; see source-map.csv for the source link."
           },
           "tokens": {}
         },
@@ -1397,8 +1334,7 @@
           ],
           "visualPreview": {
             "sample": "forms",
-            "image": "../ui_research/visual-evidence/ui-003.png",
-            "notes": "Preview reference for forms and inputs."
+            "notes": "Text-only research record; see source-map.csv for the source link."
           },
           "tokens": {}
         },
@@ -1417,8 +1353,7 @@
           ],
           "visualPreview": {
             "sample": "forms",
-            "image": "../ui_research/visual-evidence/ui-003.png",
-            "notes": "Agent choice preview."
+            "notes": "Text-only research record; see source-map.csv for the source link."
           },
           "tokens": {}
         }
@@ -1444,8 +1379,7 @@
           ],
           "visualPreview": {
             "sample": "tables",
-            "image": "../ui_research/visual-evidence/ui-004.png",
-            "notes": "Preview reference for tables and data."
+            "notes": "Text-only research record; see source-map.csv for the source link."
           },
           "tokens": {}
         },
@@ -1464,8 +1398,7 @@
           ],
           "visualPreview": {
             "sample": "tables",
-            "image": "../ui_research/visual-evidence/ui-004.png",
-            "notes": "Preview reference for tables and data."
+            "notes": "Text-only research record; see source-map.csv for the source link."
           },
           "tokens": {}
         },
@@ -1484,8 +1417,7 @@
           ],
           "visualPreview": {
             "sample": "tables",
-            "image": "../ui_research/visual-evidence/ui-004.png",
-            "notes": "Preview reference for tables and data."
+            "notes": "Text-only research record; see source-map.csv for the source link."
           },
           "tokens": {}
         },
@@ -1504,8 +1436,7 @@
           ],
           "visualPreview": {
             "sample": "tables",
-            "image": "../ui_research/visual-evidence/ui-004.png",
-            "notes": "Preview reference for tables and data."
+            "notes": "Text-only research record; see source-map.csv for the source link."
           },
           "tokens": {}
         },
@@ -1524,8 +1455,7 @@
           ],
           "visualPreview": {
             "sample": "tables",
-            "image": "../ui_research/visual-evidence/ui-004.png",
-            "notes": "Agent choice preview."
+            "notes": "Text-only research record; see source-map.csv for the source link."
           },
           "tokens": {}
         }
@@ -1551,8 +1481,7 @@
           ],
           "visualPreview": {
             "sample": "surfaces",
-            "image": "../ui_research/visual-evidence/ui-005.png",
-            "notes": "Preview reference for cards and surfaces."
+            "notes": "Text-only research record; see source-map.csv for the source link."
           },
           "tokens": {}
         },
@@ -1571,8 +1500,7 @@
           ],
           "visualPreview": {
             "sample": "surfaces",
-            "image": "../ui_research/visual-evidence/ui-005.png",
-            "notes": "Preview reference for cards and surfaces."
+            "notes": "Text-only research record; see source-map.csv for the source link."
           },
           "tokens": {}
         },
@@ -1591,8 +1519,7 @@
           ],
           "visualPreview": {
             "sample": "surfaces",
-            "image": "../ui_research/visual-evidence/ui-005.png",
-            "notes": "Preview reference for cards and surfaces."
+            "notes": "Text-only research record; see source-map.csv for the source link."
           },
           "tokens": {}
         },
@@ -1611,8 +1538,7 @@
           ],
           "visualPreview": {
             "sample": "surfaces",
-            "image": "../ui_research/visual-evidence/ui-005.png",
-            "notes": "Preview reference for cards and surfaces."
+            "notes": "Text-only research record; see source-map.csv for the source link."
           },
           "tokens": {}
         },
@@ -1631,8 +1557,7 @@
           ],
           "visualPreview": {
             "sample": "surfaces",
-            "image": "../ui_research/visual-evidence/ui-005.png",
-            "notes": "Agent choice preview."
+            "notes": "Text-only research record; see source-map.csv for the source link."
           },
           "tokens": {}
         }
@@ -1658,8 +1583,7 @@
           ],
           "visualPreview": {
             "sample": "feedback",
-            "image": "../ui_research/visual-evidence/ui-006.png",
-            "notes": "Preview reference for feedback states."
+            "notes": "Text-only research record; see source-map.csv for the source link."
           },
           "tokens": {}
         },
@@ -1678,8 +1602,7 @@
           ],
           "visualPreview": {
             "sample": "feedback",
-            "image": "../ui_research/visual-evidence/ui-006.png",
-            "notes": "Preview reference for feedback states."
+            "notes": "Text-only research record; see source-map.csv for the source link."
           },
           "tokens": {}
         },
@@ -1698,8 +1621,7 @@
           ],
           "visualPreview": {
             "sample": "feedback",
-            "image": "../ui_research/visual-evidence/ui-006.png",
-            "notes": "Preview reference for feedback states."
+            "notes": "Text-only research record; see source-map.csv for the source link."
           },
           "tokens": {}
         },
@@ -1718,8 +1640,7 @@
           ],
           "visualPreview": {
             "sample": "feedback",
-            "image": "../ui_research/visual-evidence/ui-006.png",
-            "notes": "Preview reference for feedback states."
+            "notes": "Text-only research record; see source-map.csv for the source link."
           },
           "tokens": {}
         },
@@ -1738,8 +1659,7 @@
           ],
           "visualPreview": {
             "sample": "feedback",
-            "image": "../ui_research/visual-evidence/ui-006.png",
-            "notes": "Agent choice preview."
+            "notes": "Text-only research record; see source-map.csv for the source link."
           },
           "tokens": {}
         }
@@ -1765,8 +1685,7 @@
           ],
           "visualPreview": {
             "sample": "accessibility",
-            "image": "../ui_research/visual-evidence/ui-007.png",
-            "notes": "Preview reference for accessibility defaults."
+            "notes": "Text-only research record; see source-map.csv for the source link."
           },
           "tokens": {}
         },
@@ -1785,8 +1704,7 @@
           ],
           "visualPreview": {
             "sample": "accessibility",
-            "image": "../ui_research/visual-evidence/ui-007.png",
-            "notes": "Preview reference for accessibility defaults."
+            "notes": "Text-only research record; see source-map.csv for the source link."
           },
           "tokens": {}
         },
@@ -1805,8 +1723,7 @@
           ],
           "visualPreview": {
             "sample": "accessibility",
-            "image": "../ui_research/visual-evidence/ui-007.png",
-            "notes": "Preview reference for accessibility defaults."
+            "notes": "Text-only research record; see source-map.csv for the source link."
           },
           "tokens": {}
         },
@@ -1825,8 +1742,7 @@
           ],
           "visualPreview": {
             "sample": "accessibility",
-            "image": "../ui_research/visual-evidence/ui-007.png",
-            "notes": "Preview reference for accessibility defaults."
+            "notes": "Text-only research record; see source-map.csv for the source link."
           },
           "tokens": {}
         },
@@ -1845,8 +1761,7 @@
           ],
           "visualPreview": {
             "sample": "accessibility",
-            "image": "../ui_research/visual-evidence/ui-007.png",
-            "notes": "Agent choice preview."
+            "notes": "Text-only research record; see source-map.csv for the source link."
           },
           "tokens": {}
         }
@@ -1872,8 +1787,7 @@
           ],
           "visualPreview": {
             "sample": "voice",
-            "image": "../ui_research/visual-evidence/ui-008.png",
-            "notes": "Preview reference for content voice."
+            "notes": "Text-only research record; see source-map.csv for the source link."
           },
           "tokens": {}
         },
@@ -1892,8 +1806,7 @@
           ],
           "visualPreview": {
             "sample": "voice",
-            "image": "../ui_research/visual-evidence/ui-008.png",
-            "notes": "Preview reference for content voice."
+            "notes": "Text-only research record; see source-map.csv for the source link."
           },
           "tokens": {}
         },
@@ -1912,8 +1825,7 @@
           ],
           "visualPreview": {
             "sample": "voice",
-            "image": "../ui_research/visual-evidence/ui-008.png",
-            "notes": "Preview reference for content voice."
+            "notes": "Text-only research record; see source-map.csv for the source link."
           },
           "tokens": {}
         },
@@ -1932,8 +1844,7 @@
           ],
           "visualPreview": {
             "sample": "voice",
-            "image": "../ui_research/visual-evidence/ui-008.png",
-            "notes": "Preview reference for content voice."
+            "notes": "Text-only research record; see source-map.csv for the source link."
           },
           "tokens": {}
         },
@@ -1952,8 +1863,7 @@
           ],
           "visualPreview": {
             "sample": "voice",
-            "image": "../ui_research/visual-evidence/ui-008.png",
-            "notes": "Agent choice preview."
+            "notes": "Text-only research record; see source-map.csv for the source link."
           },
           "tokens": {}
         }
@@ -1969,7 +1879,7 @@
           "name": "Source-owned composition",
           "status": "recommended",
           "recommendationReason": "Matches the approved Black Vector brief and the strongest research evidence.",
-          "description": "Adapt beUI source over shadcn and Radix with project tokens.",
+          "description": "Use project-owned React components with shadcn and Radix patterns.",
           "bestFor": "Seigyo and MyShop production implementation",
           "tradeoffs": "Requires disciplined restraint and accurate semantic states.",
           "researchEvidence": [
@@ -1979,8 +1889,7 @@
           ],
           "visualPreview": {
             "sample": "implementation",
-            "image": "../ui_research/visual-evidence/ui-009.png",
-            "notes": "Preview reference for implementation strategy."
+            "notes": "Text-only research record; see source-map.csv for the source link."
           },
           "tokens": {}
         },
@@ -1999,8 +1908,7 @@
           ],
           "visualPreview": {
             "sample": "implementation",
-            "image": "../ui_research/visual-evidence/ui-009.png",
-            "notes": "Preview reference for implementation strategy."
+            "notes": "Text-only research record; see source-map.csv for the source link."
           },
           "tokens": {}
         },
@@ -2019,8 +1927,7 @@
           ],
           "visualPreview": {
             "sample": "implementation",
-            "image": "../ui_research/visual-evidence/ui-009.png",
-            "notes": "Preview reference for implementation strategy."
+            "notes": "Text-only research record; see source-map.csv for the source link."
           },
           "tokens": {}
         },
@@ -2039,8 +1946,7 @@
           ],
           "visualPreview": {
             "sample": "implementation",
-            "image": "../ui_research/visual-evidence/ui-009.png",
-            "notes": "Preview reference for implementation strategy."
+            "notes": "Text-only research record; see source-map.csv for the source link."
           },
           "tokens": {}
         },
@@ -2059,8 +1965,7 @@
           ],
           "visualPreview": {
             "sample": "implementation",
-            "image": "../ui_research/visual-evidence/ui-009.png",
-            "notes": "Agent choice preview."
+            "notes": "Text-only research record; see source-map.csv for the source link."
           },
           "tokens": {}
         }
@@ -2086,8 +1991,7 @@
           ],
           "visualPreview": {
             "sample": "adaptation",
-            "image": "../ui_research/visual-evidence/ui-010.png",
-            "notes": "Preview reference for third-party adaptation."
+            "notes": "Text-only research record; see source-map.csv for the source link."
           },
           "tokens": {}
         },
@@ -2106,8 +2010,7 @@
           ],
           "visualPreview": {
             "sample": "adaptation",
-            "image": "../ui_research/visual-evidence/ui-010.png",
-            "notes": "Preview reference for third-party adaptation."
+            "notes": "Text-only research record; see source-map.csv for the source link."
           },
           "tokens": {}
         },
@@ -2126,8 +2029,7 @@
           ],
           "visualPreview": {
             "sample": "adaptation",
-            "image": "../ui_research/visual-evidence/ui-010.png",
-            "notes": "Preview reference for third-party adaptation."
+            "notes": "Text-only research record; see source-map.csv for the source link."
           },
           "tokens": {}
         },
@@ -2146,8 +2048,7 @@
           ],
           "visualPreview": {
             "sample": "adaptation",
-            "image": "../ui_research/visual-evidence/ui-010.png",
-            "notes": "Preview reference for third-party adaptation."
+            "notes": "Text-only research record; see source-map.csv for the source link."
           },
           "tokens": {}
         },
@@ -2166,8 +2067,7 @@
           ],
           "visualPreview": {
             "sample": "adaptation",
-            "image": "../ui_research/visual-evidence/ui-010.png",
-            "notes": "Agent choice preview."
+            "notes": "Text-only research record; see source-map.csv for the source link."
           },
           "tokens": {}
         }

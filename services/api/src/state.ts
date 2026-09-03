@@ -6,6 +6,7 @@ import type {
   ScenarioId,
   ServiceId,
 } from "@seigyo/contracts";
+import { PublicKeySchema } from "@seigyo/contracts";
 import {
   approveProposal,
   checkout,
@@ -38,6 +39,15 @@ type CheckoutRequest = {
   address: string;
   requestId: string;
   idempotencyKey: string;
+};
+
+const validatePublicRouteKey = (value: string, field: string): void => {
+  const parsed = PublicKeySchema.safeParse(value);
+  if (
+    !parsed.success ||
+    ["__proto__", "prototype", "constructor"].includes(parsed.data)
+  )
+    throw new Error(`INVALID_ARGUMENT:${field} is invalid.`);
 };
 
 export class OperationsStateObject extends DurableObject<Env> {
@@ -378,14 +388,17 @@ export class OperationsStateObject extends DurableObject<Env> {
     );
   }
   getProduct(slug: string) {
+    validatePublicRouteKey(slug, "slug");
     return this.read().products.find(
       (product) => product.slug === slug || product.id === slug,
     );
   }
   getCart(cartId: string) {
+    validatePublicRouteKey(cartId, "cartId");
     return getCart(this.read(), cartId);
   }
   async setCartItem(cartId: string, productId: string, quantity: number) {
+    validatePublicRouteKey(cartId, "cartId");
     return this.mutate(
       (state) => updateCart(state, cartId, productId, quantity),
       "cart.updated",
@@ -395,6 +408,7 @@ export class OperationsStateObject extends DurableObject<Env> {
     return this.mutate((state) => checkout(state, input), "order.created");
   }
   getOrder(orderId: string) {
+    validatePublicRouteKey(orderId, "orderId");
     return this.read().orders.find((order) => order.id === orderId);
   }
   getStoreHealth() {

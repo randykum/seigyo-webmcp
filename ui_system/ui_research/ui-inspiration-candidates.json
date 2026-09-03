@@ -30,8 +30,9 @@
     ],
     "observedInteraction": "Progressively reveals details while keeping the decision visible.",
     "evidence": {
-      "type": "screenshot",
-      "path": "visual-evidence/ui-001.png",
+      "type": "visual-note",
+      "path": "",
+      "note": "Public page reviewed through the linked source and documented observations; no local capture is retained.",
       "blockedReason": ""
     },
     "whatToBorrow": "Borrow the approval hierarchy and interaction logic while applying Seigyo or MyShop tokens.",
@@ -75,8 +76,9 @@
     ],
     "observedInteraction": "Rows enter once and completed results settle into a quiet state.",
     "evidence": {
-      "type": "screenshot",
-      "path": "visual-evidence/ui-002.png",
+      "type": "visual-note",
+      "path": "",
+      "note": "Public page reviewed through the linked source and documented observations; no local capture is retained.",
       "blockedReason": ""
     },
     "whatToBorrow": "Borrow the agent-activity hierarchy and interaction logic while applying Seigyo or MyShop tokens.",
@@ -118,8 +120,9 @@
     ],
     "observedInteraction": "Continuous motion is subtle and can be removed for reduced motion.",
     "evidence": {
-      "type": "screenshot",
-      "path": "visual-evidence/ui-003.png",
+      "type": "visual-note",
+      "path": "",
+      "note": "Public page reviewed through the linked source and documented observations; no local capture is retained.",
       "blockedReason": ""
     },
     "whatToBorrow": "Borrow the background hierarchy and interaction logic while applying Seigyo or MyShop tokens.",
@@ -163,8 +166,9 @@
     ],
     "observedInteraction": "Presence is controlled and keyboard behavior remains predictable.",
     "evidence": {
-      "type": "screenshot",
-      "path": "visual-evidence/ui-004.png",
+      "type": "visual-note",
+      "path": "",
+      "note": "Public page reviewed through the linked source and documented observations; no local capture is retained.",
       "blockedReason": ""
     },
     "whatToBorrow": "Borrow the modal hierarchy and interaction logic while applying Seigyo or MyShop tokens.",
@@ -208,8 +212,9 @@
     ],
     "observedInteraction": "Expands parameter detail without moving the final decision out of view.",
     "evidence": {
-      "type": "screenshot",
-      "path": "visual-evidence/ui-005.png",
+      "type": "visual-note",
+      "path": "",
+      "note": "Public page reviewed through the linked source and documented observations; no local capture is retained.",
       "blockedReason": ""
     },
     "whatToBorrow": "Borrow the approval hierarchy and interaction logic while applying Seigyo or MyShop tokens.",
@@ -253,8 +258,9 @@
     ],
     "observedInteraction": "Auto-follow pauses when the user scrolls away from the newest event.",
     "evidence": {
-      "type": "screenshot",
-      "path": "visual-evidence/ui-006.png",
+      "type": "visual-note",
+      "path": "",
+      "note": "Public page reviewed through the linked source and documented observations; no local capture is retained.",
       "blockedReason": ""
     },
     "whatToBorrow": "Borrow the streaming hierarchy and interaction logic while applying Seigyo or MyShop tokens.",
@@ -298,8 +304,9 @@
     ],
     "observedInteraction": "The result expands in place and avoids modal interruption.",
     "evidence": {
-      "type": "screenshot",
-      "path": "visual-evidence/ui-007.png",
+      "type": "visual-note",
+      "path": "",
+      "note": "Public page reviewed through the linked source and documented observations; no local capture is retained.",
       "blockedReason": ""
     },
     "whatToBorrow": "Borrow the tool-result hierarchy and interaction logic while applying Seigyo or MyShop tokens.",
@@ -343,8 +350,9 @@
     ],
     "observedInteraction": "Width and labels transition together with restrained layout animation.",
     "evidence": {
-      "type": "screenshot",
-      "path": "visual-evidence/ui-008.png",
+      "type": "visual-note",
+      "path": "",
+      "note": "Public page reviewed through the linked source and documented observations; no local capture is retained.",
       "blockedReason": ""
     },
     "whatToBorrow": "Borrow the navigation hierarchy and interaction logic while applying Seigyo or MyShop tokens.",
@@ -388,8 +396,9 @@
     ],
     "observedInteraction": "Keyboard cursor and filtered results update immediately.",
     "evidence": {
-      "type": "screenshot",
-      "path": "visual-evidence/ui-009.png",
+      "type": "visual-note",
+      "path": "",
+      "note": "Public page reviewed through the linked source and documented observations; no local capture is retained.",
       "blockedReason": ""
     },
     "whatToBorrow": "Borrow the command hierarchy and interaction logic while applying Seigyo or MyShop tokens.",
@@ -433,8 +442,9 @@
     ],
     "observedInteraction": "Notices enter and leave on one consistent axis.",
     "evidence": {
-      "type": "screenshot",
-      "path": "visual-evidence/ui-010.png",
+      "type": "visual-note",
+      "path": "",
+      "note": "Public page reviewed through the linked source and documented observations; no local capture is retained.",
       "blockedReason": ""
     },
     "whatToBorrow": "Borrow the feedback hierarchy and interaction logic while applying Seigyo or MyShop tokens.",
@@ -478,8 +488,9 @@
     ],
     "observedInteraction": "Shared geometry carries context between list and detail.",
     "evidence": {
-      "type": "screenshot",
-      "path": "visual-evidence/ui-001.png",
+      "type": "visual-note",
+      "path": "",
+      "note": "Public page reviewed through the linked source and documented observations; no local capture is retained.",
       "blockedReason": ""
     },
     "whatToBorrow": "Borrow the modal hierarchy and interaction logic while applying Seigyo or MyShop tokens.",
@@ -523,8 +534,9 @@
     ],
     "observedInteraction": "Selection and row updates avoid lifting or resizing content.",
     "evidence": {
-      "type": "screenshot",
-      "path": "visual-evidence/ui-002.png",
+      "type": "visual-note",
+      "path": "",
+      "note": "Public page reviewed through the linked source and documented observations; no local capture is retained.",
       "blockedReason": ""
     },
     "whatToBorrow": "Borrow the table hierarchy and interaction logic while applying Seigyo or MyShop tokens.",
@@ -568,8 +580,9 @@
     ],
     "observedInteraction": "Short loops stop immediately when work completes.",
     "evidence": {
-      "type": "screenshot",
-      "path": "visual-evidence/ui-003.png",
+      "type": "visual-note",
+      "path": "",
+      "note": "Public page reviewed through the linked source and documented observations; no local capture is retained.",
       "blockedReason": ""
     },
     "whatToBorrow": "Borrow the loading hierarchy and interaction logic while applying Seigyo or MyShop tokens.",
@@ -613,8 +626,9 @@
     ],
     "observedInteraction": "Tooltip and series transitions remain secondary to the data.",
     "evidence": {
-      "type": "screenshot",
-      "path": "visual-evidence/ui-004.png",
+      "type": "visual-note",
+      "path": "",
+      "note": "Public page reviewed through the linked source and documented observations; no local capture is retained.",
       "blockedReason": ""
     },
     "whatToBorrow": "Borrow the chart hierarchy and interaction logic while applying Seigyo or MyShop tokens.",
@@ -658,8 +672,9 @@
     ],
     "observedInteraction": "Sorting and filtering update in place with stable geometry.",
     "evidence": {
-      "type": "screenshot",
-      "path": "visual-evidence/ui-005.png",
+      "type": "visual-note",
+      "path": "",
+      "note": "Public page reviewed through the linked source and documented observations; no local capture is retained.",
       "blockedReason": ""
     },
     "whatToBorrow": "Borrow the table hierarchy and interaction logic while applying Seigyo or MyShop tokens.",
@@ -703,8 +718,9 @@
     ],
     "observedInteraction": "Focus begins inside the decision and returns to the trigger.",
     "evidence": {
-      "type": "screenshot",
-      "path": "visual-evidence/ui-006.png",
+      "type": "visual-note",
+      "path": "",
+      "note": "Public page reviewed through the linked source and documented observations; no local capture is retained.",
       "blockedReason": ""
     },
     "whatToBorrow": "Borrow the approval hierarchy and interaction logic while applying Seigyo or MyShop tokens.",
@@ -748,8 +764,9 @@
     ],
     "observedInteraction": "Delay and dismissal remain predictable for mouse and keyboard.",
     "evidence": {
-      "type": "screenshot",
-      "path": "visual-evidence/ui-007.png",
+      "type": "visual-note",
+      "path": "",
+      "note": "Public page reviewed through the linked source and documented observations; no local capture is retained.",
       "blockedReason": ""
     },
     "whatToBorrow": "Borrow the help hierarchy and interaction logic while applying Seigyo or MyShop tokens.",
@@ -793,8 +810,9 @@
     ],
     "observedInteraction": "Route and panel changes feel fast and spatially stable.",
     "evidence": {
-      "type": "screenshot",
-      "path": "visual-evidence/ui-008.png",
+      "type": "visual-note",
+      "path": "",
+      "note": "Public page reviewed through the linked source and documented observations; no local capture is retained.",
       "blockedReason": ""
     },
     "whatToBorrow": "Borrow the workspace hierarchy and interaction logic while applying Seigyo or MyShop tokens.",
@@ -838,8 +856,9 @@
     ],
     "observedInteraction": "Fuzzy results and keyboard movement respond immediately.",
     "evidence": {
-      "type": "screenshot",
-      "path": "visual-evidence/ui-009.png",
+      "type": "visual-note",
+      "path": "",
+      "note": "Public page reviewed through the linked source and documented observations; no local capture is retained.",
       "blockedReason": ""
     },
     "whatToBorrow": "Borrow the command hierarchy and interaction logic while applying Seigyo or MyShop tokens.",
@@ -883,8 +902,9 @@
     ],
     "observedInteraction": "Expanding evidence preserves the issue context.",
     "evidence": {
-      "type": "screenshot",
-      "path": "visual-evidence/ui-010.png",
+      "type": "visual-note",
+      "path": "",
+      "note": "Public page reviewed through the linked source and documented observations; no local capture is retained.",
       "blockedReason": ""
     },
     "whatToBorrow": "Borrow the incident hierarchy and interaction logic while applying Seigyo or MyShop tokens.",
@@ -928,8 +948,9 @@
     ],
     "observedInteraction": "Selecting a span updates the detail region without route loss.",
     "evidence": {
-      "type": "screenshot",
-      "path": "visual-evidence/ui-001.png",
+      "type": "visual-note",
+      "path": "",
+      "note": "Public page reviewed through the linked source and documented observations; no local capture is retained.",
       "blockedReason": ""
     },
     "whatToBorrow": "Borrow the trace hierarchy and interaction logic while applying Seigyo or MyShop tokens.",
@@ -973,8 +994,9 @@
     ],
     "observedInteraction": "Selection and zoom reveal detail without constant force movement.",
     "evidence": {
-      "type": "screenshot",
-      "path": "visual-evidence/ui-002.png",
+      "type": "visual-note",
+      "path": "",
+      "note": "Public page reviewed through the linked source and documented observations; no local capture is retained.",
       "blockedReason": ""
     },
     "whatToBorrow": "Borrow the service-graph hierarchy and interaction logic while applying Seigyo or MyShop tokens.",
@@ -1018,8 +1040,9 @@
     ],
     "observedInteraction": "Hover inspection does not move the plot or surrounding layout.",
     "evidence": {
-      "type": "screenshot",
-      "path": "visual-evidence/ui-003.png",
+      "type": "visual-note",
+      "path": "",
+      "note": "Public page reviewed through the linked source and documented observations; no local capture is retained.",
       "blockedReason": ""
     },
     "whatToBorrow": "Borrow the chart hierarchy and interaction logic while applying Seigyo or MyShop tokens.",
@@ -1063,8 +1086,9 @@
     ],
     "observedInteraction": "Filtering reduces scope while preserving node placement.",
     "evidence": {
-      "type": "screenshot",
-      "path": "visual-evidence/ui-004.png",
+      "type": "visual-note",
+      "path": "",
+      "note": "Public page reviewed through the linked source and documented observations; no local capture is retained.",
       "blockedReason": ""
     },
     "whatToBorrow": "Borrow the service-graph hierarchy and interaction logic while applying Seigyo or MyShop tokens.",
@@ -1110,8 +1134,9 @@
     ],
     "observedInteraction": "Queries update evidence while retaining time and filter context.",
     "evidence": {
-      "type": "screenshot",
-      "path": "visual-evidence/ui-005.png",
+      "type": "visual-note",
+      "path": "",
+      "note": "Public page reviewed through the linked source and documented observations; no local capture is retained.",
       "blockedReason": ""
     },
     "whatToBorrow": "Borrow the logs hierarchy and interaction logic while applying Seigyo or MyShop tokens.",
@@ -1155,8 +1180,9 @@
     ],
     "observedInteraction": "Query execution clearly distinguishes running, result, and failure states.",
     "evidence": {
-      "type": "screenshot",
-      "path": "visual-evidence/ui-006.png",
+      "type": "visual-note",
+      "path": "",
+      "note": "Public page reviewed through the linked source and documented observations; no local capture is retained.",
       "blockedReason": ""
     },
     "whatToBorrow": "Borrow the logs hierarchy and interaction logic while applying Seigyo or MyShop tokens.",
@@ -1202,7 +1228,7 @@
     "evidence": {
       "type": "visual-note",
       "path": "",
-      "note": "Public page observed through documentation and current product references; no stable local capture retained.",
+      "note": "Public page reviewed through the linked source and documented observations; no local capture is retained.",
       "blockedReason": ""
     },
     "whatToBorrow": "Borrow the logs hierarchy and interaction logic while applying Seigyo or MyShop tokens.",
@@ -1248,7 +1274,7 @@
     "evidence": {
       "type": "visual-note",
       "path": "",
-      "note": "Public page observed through documentation and current product references; no stable local capture retained.",
+      "note": "Public page reviewed through the linked source and documented observations; no local capture is retained.",
       "blockedReason": ""
     },
     "whatToBorrow": "Borrow the timeline hierarchy and interaction logic while applying Seigyo or MyShop tokens.",
@@ -1294,7 +1320,7 @@
     "evidence": {
       "type": "visual-note",
       "path": "",
-      "note": "Public page observed through documentation and current product references; no stable local capture retained.",
+      "note": "Public page reviewed through the linked source and documented observations; no local capture is retained.",
       "blockedReason": ""
     },
     "whatToBorrow": "Borrow the deployment hierarchy and interaction logic while applying Seigyo or MyShop tokens.",
@@ -1340,7 +1366,7 @@
     "evidence": {
       "type": "visual-note",
       "path": "",
-      "note": "Public page observed through documentation and current product references; no stable local capture retained.",
+      "note": "Public page reviewed through the linked source and documented observations; no local capture is retained.",
       "blockedReason": ""
     },
     "whatToBorrow": "Borrow the recovery hierarchy and interaction logic while applying Seigyo or MyShop tokens.",
@@ -1386,7 +1412,7 @@
     "evidence": {
       "type": "visual-note",
       "path": "",
-      "note": "Public page observed through documentation and current product references; no stable local capture retained.",
+      "note": "Public page reviewed through the linked source and documented observations; no local capture is retained.",
       "blockedReason": ""
     },
     "whatToBorrow": "Borrow the incident hierarchy and interaction logic while applying Seigyo or MyShop tokens.",
@@ -1432,7 +1458,7 @@
     "evidence": {
       "type": "visual-note",
       "path": "",
-      "note": "Public page observed through documentation and current product references; no stable local capture retained.",
+      "note": "Public page reviewed through the linked source and documented observations; no local capture is retained.",
       "blockedReason": ""
     },
     "whatToBorrow": "Borrow the status hierarchy and interaction logic while applying Seigyo or MyShop tokens.",
@@ -1478,7 +1504,7 @@
     "evidence": {
       "type": "visual-note",
       "path": "",
-      "note": "Public page observed through documentation and current product references; no stable local capture retained.",
+      "note": "Public page reviewed through the linked source and documented observations; no local capture is retained.",
       "blockedReason": ""
     },
     "whatToBorrow": "Borrow the chart hierarchy and interaction logic while applying Seigyo or MyShop tokens.",
@@ -1524,7 +1550,7 @@
     "evidence": {
       "type": "visual-note",
       "path": "",
-      "note": "Public page observed through documentation and current product references; no stable local capture retained.",
+      "note": "Public page reviewed through the linked source and documented observations; no local capture is retained.",
       "blockedReason": ""
     },
     "whatToBorrow": "Borrow the table hierarchy and interaction logic while applying Seigyo or MyShop tokens.",
@@ -1570,7 +1596,7 @@
     "evidence": {
       "type": "visual-note",
       "path": "",
-      "note": "Public page observed through documentation and current product references; no stable local capture retained.",
+      "note": "Public page reviewed through the linked source and documented observations; no local capture is retained.",
       "blockedReason": ""
     },
     "whatToBorrow": "Borrow the list hierarchy and interaction logic while applying Seigyo or MyShop tokens.",
@@ -1614,7 +1640,7 @@
     "evidence": {
       "type": "visual-note",
       "path": "",
-      "note": "Public page observed through documentation and current product references; no stable local capture retained.",
+      "note": "Public page reviewed through the linked source and documented observations; no local capture is retained.",
       "blockedReason": ""
     },
     "whatToBorrow": "Borrow the accessibility hierarchy and interaction logic while applying Seigyo or MyShop tokens.",
@@ -1660,7 +1686,7 @@
     "evidence": {
       "type": "visual-note",
       "path": "",
-      "note": "Public page observed through documentation and current product references; no stable local capture retained.",
+      "note": "Public page reviewed through the linked source and documented observations; no local capture is retained.",
       "blockedReason": ""
     },
     "whatToBorrow": "Borrow the table hierarchy and interaction logic while applying Seigyo or MyShop tokens.",
@@ -1706,7 +1732,7 @@
     "evidence": {
       "type": "visual-note",
       "path": "",
-      "note": "Public page observed through documentation and current product references; no stable local capture retained.",
+      "note": "Public page reviewed through the linked source and documented observations; no local capture is retained.",
       "blockedReason": ""
     },
     "whatToBorrow": "Borrow the checkout hierarchy and interaction logic while applying Seigyo or MyShop tokens.",
@@ -1752,7 +1778,7 @@
     "evidence": {
       "type": "visual-note",
       "path": "",
-      "note": "Public page observed through documentation and current product references; no stable local capture retained.",
+      "note": "Public page reviewed through the linked source and documented observations; no local capture is retained.",
       "blockedReason": ""
     },
     "whatToBorrow": "Borrow the retail hierarchy and interaction logic while applying Seigyo or MyShop tokens.",
@@ -1798,7 +1824,7 @@
     "evidence": {
       "type": "visual-note",
       "path": "",
-      "note": "Public page observed through documentation and current product references; no stable local capture retained.",
+      "note": "Public page reviewed through the linked source and documented observations; no local capture is retained.",
       "blockedReason": ""
     },
     "whatToBorrow": "Borrow the product hierarchy and interaction logic while applying Seigyo or MyShop tokens.",
@@ -1844,7 +1870,7 @@
     "evidence": {
       "type": "visual-note",
       "path": "",
-      "note": "Public page observed through documentation and current product references; no stable local capture retained.",
+      "note": "Public page reviewed through the linked source and documented observations; no local capture is retained.",
       "blockedReason": ""
     },
     "whatToBorrow": "Borrow the retail hierarchy and interaction logic while applying Seigyo or MyShop tokens.",
@@ -1890,7 +1916,7 @@
     "evidence": {
       "type": "visual-note",
       "path": "",
-      "note": "Public page observed through documentation and current product references; no stable local capture retained.",
+      "note": "Public page reviewed through the linked source and documented observations; no local capture is retained.",
       "blockedReason": ""
     },
     "whatToBorrow": "Borrow the product hierarchy and interaction logic while applying Seigyo or MyShop tokens.",
@@ -1936,7 +1962,7 @@
     "evidence": {
       "type": "visual-note",
       "path": "",
-      "note": "Public page observed through documentation and current product references; no stable local capture retained.",
+      "note": "Public page reviewed through the linked source and documented observations; no local capture is retained.",
       "blockedReason": ""
     },
     "whatToBorrow": "Borrow the retail hierarchy and interaction logic while applying Seigyo or MyShop tokens.",
@@ -1982,7 +2008,7 @@
     "evidence": {
       "type": "visual-note",
       "path": "",
-      "note": "Public page observed through documentation and current product references; no stable local capture retained.",
+      "note": "Public page reviewed through the linked source and documented observations; no local capture is retained.",
       "blockedReason": ""
     },
     "whatToBorrow": "Borrow the retail hierarchy and interaction logic while applying Seigyo or MyShop tokens.",
@@ -2028,7 +2054,7 @@
     "evidence": {
       "type": "visual-note",
       "path": "",
-      "note": "Public page observed through documentation and current product references; no stable local capture retained.",
+      "note": "Public page reviewed through the linked source and documented observations; no local capture is retained.",
       "blockedReason": ""
     },
     "whatToBorrow": "Borrow the editorial hierarchy and interaction logic while applying Seigyo or MyShop tokens.",
@@ -2074,7 +2100,7 @@
     "evidence": {
       "type": "visual-note",
       "path": "",
-      "note": "Public page observed through documentation and current product references; no stable local capture retained.",
+      "note": "Public page reviewed through the linked source and documented observations; no local capture is retained.",
       "blockedReason": ""
     },
     "whatToBorrow": "Borrow the product hierarchy and interaction logic while applying Seigyo or MyShop tokens.",
@@ -2120,7 +2146,7 @@
     "evidence": {
       "type": "visual-note",
       "path": "",
-      "note": "Public page observed through documentation and current product references; no stable local capture retained.",
+      "note": "Public page reviewed through the linked source and documented observations; no local capture is retained.",
       "blockedReason": ""
     },
     "whatToBorrow": "Borrow the table hierarchy and interaction logic while applying Seigyo or MyShop tokens.",
@@ -2166,7 +2192,7 @@
     "evidence": {
       "type": "visual-note",
       "path": "",
-      "note": "Public page observed through documentation and current product references; no stable local capture retained.",
+      "note": "Public page reviewed through the linked source and documented observations; no local capture is retained.",
       "blockedReason": ""
     },
     "whatToBorrow": "Borrow the execution hierarchy and interaction logic while applying Seigyo or MyShop tokens.",
@@ -2212,7 +2238,7 @@
     "evidence": {
       "type": "visual-note",
       "path": "",
-      "note": "Public page observed through documentation and current product references; no stable local capture retained.",
+      "note": "Public page reviewed through the linked source and documented observations; no local capture is retained.",
       "blockedReason": ""
     },
     "whatToBorrow": "Borrow the empty-state hierarchy and interaction logic while applying Seigyo or MyShop tokens.",
@@ -2256,7 +2282,7 @@
     "evidence": {
       "type": "visual-note",
       "path": "",
-      "note": "Public page observed through documentation and current product references; no stable local capture retained.",
+      "note": "Public page reviewed through the linked source and documented observations; no local capture is retained.",
       "blockedReason": ""
     },
     "whatToBorrow": "Borrow the loading hierarchy and interaction logic while applying Seigyo or MyShop tokens.",
@@ -2302,7 +2328,7 @@
     "evidence": {
       "type": "visual-note",
       "path": "",
-      "note": "Public page observed through documentation and current product references; no stable local capture retained.",
+      "note": "Public page reviewed through the linked source and documented observations; no local capture is retained.",
       "blockedReason": ""
     },
     "whatToBorrow": "Borrow the accessibility hierarchy and interaction logic while applying Seigyo or MyShop tokens.",

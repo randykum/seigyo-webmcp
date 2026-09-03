@@ -3,7 +3,7 @@
     "name": "Seigyo and MyShop",
     "type": "Operational incident recovery plus causal commerce environment",
     "audience": "Incident responders, engineering teams, judges, and shoppers",
-    "stack": "React 19, Tailwind 4, beUI source, Radix, Motion, Recharts",
+    "stack": "React 19, Tailwind 4, Radix, Motion, Recharts",
     "assumptions": [
       "The user selected Black Vector.",
       "The user asked the implementing agent to complete the build."
@@ -126,8 +126,8 @@
     "myshop": "Concise material-led editorial copy"
   },
   "implementationRules": {
-    "componentBase": "beUI source adapted over shadcn and Radix",
-    "icons": "Lucide, Simple Icons, and original SVG only",
+    "componentBase": "Project-owned React components using accessible shadcn and Radix patterns",
+    "icons": "Lucide and original SVG only",
     "surfaces": "Opaque with hairline borders",
     "cards": "Only when the region itself is an interaction"
   },
