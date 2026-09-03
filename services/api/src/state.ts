@@ -1,5 +1,6 @@
 import { DurableObject } from "cloudflare:workers";
 import type {
+  DeployCheckoutRevisionInput,
   ProposalInput,
   RecoveryAction,
   ScenarioId,
@@ -24,6 +25,7 @@ import {
   proposeAction,
   computeHealth,
   dependencyEdges,
+  deployCheckoutRevision,
   deriveOperationalStatus,
   isCustomerPathRecovered,
   type EnvironmentState,
@@ -356,6 +358,13 @@ export class OperationsStateObject extends DurableObject<Env> {
       Object.assign(state, next);
       return snapshot(state);
     }, "scenario.reset");
+  }
+
+  async deployCheckoutRevision(input: DeployCheckoutRevisionInput) {
+    return this.mutate(
+      (state) => deployCheckoutRevision(state, input),
+      "deployment.created",
+    );
   }
 
   getProducts(query = "", category = "") {

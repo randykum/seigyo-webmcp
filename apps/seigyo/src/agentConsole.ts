@@ -55,7 +55,9 @@ type Waiter = {
 
 const listeners = new Set<() => void>();
 const waiters = new Map<string, Set<Waiter>>();
+const dismissLocks = new Set<"pointer" | "focus">();
 let hideTimer: number | undefined;
+export const AGENT_CONSOLE_QUIET_MS = 5000;
 let snapshot: AgentConsoleSnapshot = {
   calls: [],
   approvals: [],
@@ -75,6 +77,7 @@ const clearHideTimer = (): void => {
 const scheduleHide = (): void => {
   clearHideTimer();
   if (
+    dismissLocks.size > 0 ||
     snapshot.calls.some((call) => call.state === "running") ||
     snapshot.approvals.length > 0
   )
@@ -82,7 +85,25 @@ const scheduleHide = (): void => {
   hideTimer = window.setTimeout(() => {
     publish({ ...snapshot, visible: false });
     hideTimer = undefined;
-  }, 2000);
+  }, AGENT_CONSOLE_QUIET_MS);
+};
+
+const retainCalls = (calls: ToolCallEvent[]): ToolCallEvent[] => [
+  ...calls.filter((call) => call.state === "running"),
+  ...calls.filter((call) => call.state !== "running").slice(0, 12),
+];
+
+export const setAgentConsoleDismissLock = (
+  source: "pointer" | "focus",
+  locked: boolean,
+): void => {
+  if (locked) {
+    dismissLocks.add(source);
+    clearHideTimer();
+    return;
+  }
+  dismissLocks.delete(source);
+  scheduleHide();
 };
 
 export const subscribeAgentConsole = (listener: () => void): (() => void) => {
@@ -103,7 +124,7 @@ export const emitToolStarted = (callId: string, toolName: ToolName): void => {
   };
   publish({
     ...snapshot,
-    calls: [call, ...snapshot.calls].slice(0, 12),
+    calls: retainCalls([call, ...snapshot.calls]),
     visible: true,
   });
 };
@@ -114,10 +135,12 @@ export const emitToolFinished = (
 ): void => {
   publish({
     ...snapshot,
-    calls: snapshot.calls.map((call) =>
-      call.callId === callId
-        ? { ...call, state, finishedAt: Date.now() }
-        : call,
+    calls: retainCalls(
+      snapshot.calls.map((call) =>
+        call.callId === callId
+          ? { ...call, state, finishedAt: Date.now() }
+          : call,
+      ),
     ),
   });
   scheduleHide();
@@ -218,6 +241,7 @@ export const cancelAllPendingApprovals = (message: string): void => {
 
 export const resetAgentConsoleState = (): void => {
   clearHideTimer();
+  dismissLocks.clear();
   for (const proposalWaiters of waiters.values()) {
     for (const waiter of proposalWaiters) {
       window.clearTimeout(waiter.timer);

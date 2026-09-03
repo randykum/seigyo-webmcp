@@ -38,4 +38,43 @@ describe("OperationsStateObject", () => {
     expect(after.epoch).toBe(before.epoch + 1);
     expect(after.scenario).toBe("payment-outage");
   });
+
+  it("persists an idempotent checkout release after recovery", async () => {
+    const state = env.OPERATIONS_STATE.getByName("checkout-release-workspace");
+    const proposal = await state.createProposal({
+      incidentId: "INC-042",
+      action: {
+        type: "rollback_deployment",
+        targetService: "checkout-api",
+        parameters: {},
+      },
+      rationale: "Rollback the correlated checkout deployment safely.",
+      evidenceRefs: ["deployment:DEP-160"],
+      idempotencyKey: "state-release-proposal",
+    });
+    const approval = await state.approve(proposal.id, "state-release-session");
+    const execution = await state.execute(
+      proposal.id,
+      approval.token,
+      "state-release-execution",
+      "state-release-session",
+    );
+    await state.verify(execution.id, proposal.incidentId);
+    const recovered = await state.getSnapshot();
+    expect(recovered.operationalStatus.state).toBe("operational");
+
+    const first = await state.deployCheckoutRevision({
+      idempotencyKey: "state-checkout-release",
+    });
+    const second = await state.deployCheckoutRevision({
+      idempotencyKey: "state-checkout-release",
+    });
+    const persisted = await state.getSnapshot();
+    expect(second).toEqual(first);
+    expect(persisted.activeIncident?.id).toBe(first.incident.id);
+    expect(persisted.deployments[0]?.id).toBe(first.deployment.id);
+    expect(persisted.incidents.some((item) => item.id === "INC-042")).toBe(
+      true,
+    );
+  });
 });

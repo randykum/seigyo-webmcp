@@ -43,7 +43,7 @@ const resetScenario = async () => {
 await resetScenario();
 
 await page.goto(seigyoUrl, { waitUntil: "networkidle" });
-await page.getByRole("heading", { name: "Recovery control" }).waitFor();
+await page.getByRole("heading", { name: "Operations overview" }).waitFor();
 const snapshot = await page.evaluate(async (apiBase) => {
   const response = await fetch(`${apiBase}/api/snapshot`, {
     headers: { "X-Session-Id": "seigyo-operator-session" },
@@ -70,10 +70,20 @@ await page.screenshot({
   fullPage: false,
 });
 
-await page.goto(myshopUrl, { waitUntil: "networkidle" });
+await page.goto(myshopUrl, { waitUntil: "domcontentloaded" });
 await page
   .getByRole("heading", { name: "Objects that hold the room quietly." })
   .waitFor();
+await page.locator(".hero img").evaluate(async (image) => {
+  if (!image.complete) {
+    await new Promise((resolve, reject) => {
+      image.addEventListener("load", resolve, { once: true });
+      image.addEventListener("error", reject, { once: true });
+    });
+  }
+  if (!image.naturalWidth) throw new Error("MyShop hero image did not load");
+  await image.decode();
+});
 const health = await page.evaluate(async (apiBase) => {
   const response = await fetch(`${apiBase}/api/store/health`);
   return {
@@ -85,6 +95,7 @@ const health = await page.evaluate(async (apiBase) => {
 if (health.status !== 200 || !health.body.ok) {
   throw new Error(`MyShop API smoke test failed: ${JSON.stringify(health)}`);
 }
+await page.evaluate(() => window.scrollTo(0, 0));
 await page.screenshot({
   path: "screenshots/deployed-myshop.png",
   fullPage: false,
@@ -150,9 +161,32 @@ await page.getByRole("tab", { name: /Active 0/ }).waitFor();
 if (await page.locator('nav a[href="/incidents"] b').count())
   throw new Error("Resolved incident badge remained visible");
 
-await page.goto(`${myshopUrl}/checkout`, { waitUntil: "networkidle" });
+await page.goto(`${myshopUrl}/checkout`, { waitUntil: "domcontentloaded" });
 await page.getByRole("button", { name: /Place order/ }).click();
 await page.getByRole("heading", { name: /Thank you/ }).waitFor();
+
+const operationsPage = await browser.newPage({
+  viewport: { width: 1440, height: 1000 },
+});
+await operationsPage.goto(`${seigyoUrl}/settings`, {
+  waitUntil: "networkidle",
+});
+const deployButton = operationsPage.getByRole("button", {
+  name: "Deploy new revision",
+});
+if (!(await deployButton.isEnabled()))
+  throw new Error("Checkout release control was not available after recovery");
+await deployButton.click();
+await operationsPage.getByText("Checkout revision deployed").waitFor();
+if (await deployButton.isEnabled())
+  throw new Error("Checkout release control remained enabled during an incident");
+await page
+  .locator(".service-note")
+  .getByText("Checkout is currently unavailable")
+  .waitFor();
+await operationsPage.goto(seigyoUrl, { waitUntil: "networkidle" });
+await operationsPage.locator(".status-strip-investigating").waitFor();
+await operationsPage.close();
 
 await browser.close();
 
@@ -172,6 +206,7 @@ console.log(
     seigyo: snapshot.status,
     myshop: health.status,
     recovery: "verified",
+    checkoutRelease: "verified",
     stateVersion: snapshot.body.stateVersion,
   }),
 );

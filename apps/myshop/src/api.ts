@@ -1,6 +1,7 @@
 import type { ApiResult } from "@seigyo/contracts";
 
 const API_BASE = (import.meta.env.VITE_API_BASE_URL as string | undefined)?.replace(/\/$/, "") ?? "";
+const SESSION_ID = "seigyo-operator-session";
 
 async function request<T>(path: string, init?: RequestInit): Promise<T> {
   const response = await fetch(`${API_BASE}${path}`, { ...init, headers: { "Content-Type": "application/json", ...init?.headers } });
@@ -20,3 +21,9 @@ export const shopApi = {
 };
 
 export const CART_ID = "myshop-judging-cart";
+
+export const shopWebsocketUrl = (): string => {
+  if (API_BASE)
+    return `${API_BASE.replace(/^http/, "ws")}/ws?session=${encodeURIComponent(SESSION_ID)}`;
+  return `${location.protocol === "https:" ? "wss:" : "ws:"}//${location.host}/ws?session=${encodeURIComponent(SESSION_ID)}`;
+};

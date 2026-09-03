@@ -102,6 +102,11 @@ td { color: var(--supporting); font-size: 12px; }
 .runbook li::before { font-size: 11px; }
 .receipt p, .empty-page p { color: var(--supporting); font-size: 12px; }
 .settings-panel select { color: var(--text); background: var(--interactive); border-color: #4b5665; font-size: 12px; }
+.release-control-copy p { color: var(--supporting); font-size: 12px; line-height: 1.65; }
+.release-control-panel { background: var(--surface-2); }
+.release-control-meta dt { color: var(--muted); }
+.release-control-meta dd { color: var(--text); }
+.release-control-disabled { color: var(--supporting); }
 .toast { background: var(--surface-2); border-color: #4a5665; }
 .toast strong { color: var(--text); font-size: 12px; }
 .toast p { color: var(--supporting); font-size: 11px; }

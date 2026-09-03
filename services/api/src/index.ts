@@ -2,6 +2,7 @@ import { Hono } from "hono";
 import {
   CartItemInputSchema,
   CheckoutInputSchema,
+  DeployCheckoutRevisionInputSchema,
   ExecutionInputSchema,
   ProposalInputSchema,
   ResetInputSchema,
@@ -191,6 +192,24 @@ app.get("/api/deployments", async (context) => {
   return context.json(
     success(await stub(context.env).listDeployments(serviceId)),
   );
+});
+app.post("/api/deployments/checkout/revisions", async (context) => {
+  try {
+    sessionId(context.req.header("X-Session-Id"));
+    const input = DeployCheckoutRevisionInputSchema.parse(await json(context));
+    const data = await stub(context.env).deployCheckoutRevision(input);
+    return context.json(success(data, data.causalRevision), 201);
+  } catch (caught) {
+    const code = errorCode(caught instanceof Error ? caught.message : "");
+    return context.json(
+      failure(caught),
+      code === "AUTH_REQUIRED"
+        ? 401
+        : code === "CONFLICT" || code === "PRECONDITION_FAILED"
+          ? 409
+          : 400,
+    );
+  }
 });
 app.get("/api/dependencies", async (context) => {
   const raw = context.req.query("serviceId");

@@ -90,6 +90,18 @@ export const ResetInputSchema = z.object({
   confirmation: z.literal("RESET ENVIRONMENT"),
 });
 
+export const DeployCheckoutRevisionInputSchema = z
+  .object({
+    idempotencyKey: z
+      .string()
+      .trim()
+      .regex(/^[a-zA-Z0-9_-]{8,100}$/),
+  })
+  .strict();
+export type DeployCheckoutRevisionInput = z.infer<
+  typeof DeployCheckoutRevisionInputSchema
+>;
+
 export const CartItemInputSchema = z
   .object({
     productId: z.string().trim().min(1).max(64),
@@ -243,6 +255,12 @@ export interface Deployment {
   commitSha: string;
   createdAt: number;
   summary: string;
+}
+export interface DeployCheckoutRevisionResult {
+  deployment: Deployment;
+  incident: Incident;
+  operationalStatus: OperationalStatus;
+  causalRevision: number;
 }
 export interface Proposal {
   id: string;

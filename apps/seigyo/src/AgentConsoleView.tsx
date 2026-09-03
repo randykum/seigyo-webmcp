@@ -13,6 +13,7 @@ import { api } from "./api";
 import {
   getAgentConsoleSnapshot,
   resolvePendingApproval,
+  setAgentConsoleDismissLock,
   subscribeAgentConsole,
 } from "./agentConsole";
 
@@ -267,6 +268,17 @@ export function AgentConsole({
             ref={consoleRef}
             key={approval ? `approval-${approval.proposal.id}` : "activity"}
             className={`agent-console ${approval ? "awaiting-approval" : "showing-activity"}`}
+            onMouseEnter={() => setAgentConsoleDismissLock("pointer", true)}
+            onMouseLeave={() => setAgentConsoleDismissLock("pointer", false)}
+            onFocus={() => setAgentConsoleDismissLock("focus", true)}
+            onBlur={(event) => {
+              if (
+                !event.currentTarget.contains(
+                  event.relatedTarget as Node | null,
+                )
+              )
+                setAgentConsoleDismissLock("focus", false);
+            }}
             initial={
               reduceMotion ? { opacity: 0 } : { opacity: 0, y: 18, scale: 0.98 }
             }
@@ -290,13 +302,19 @@ export function AgentConsole({
               <div role="status" aria-live="polite" aria-atomic="true">
                 <div className="agent-console-head">
                   <span className="agent-console-icon active">
-                    <LoaderCircle className="spin" size={17} />
+                    {active ? (
+                      <LoaderCircle className="spin" size={17} />
+                    ) : (
+                      <CheckCircle2 size={17} />
+                    )}
                   </span>
                   <div>
                     <span className="eyebrow">WebMCP</span>
-                    <h2>Agent working</h2>
+                    <h2>{active ? "Agent working" : "Agent activity"}</h2>
                   </div>
-                  <span className="agent-live">Live</span>
+                  <span className="agent-live">
+                    {active ? "Live" : "Complete"}
+                  </span>
                 </div>
                 {active && (
                   <div className="agent-active-call">

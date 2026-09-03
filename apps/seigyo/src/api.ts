@@ -1,5 +1,6 @@
 import type {
   ApiResult,
+  DeployCheckoutRevisionResult,
   ProposalInput,
   ScenarioId,
   ServiceId,
@@ -127,6 +128,14 @@ export const api = {
       method: "POST",
       body: JSON.stringify({ scenario, confirmation: "RESET ENVIRONMENT" }),
     }),
+  deployCheckoutRevision: (idempotencyKey: string) =>
+    request<DeployCheckoutRevisionResult>(
+      "/api/deployments/checkout/revisions",
+      {
+        method: "POST",
+        body: JSON.stringify({ idempotencyKey }),
+      },
+    ),
 };
 
 export const websocketUrl = (): string => {

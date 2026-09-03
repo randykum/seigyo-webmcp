@@ -61,6 +61,7 @@ test.beforeEach(async ({ request }) => {
 
 test("customer failure, controlled recovery, and successful checkout", async ({
   page,
+  context,
 }) => {
   await page.goto("http://localhost:5174/");
   await expect(
@@ -215,10 +216,38 @@ test("customer failure, controlled recovery, and successful checkout", async ({
   await page.getByRole("tab", { name: /History/ }).click();
   await expect(page.getByText("INC-042")).toBeVisible();
 
+  await page.goto("http://localhost:5173/");
+  await expect(page.locator(".status-strip-operational")).toBeVisible();
+  await expect(page.locator(".status-strip-operational")).toHaveCSS(
+    "box-shadow",
+    /rgb\(119, 213, 154\)/,
+  );
+
   await page.goto("http://localhost:5174/checkout");
   await page.getByRole("button", { name: /Place order/ }).click();
   await expect(page.getByRole("heading", { name: /Thank you/ })).toBeVisible();
   await expect(page.getByText(/Order confirmed/).first()).toBeVisible();
+
+  const operationsPage = await context.newPage();
+  await operationsPage.goto("http://localhost:5173/settings");
+  const deployButton = operationsPage.getByRole("button", {
+    name: "Deploy new revision",
+  });
+  await expect(deployButton).toBeEnabled();
+  await deployButton.click();
+  await expect(
+    operationsPage.getByText("Checkout revision deployed"),
+  ).toBeVisible();
+  await expect(deployButton).toBeDisabled();
+  await expect(page.locator(".service-note")).toContainText(
+    "Checkout is currently unavailable",
+  );
+  await operationsPage.goto("http://localhost:5173/");
+  await expect(operationsPage.locator(".status-strip-investigating")).toHaveCSS(
+    "box-shadow",
+    /rgb\(241, 192, 106\)/,
+  );
+  await operationsPage.close();
 });
 
 test("incident navigation and measured topology remain correct across widths", async ({

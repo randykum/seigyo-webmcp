@@ -3,6 +3,8 @@ import type {
   AgentActivity,
   Approval,
   Cart,
+  DeployCheckoutRevisionInput,
+  DeployCheckoutRevisionResult,
   Deployment,
   DependencyEdge,
   Execution,
@@ -611,8 +613,8 @@ const directHealth = (
   let faultError = 0;
   let faultLatency = 0;
   if (
+    state.scenario === "checkout-regression" &&
     serviceId === "checkout-api" &&
-    service.version === "checkout-2026.08.30.4" &&
     service.featureFlags["new-tax-rounding"]
   ) {
     faultError = 0.17;
@@ -1035,6 +1037,8 @@ export const investigate = (state: EnvironmentState, incidentId: string) => {
   if (incident.status === "investigating") incident.status = "identified";
   const health = computeHealth(state);
   const root = scenarioInfo[state.scenario];
+  const currentCause =
+    state.scenario === "checkout-regression" ? incident.cause : root.cause;
   const deployment = state.deployments.find(
     (item) => item.serviceId === root.serviceId,
   );
@@ -1044,7 +1048,7 @@ export const investigate = (state: EnvironmentState, incidentId: string) => {
     hypotheses: [
       {
         id: "H1",
-        statement: root.cause,
+        statement: currentCause,
         confidence: 0.92,
         evidenceRefs: [
           `metric:${root.serviceId}`,
@@ -1600,6 +1604,130 @@ export const resetEnvironment = (
   return next;
 };
 
+const nextNumericId = (items: Array<{ id: string }>, prefix: string): string => {
+  const highest = items.reduce((maximum, item) => {
+    const match = new RegExp(`^${prefix}-(\\d+)$`).exec(item.id);
+    return match ? Math.max(maximum, Number(match[1])) : maximum;
+  }, 0);
+  return id(prefix, highest + 1);
+};
+
+const nextCheckoutVersion = (state: EnvironmentState): string => {
+  const date = new Date(state.virtualNow);
+  const datePart = [
+    date.getUTCFullYear(),
+    String(date.getUTCMonth() + 1).padStart(2, "0"),
+    String(date.getUTCDate()).padStart(2, "0"),
+  ].join(".");
+  const prefix = `checkout-${datePart}.`;
+  const highestRevision = state.deployments.reduce((maximum, deployment) => {
+    if (!deployment.version.startsWith(prefix)) return maximum;
+    const revision = Number(deployment.version.slice(prefix.length));
+    return Number.isInteger(revision) ? Math.max(maximum, revision) : maximum;
+  }, 0);
+  return `${prefix}${highestRevision + 1}`;
+};
+
+export const deployCheckoutRevision = async (
+  state: EnvironmentState,
+  input: DeployCheckoutRevisionInput,
+): Promise<DeployCheckoutRevisionResult> => {
+  validatePublicKey(input.idempotencyKey, "idempotencyKey");
+  const fingerprint = await sha256(
+    canonical({ operation: "deploy-checkout-revision", ...input }),
+  );
+  const duplicate = Object.hasOwn(state.idempotency, input.idempotencyKey)
+    ? state.idempotency[input.idempotencyKey]
+    : undefined;
+  if (duplicate) {
+    if (duplicate.fingerprint !== fingerprint)
+      throw new Error("IDEMPOTENCY_CONFLICT");
+    return structuredClone(duplicate.result) as DeployCheckoutRevisionResult;
+  }
+
+  const status = deriveOperationalStatus(state);
+  if (
+    status.state !== "operational" ||
+    status.openIncidentCount > 0 ||
+    state.deployments.some((deployment) => deployment.status === "in_progress")
+  )
+    throw new Error(
+      "PRECONDITION_FAILED:A new checkout revision can be deployed only when all systems are operational.",
+    );
+
+  const checkoutService = state.services["checkout-api"];
+  const previousVersion = checkoutService.version;
+  const version = nextCheckoutVersion(state);
+  const deployment: Deployment = {
+    id: nextNumericId(state.deployments, "DEP"),
+    serviceId: "checkout-api",
+    version,
+    previousVersion,
+    status: "success",
+    actor: "Randy B.",
+    commitSha: shortHash(
+      `${state.seed}:${state.epoch}:${state.causalRevision}:${version}`,
+    ),
+    createdAt: state.virtualNow,
+    summary: "Checkout tax rounding and validation update",
+  };
+  const incident: Incident = {
+    id: nextNumericId(state.incidents, "INC"),
+    title: "Checkout errors after deployment",
+    severity: "critical",
+    status: "investigating",
+    serviceId: "checkout-api",
+    startedAt: state.virtualNow,
+    updatedAt: state.virtualNow,
+    impact: "Customers receive validation failures during checkout.",
+    customerErrorsPerMinute: 186,
+    ordersAtRisk: 42,
+    cause: `${version} with new-tax-rounding enabled`,
+  };
+
+  for (const proposal of state.proposals) {
+    if (proposal.status === "pending" || proposal.status === "approved")
+      proposal.status = "stale";
+  }
+  state.scenario = "checkout-regression";
+  checkoutService.previousVersion = previousVersion;
+  checkoutService.version = version;
+  checkoutService.featureFlags["new-tax-rounding"] = true;
+  state.deployments.unshift(deployment);
+  state.incidents.unshift(incident);
+  state.causalRevision += 1;
+  tick(state, 0);
+  state.logs.push({
+    id: nextNumericId(state.logs, "LOG"),
+    timestamp: state.virtualNow,
+    serviceId: "checkout-api",
+    level: "error",
+    eventName: "deployment.regression_detected",
+    message: `${version} increased checkout validation failures`,
+    traceId: `tr_${shortHash(`${version}:deployment`)}`,
+    metadata: {
+      deploymentId: deployment.id,
+      version,
+      errorRate:
+        computeHealth(state).find((item) => item.serviceId === "checkout-api")
+          ?.errorRate ?? 0,
+    },
+  });
+  if (state.logs.length > 1800) state.logs.splice(0, state.logs.length - 1800);
+
+  const result: DeployCheckoutRevisionResult = {
+    deployment,
+    incident,
+    operationalStatus: deriveOperationalStatus(state),
+    causalRevision: state.causalRevision,
+  };
+  state.idempotency[input.idempotencyKey] = {
+    fingerprint,
+    result: structuredClone(result),
+  };
+  return result;
+};
+
 const boundedLimit = (value: number, fallback: number, max: number): number =>
   Number.isFinite(value)
     ? Math.max(0, Math.min(Math.trunc(value), max))
@@ -1714,7 +1842,6 @@ export const checkout = async (
     );
   if (
     state.scenario === "checkout-regression" &&
-    checkoutService.version === "checkout-2026.08.30.4" &&
     checkoutService.featureFlags["new-tax-rounding"] &&
     hash01(`${state.seed}:${input.requestId}`) < 0.4
   )

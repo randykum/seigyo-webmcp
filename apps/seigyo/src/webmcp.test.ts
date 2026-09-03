@@ -31,6 +31,7 @@ import {
   getAgentConsoleSnapshot,
   resetAgentConsoleState,
   resolvePendingApproval,
+  setAgentConsoleDismissLock,
 } from "./agentConsole";
 import { registerSeigyoTools } from "./webmcp";
 
@@ -81,7 +82,7 @@ beforeEach(() => {
 });
 
 describe("Seigyo WebMCP lifecycle", () => {
-  it("emits the natural tool label immediately and exits after two quiet seconds", async () => {
+  it("emits the natural tool label immediately and exits after five quiet seconds", async () => {
     const registered = new Map<string, Registered>();
     vi.stubGlobal("document", {
       modelContext: {
@@ -95,7 +96,7 @@ describe("Seigyo WebMCP lifecycle", () => {
     expect(getAgentConsoleSnapshot().calls[0]?.label).toBe("Listing incidents");
     await result;
     expect(getAgentConsoleSnapshot().calls[0]?.state).toBe("complete");
-    await vi.advanceTimersByTimeAsync(1999);
+    await vi.advanceTimersByTimeAsync(4999);
     expect(getAgentConsoleSnapshot().visible).toBe(true);
     await vi.advanceTimersByTimeAsync(1);
     expect(getAgentConsoleSnapshot().visible).toBe(false);
@@ -117,11 +118,66 @@ describe("Seigyo WebMCP lifecycle", () => {
     ]);
     const calls = getAgentConsoleSnapshot().calls;
     expect(new Set(calls.map((call) => call.callId)).size).toBe(2);
-    await vi.advanceTimersByTimeAsync(1500);
+    await vi.advanceTimersByTimeAsync(3500);
     const resumed = registered.get("seigyo.list_incidents")?.execute({});
     expect(getAgentConsoleSnapshot().visible).toBe(true);
     await resumed;
-    await vi.advanceTimersByTimeAsync(1999);
+    await vi.advanceTimersByTimeAsync(4999);
+    expect(getAgentConsoleSnapshot().visible).toBe(true);
+    await vi.advanceTimersByTimeAsync(1);
+    expect(getAgentConsoleSnapshot().visible).toBe(false);
+  });
+
+  it("retains every active call when more than twelve calls overlap", async () => {
+    const registered = new Map<string, Registered>();
+    vi.stubGlobal("document", {
+      modelContext: {
+        registerTool: (tool: Registered) => registered.set(tool.name, tool),
+      },
+    });
+    const resolvers: Array<(value: { incidents: never[] }) => void> = [];
+    apiMock.incidents.mockImplementation(
+      () =>
+        new Promise<{ incidents: never[] }>((resolve) => {
+          resolvers.push(resolve);
+        }),
+    );
+    registerSeigyoTools();
+    const calls = Array.from({ length: 15 }, () =>
+      registered.get("seigyo.list_incidents")?.execute({}),
+    );
+    expect(
+      getAgentConsoleSnapshot().calls.filter((call) => call.state === "running"),
+    ).toHaveLength(15);
+    for (const resolve of resolvers) resolve({ incidents: [] });
+    await Promise.all(calls);
+    expect(getAgentConsoleSnapshot().calls).toHaveLength(12);
+    expect(
+      getAgentConsoleSnapshot().calls.every(
+        (call) => call.state === "complete",
+      ),
+    ).toBe(true);
+  });
+
+  it("pauses dismissal while hovered or keyboard focused", async () => {
+    const registered = new Map<string, Registered>();
+    vi.stubGlobal("document", {
+      modelContext: {
+        registerTool: (tool: Registered) => registered.set(tool.name, tool),
+      },
+    });
+    apiMock.incidents.mockResolvedValue({ incidents: [] });
+    registerSeigyoTools();
+    await registered.get("seigyo.list_incidents")?.execute({});
+    setAgentConsoleDismissLock("pointer", true);
+    setAgentConsoleDismissLock("focus", true);
+    await vi.advanceTimersByTimeAsync(10_000);
+    expect(getAgentConsoleSnapshot().visible).toBe(true);
+    setAgentConsoleDismissLock("pointer", false);
+    await vi.advanceTimersByTimeAsync(10_000);
+    expect(getAgentConsoleSnapshot().visible).toBe(true);
+    setAgentConsoleDismissLock("focus", false);
+    await vi.advanceTimersByTimeAsync(4999);
     expect(getAgentConsoleSnapshot().visible).toBe(true);
     await vi.advanceTimersByTimeAsync(1);
     expect(getAgentConsoleSnapshot().visible).toBe(false);

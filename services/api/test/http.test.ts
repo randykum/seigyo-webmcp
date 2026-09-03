@@ -57,4 +57,36 @@ describe("HTTP security boundary", () => {
     const response = await SELF.fetch("https://worker.test/ws", { headers: { Upgrade: "websocket" } });
     expect(response.status).toBe(403);
   });
+
+  it("protects and strictly validates checkout revision deployment", async () => {
+    const unauthenticated = await SELF.fetch(
+      "https://worker.test/api/deployments/checkout/revisions",
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ idempotencyKey: "release-http-001" }),
+      },
+    );
+    expect(unauthenticated.status).toBe(401);
+
+    const invalid = await SELF.fetch(
+      "https://worker.test/api/deployments/checkout/revisions",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "X-Session-Id": "seigyo-operator-session",
+        },
+        body: JSON.stringify({
+          idempotencyKey: "release-http-002",
+          serviceId: "catalog-api",
+        }),
+      },
+    );
+    expect(invalid.status).toBe(400);
+    const invalidBody = (await invalid.json()) as {
+      error: { code: string };
+    };
+    expect(invalidBody.error.code).toBe("INVALID_ARGUMENT");
+  });
 });

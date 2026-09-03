@@ -45,6 +45,7 @@ import {
   Menu,
   Network,
   RotateCcw,
+  Rocket,
   Search,
   Server,
   Settings,
@@ -516,7 +517,7 @@ function Overview({ data }: { data: EnvironmentSnapshot }) {
       <header className="page-head">
         <div>
           <span className="eyebrow">Production / live</span>
-          <h1>Recovery control</h1>
+          <h1>Operations overview</h1>
         </div>
         <button className="button button-ghost">
           <ListFilter size={15} />
@@ -1171,6 +1172,37 @@ function Environment({
 }) {
   const [scenario, setScenario] = useState<ScenarioId>(data.scenario);
   const [busy, setBusy] = useState(false);
+  const [releaseBusy, setReleaseBusy] = useState(false);
+  const checkoutService = data.services.find(
+    (service) => service.id === "checkout-api",
+  );
+  const releaseAvailable =
+    data.operationalStatus.state === "operational" &&
+    data.operationalStatus.openIncidentCount === 0 &&
+    !data.deployments.some((deployment) => deployment.status === "in_progress");
+  const deployRevision = async () => {
+    setReleaseBusy(true);
+    try {
+      const result = await api.deployCheckoutRevision(crypto.randomUUID());
+      cancelAllPendingApprovals(
+        "A new checkout revision changed the operating state.",
+      );
+      notify(
+        "success",
+        "Checkout revision deployed",
+        `${result.deployment.version} is live. Seigyo detected a new checkout incident.`,
+      );
+      await reload();
+    } catch (error) {
+      notify(
+        "danger",
+        "Deployment failed",
+        error instanceof Error ? error.message : "Unknown error",
+      );
+    } finally {
+      setReleaseBusy(false);
+    }
+  };
   const reset = async () => {
     setBusy(true);
     try {
@@ -1193,6 +1225,46 @@ function Environment({
       title="Environment configuration"
       subtitle="Production environment controls and operating metadata"
     >
+      <section className="panel settings-panel release-control-panel">
+        <div className="release-control-copy">
+          <span className="eyebrow">Release control</span>
+          <h2>Checkout API</h2>
+          <p>
+            Deploy a new checkout revision to the production environment. The
+            release takes effect immediately.
+          </p>
+        </div>
+        <dl className="release-control-meta">
+          <div>
+            <dt>Current revision</dt>
+            <dd>{checkoutService?.version ?? "Unavailable"}</dd>
+          </div>
+          <div>
+            <dt>Environment status</dt>
+            <dd>{data.operationalStatus.label}</dd>
+          </div>
+        </dl>
+        <div className="release-control-action">
+          <button
+            className="button button-primary"
+            onClick={deployRevision}
+            disabled={!releaseAvailable || releaseBusy}
+          >
+            {releaseBusy ? (
+              <LoaderCircle className="spin" size={15} />
+            ) : (
+              <Rocket size={15} />
+            )}
+            {releaseBusy ? "Deploying revision" : "Deploy new revision"}
+          </button>
+          {!releaseAvailable && (
+            <p className="release-control-disabled" role="status">
+              Resolve the current operating issue before deploying another
+              checkout revision.
+            </p>
+          )}
+        </div>
+      </section>
       <div className="settings-grid">
         <section className="panel settings-panel">
           <span className="eyebrow">Operational state</span>
