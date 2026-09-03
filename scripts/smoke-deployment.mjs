@@ -10,39 +10,85 @@ if (!seigyoUrl || !myshopUrl || !apiUrl) {
 
 const browser = await chromium.launch();
 const page = await browser.newPage({ viewport: { width: 1440, height: 1000 } });
+await page.addInitScript(() => {
+  const tools = {};
+  Object.defineProperty(document, "modelContext", {
+    configurable: true,
+    value: {
+      registerTool(tool) {
+        tools[tool.name] = tool;
+        globalThis.__seigyoTools = tools;
+      },
+    },
+  });
+});
 
 const resetScenario = async () => {
   const response = await fetch(`${apiUrl}/api/scenario/reset`, {
     method: "POST",
-    headers: { "Content-Type": "application/json", "X-Session-Id": "seigyo-operator-session", Origin: seigyoUrl },
-    body: JSON.stringify({ scenario: "checkout-regression", confirmation: "RESET ENVIRONMENT" }),
+    headers: {
+      "Content-Type": "application/json",
+      "X-Session-Id": "seigyo-operator-session",
+      Origin: seigyoUrl,
+    },
+    body: JSON.stringify({
+      scenario: "checkout-regression",
+      confirmation: "RESET ENVIRONMENT",
+    }),
   });
-  if (!response.ok) throw new Error(`Scenario reset failed with ${response.status}`);
+  if (!response.ok)
+    throw new Error(`Scenario reset failed with ${response.status}`);
 };
 
 await resetScenario();
 
 await page.goto(seigyoUrl, { waitUntil: "networkidle" });
 await page.getByRole("heading", { name: "Recovery control" }).waitFor();
-const snapshot = await page.evaluate(async apiBase => {
-  const response = await fetch(`${apiBase}/api/snapshot`, { headers: { "X-Session-Id": "seigyo-operator-session" } });
-  return { status: response.status, cors: response.headers.get("access-control-allow-origin"), body: await response.json() };
+const snapshot = await page.evaluate(async (apiBase) => {
+  const response = await fetch(`${apiBase}/api/snapshot`, {
+    headers: { "X-Session-Id": "seigyo-operator-session" },
+  });
+  return {
+    status: response.status,
+    cors: response.headers.get("access-control-allow-origin"),
+    body: await response.json(),
+  };
 }, apiUrl);
 if (snapshot.status !== 200 || !snapshot.body.ok) {
   throw new Error(`Seigyo API smoke test failed: ${JSON.stringify(snapshot)}`);
 }
-await page.screenshot({ path: "screenshots/deployed-seigyo.png", fullPage: false });
+if (
+  snapshot.body.data.dependencyEdges.length !== 9 ||
+  !snapshot.body.data.operationalStatus
+) {
+  throw new Error(
+    "Seigyo snapshot is missing canonical topology or operational status data",
+  );
+}
+await page.screenshot({
+  path: "screenshots/deployed-seigyo.png",
+  fullPage: false,
+});
 
 await page.goto(myshopUrl, { waitUntil: "networkidle" });
-await page.getByRole("heading", { name: "Objects that hold the room quietly." }).waitFor();
-const health = await page.evaluate(async apiBase => {
+await page
+  .getByRole("heading", { name: "Objects that hold the room quietly." })
+  .waitFor();
+const health = await page.evaluate(async (apiBase) => {
   const response = await fetch(`${apiBase}/api/store/health`);
-  return { status: response.status, cors: response.headers.get("access-control-allow-origin"), body: await response.json() };
+  return {
+    status: response.status,
+    cors: response.headers.get("access-control-allow-origin"),
+    body: await response.json(),
+  };
 }, apiUrl);
 if (health.status !== 200 || !health.body.ok) {
   throw new Error(`MyShop API smoke test failed: ${JSON.stringify(health)}`);
 }
-await page.screenshot({ path: "screenshots/deployed-myshop.png", fullPage: false });
+await page.screenshot({
+  path: "screenshots/deployed-myshop.png",
+  fullPage: false,
+});
 
 await page.getByRole("link", { name: "Kuro lounge chair" }).first().click();
 await page.getByRole("button", { name: /Add to bag/ }).click();
@@ -51,13 +97,58 @@ await page.getByRole("button", { name: /Place order/ }).click();
 await page.getByRole("alert").waitFor();
 
 await page.goto(`${seigyoUrl}/incidents/INC-042`, { waitUntil: "networkidle" });
-await page.getByRole("button", { name: "Investigate" }).click();
-await page.getByText("Leading hypotheses").waitFor();
-await page.getByRole("button", { name: "Propose action" }).click();
+await page.evaluate(async () =>
+  globalThis.__seigyoTools["seigyo.investigate_incident"].execute({
+    incidentId: "INC-042",
+  }),
+);
+await page.evaluate(() => {
+  globalThis.__pendingProposal = globalThis.__seigyoTools[
+    "seigyo.propose_action"
+  ].execute({
+    incidentId: "INC-042",
+    action: {
+      type: "rollback_deployment",
+      targetService: "checkout-api",
+      parameters: {},
+    },
+    rationale: "The checkout error increase follows the current deployment.",
+    evidenceRefs: ["deployment:DEP-160"],
+    idempotencyKey: "deployed-proposal-rollback-001",
+  });
+});
+await page
+  .getByRole("alertdialog", { name: "Approve exact intervention" })
+  .waitFor();
 await page.getByRole("button", { name: "Approve exact action" }).click();
-await page.getByRole("button", { name: "Execute approved action" }).click();
-await page.getByRole("button", { name: "Verify outcome" }).click();
-await page.getByText(/Observed outcome: recovered/).waitFor();
+const proposalResult = await page.evaluate(
+  async () => globalThis.__pendingProposal,
+);
+if (proposalResult.structuredContent.decision !== "approved")
+  throw new Error("Pending proposal did not resume after approval");
+const proposalId = proposalResult.structuredContent.proposal.id;
+const executionResult = await page.evaluate(
+  async (proposalId) =>
+    globalThis.__seigyoTools["seigyo.execute_action"].execute({
+      proposalId,
+      idempotencyKey: "deployed-execution-rollback-001",
+    }),
+  proposalId,
+);
+const verificationResult = await page.evaluate(
+  async (executionId) =>
+    globalThis.__seigyoTools["seigyo.verify_action"].execute({
+      executionId,
+      incidentId: "INC-042",
+    }),
+  executionResult.structuredContent.id,
+);
+if (verificationResult.structuredContent.outcome !== "recovered")
+  throw new Error("Deployed recovery verification did not recover");
+await page.goto(`${seigyoUrl}/incidents`, { waitUntil: "networkidle" });
+await page.getByRole("tab", { name: /Active 0/ }).waitFor();
+if (await page.locator('nav a[href="/incidents"] b').count())
+  throw new Error("Resolved incident badge remained visible");
 
 await page.goto(`${myshopUrl}/checkout`, { waitUntil: "networkidle" });
 await page.getByRole("button", { name: /Place order/ }).click();
@@ -66,7 +157,9 @@ await page.getByRole("heading", { name: /Thank you/ }).waitFor();
 await browser.close();
 
 for (const origin of [seigyoUrl, myshopUrl]) {
-  const response = await fetch(`${apiUrl}/api/snapshot`, { headers: { Origin: origin } });
+  const response = await fetch(`${apiUrl}/api/snapshot`, {
+    headers: { Origin: origin },
+  });
   if (response.headers.get("access-control-allow-origin") !== origin) {
     throw new Error(`Exact-origin CORS smoke test failed for ${origin}`);
   }
@@ -74,4 +167,11 @@ for (const origin of [seigyoUrl, myshopUrl]) {
 
 await resetScenario();
 
-console.log(JSON.stringify({ seigyo: snapshot.status, myshop: health.status, recovery: "verified", stateVersion: snapshot.body.stateVersion }));
+console.log(
+  JSON.stringify({
+    seigyo: snapshot.status,
+    myshop: health.status,
+    recovery: "verified",
+    stateVersion: snapshot.body.stateVersion,
+  }),
+);
