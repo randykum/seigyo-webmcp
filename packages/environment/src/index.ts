@@ -507,6 +507,7 @@ const createDeployments = (now: number): Deployment[] =>
 export const seedEnvironment = (
   scenario: ScenarioId = "checkout-regression",
   epoch = 1,
+  initialState: "incident" | "operational" = "incident",
 ): EnvironmentState => {
   const now = Date.UTC(2026, 8, 1, 13, 20, 0);
   const state: EnvironmentState = {
@@ -535,9 +536,21 @@ export const seedEnvironment = (
     idempotency: Object.create(null) as Record<string, IdempotencyRecord>,
     undoSnapshots: Object.create(null) as Record<string, UndoSnapshot>,
   };
-  if (scenario !== "checkout-regression") {
+  if (scenario !== "checkout-regression" || initialState === "operational") {
     state.services["checkout-api"].version = "checkout-2026.08.29.7";
     state.services["checkout-api"].featureFlags["new-tax-rounding"] = false;
+  }
+  if (initialState === "operational") {
+    const initialIncident = state.incidents.find(
+      (incident) => incident.status !== "resolved",
+    );
+    if (initialIncident) {
+      initialIncident.status = "resolved";
+      initialIncident.updatedAt = now;
+      initialIncident.resolvedAt = now;
+      initialIncident.customerErrorsPerMinute = 0;
+      initialIncident.ordersAtRisk = 0;
+    }
   }
   for (let tick = 720; tick > 0; tick -= 1) {
     const timestamp = now - tick * 60_000;
@@ -592,6 +605,9 @@ export const seedEnvironment = (
   }
   return state;
 };
+
+export const seedHealthyEnvironment = (epoch = 1): EnvironmentState =>
+  seedEnvironment("checkout-regression", epoch, "operational");
 
 const directHealth = (
   state: EnvironmentState,
@@ -1598,6 +1614,17 @@ export const resetEnvironment = (
 ): EnvironmentState => {
   const receipts = state.receipts;
   const next = seedEnvironment(scenario, state.epoch + 1);
+  next.receipts = receipts;
+  next.causalRevision = state.causalRevision + 1;
+  next.observabilityRevision = state.observabilityRevision + 1;
+  return next;
+};
+
+export const restoreHealthyEnvironment = (
+  state: EnvironmentState,
+): EnvironmentState => {
+  const receipts = state.receipts;
+  const next = seedHealthyEnvironment(state.epoch + 1);
   next.receipts = receipts;
   next.causalRevision = state.causalRevision + 1;
   next.observabilityRevision = state.observabilityRevision + 1;

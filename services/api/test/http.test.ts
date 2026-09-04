@@ -153,6 +153,55 @@ describe("HTTP security boundary", () => {
     expect(invalidBody.error.code).toBe("INVALID_ARGUMENT");
   });
 
+  it("protects and strictly validates healthy baseline restoration", async () => {
+    const unauthenticated = await SELF.fetch(
+      "https://worker.test/api/environment/restore",
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ confirmation: "RESTORE HEALTHY BASELINE" }),
+      },
+    );
+    expect(unauthenticated.status).toBe(401);
+
+    const invalid = await SELF.fetch(
+      "https://worker.test/api/environment/restore",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "X-Session-Id": "restore-http-session",
+        },
+        body: JSON.stringify({ confirmation: "RESTORE" }),
+      },
+    );
+    expect(invalid.status).toBe(400);
+
+    const restored = await SELF.fetch(
+      "https://worker.test/api/environment/restore",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "X-Session-Id": "restore-http-session",
+        },
+        body: JSON.stringify({ confirmation: "RESTORE HEALTHY BASELINE" }),
+      },
+    );
+    expect(restored.status).toBe(200);
+    const body = (await restored.json()) as {
+      data: {
+        activeIncident: unknown;
+        operationalStatus: { state: string; openIncidentCount: number };
+      };
+    };
+    expect(body.data.activeIncident).toBeNull();
+    expect(body.data.operationalStatus).toMatchObject({
+      state: "operational",
+      openIncidentCount: 0,
+    });
+  });
+
   it("routes each validated session to an isolated environment", async () => {
     const firstSession = "http-isolation-a";
     const secondSession = "http-isolation-b";

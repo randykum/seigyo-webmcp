@@ -106,6 +106,10 @@ export const ResetInputSchema = z.object({
   confirmation: z.literal("RESET ENVIRONMENT"),
 });
 
+export const RestoreHealthyInputSchema = z
+  .object({ confirmation: z.literal("RESTORE HEALTHY BASELINE") })
+  .strict();
+
 export const DeployCheckoutRevisionInputSchema = z
   .object({
     idempotencyKey: z

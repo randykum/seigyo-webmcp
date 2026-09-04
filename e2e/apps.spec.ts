@@ -54,13 +54,35 @@ test.beforeEach(async ({ request }) => {
   await request.post("http://localhost:8787/api/scenario/reset", {
     headers: {
       "X-Session-Id": E2E_SESSION,
-      Origin: "http://localhost:5173",
+      Origin: "http://localhost:15173",
     },
     data: {
       scenario: "checkout-regression",
       confirmation: "RESET ENVIRONMENT",
     },
   });
+});
+
+test("hidden baseline control prepares the healthy release flow", async ({
+  page,
+}) => {
+  await page.goto(scoped("http://localhost:15173/settings"));
+  const restore = page.getByRole("button", { name: "Restore healthy baseline" });
+  await expect(restore).toBeVisible();
+  await expect(restore).toHaveText("WebMCP");
+  await expect(restore).toHaveCSS("background-color", "rgba(0, 0, 0, 0)");
+  await expect(restore).toHaveCSS("border-top-width", "0px");
+
+  await restore.click();
+  await expect(page.getByText("Healthy baseline restored")).toBeVisible();
+  await expect(page.getByText("All systems operational", { exact: true })).toBeVisible();
+
+  const deploy = page.getByRole("button", { name: "Deploy new revision" });
+  await expect(deploy).toBeEnabled();
+  await deploy.click();
+  await expect(page.getByText("Checkout revision deployed")).toBeVisible();
+  await expect(page.getByText("Investigating", { exact: true })).toBeVisible();
+  await expect(deploy).toBeDisabled();
 });
 
 test("customer failure, controlled recovery, and successful checkout", async ({
@@ -95,7 +117,7 @@ test("customer failure, controlled recovery, and successful checkout", async ({
       },
     });
   });
-  await page.goto(scoped("http://localhost:5173/incidents/INC-042"));
+  await page.goto(scoped("http://localhost:15173/incidents/INC-042"));
   await expect(
     page.getByRole("heading", { name: "Checkout errors after deployment" }),
   ).toBeVisible();
@@ -211,7 +233,7 @@ test("customer failure, controlled recovery, and successful checkout", async ({
     { executionId },
   );
   expect(verificationResult?.structuredContent.outcome).toBe("recovered");
-  await page.goto(scoped("http://localhost:5173/incidents"));
+  await page.goto(scoped("http://localhost:15173/incidents"));
   await expect(page.getByRole("tab", { name: /Active 0/ })).toHaveAttribute(
     "aria-selected",
     "true",
@@ -220,7 +242,7 @@ test("customer failure, controlled recovery, and successful checkout", async ({
   await page.getByRole("tab", { name: /History/ }).click();
   await expect(page.getByText("INC-042")).toBeVisible();
 
-  await page.goto(scoped("http://localhost:5173/"));
+  await page.goto(scoped("http://localhost:15173/"));
   await expect(page.locator(".status-strip-operational")).toBeVisible();
   await expect(page.locator(".status-strip-operational")).toHaveCSS(
     "box-shadow",
@@ -233,7 +255,7 @@ test("customer failure, controlled recovery, and successful checkout", async ({
   await expect(page.getByText(/Order confirmed/).first()).toBeVisible();
 
   const operationsPage = await context.newPage();
-  await operationsPage.goto(scoped("http://localhost:5173/settings"));
+  await operationsPage.goto(scoped("http://localhost:15173/settings"));
   await expect(
     operationsPage.getByRole("link", { name: "Open storefront" }),
   ).toHaveAttribute("href", /session=e2e-judge-session/);
@@ -249,7 +271,7 @@ test("customer failure, controlled recovery, and successful checkout", async ({
   await expect(page.locator(".service-note")).toContainText(
     "Checkout is currently unavailable",
   );
-  await operationsPage.goto(scoped("http://localhost:5173/"));
+  await operationsPage.goto(scoped("http://localhost:15173/"));
   await expect(operationsPage.locator(".status-strip-investigating")).toHaveCSS(
     "box-shadow",
     /rgb\(241, 192, 106\)/,
@@ -262,7 +284,7 @@ test("incident navigation and measured topology remain correct across widths", a
 }) => {
   for (const width of [320, 390, 768, 1186, 1440, 1920]) {
     await page.setViewportSize({ width, height: 900 });
-    await page.goto(scoped("http://localhost:5173/services"));
+    await page.goto(scoped("http://localhost:15173/services"));
     await expect(page.locator(".dependency-edge")).toHaveCount(9);
     const errors = await page.locator(".dependency-map").evaluate((map) => {
       const mapRect = map.getBoundingClientRect();
@@ -301,27 +323,27 @@ test("incident navigation and measured topology remain correct across widths", a
     });
     expect(errors, `${width}px topology`).toEqual([]);
   }
-  await page.goto(scoped("http://localhost:5173/incidents/INC-042"));
+  await page.goto(scoped("http://localhost:15173/incidents/INC-042"));
   await expect(
     page.getByRole("link", { name: "Back to incidents" }),
   ).toHaveAttribute("href", "/incidents");
   await page.getByRole("link", { name: "Back to incidents" }).click();
-  await expect(page).toHaveURL("http://localhost:5173/incidents");
+  await expect(page).toHaveURL("http://localhost:15173/incidents");
 });
 
 test("primary pages have no serious automated accessibility violations", async ({
   page,
 }) => {
   for (const url of [
-    scoped("http://localhost:5173/"),
-    scoped("http://localhost:5173/incidents"),
-    scoped("http://localhost:5173/incidents/INC-042"),
-    scoped("http://localhost:5173/services"),
-    scoped("http://localhost:5173/deployments"),
-    scoped("http://localhost:5173/evidence"),
-    scoped("http://localhost:5173/runbooks"),
-    scoped("http://localhost:5173/receipts"),
-    scoped("http://localhost:5173/settings"),
+    scoped("http://localhost:15173/"),
+    scoped("http://localhost:15173/incidents"),
+    scoped("http://localhost:15173/incidents/INC-042"),
+    scoped("http://localhost:15173/services"),
+    scoped("http://localhost:15173/deployments"),
+    scoped("http://localhost:15173/evidence"),
+    scoped("http://localhost:15173/runbooks"),
+    scoped("http://localhost:15173/receipts"),
+    scoped("http://localhost:15173/settings"),
     scoped("http://localhost:5174/"),
     scoped("http://localhost:5174/collections/all"),
     scoped("http://localhost:5174/product/kuro-lounge-chair"),
@@ -348,7 +370,7 @@ test("primary pages have no serious automated accessibility violations", async (
 test("service architecture names every provider and remains readable", async ({
   page,
 }) => {
-  await page.goto(scoped("http://localhost:5173/services"));
+  await page.goto(scoped("http://localhost:15173/services"));
   await expect(page.getByText("4 providers")).toBeVisible();
   for (const provider of ["Cloudflare", "Render", "Stripe", "Supabase"])
     await expect(page.getByText(provider).first()).toBeVisible();
@@ -379,7 +401,7 @@ test("direct apps share production health while carts remain private", async ({
   const operationsPage = await firstContext.newPage();
   await firstPage.goto("http://localhost:5174/");
   await secondPage.goto("http://localhost:5174/");
-  await operationsPage.goto("http://localhost:5173/");
+  await operationsPage.goto("http://localhost:15173/");
   const firstEnvironment = await firstPage.evaluate(() =>
     sessionStorage.getItem("myshop.environment-session-v2"),
   );
@@ -435,11 +457,11 @@ test("direct apps share production health while carts remain private", async ({
 test("invalid routes and orders show clear not-found states", async ({
   page,
 }) => {
-  await page.goto(scoped("http://localhost:5173/incidents/DOES-NOT-EXIST"));
+  await page.goto(scoped("http://localhost:15173/incidents/DOES-NOT-EXIST"));
   await expect(
     page.getByRole("heading", { name: "Incident not found" }),
   ).toBeVisible();
-  await page.goto(scoped("http://localhost:5173/DOES-NOT-EXIST"));
+  await page.goto(scoped("http://localhost:15173/DOES-NOT-EXIST"));
   await expect(
     page.getByRole("heading", { name: "Page not found" }),
   ).toBeVisible();

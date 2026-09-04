@@ -10,7 +10,9 @@ import {
   queryMetrics,
   resetEnvironment,
   seedEnvironment,
+  seedHealthyEnvironment,
   snapshot,
+  restoreHealthyEnvironment,
   undoExecution,
   updateCart,
   verifyExecution,
@@ -44,6 +46,35 @@ const recoverCheckout = async (
 };
 
 describe("causal environment", () => {
+  it("seeds a healthy environment for a new recording", () => {
+    const state = seedHealthyEnvironment();
+    const view = snapshot(state);
+
+    expect(view.activeIncident).toBeNull();
+    expect(view.operationalStatus.state).toBe("operational");
+    expect(view.operationalStatus.openIncidentCount).toBe(0);
+    expect(computeHealth(state).every((service) => service.status === "healthy")).toBe(
+      true,
+    );
+    expect(state.services["checkout-api"].featureFlags["new-tax-rounding"]).toBe(
+      false,
+    );
+  });
+
+  it("restores an active environment to a fresh healthy baseline", async () => {
+    const recovered = await recoverCheckout();
+    const state = resetEnvironment(recovered, "checkout-regression");
+    const previousEpoch = state.epoch;
+    const previousCausalRevision = state.causalRevision;
+    const restored = restoreHealthyEnvironment(state);
+
+    expect(restored.epoch).toBe(previousEpoch + 1);
+    expect(restored.causalRevision).toBe(previousCausalRevision + 1);
+    expect(snapshot(restored).activeIncident).toBeNull();
+    expect(snapshot(restored).operationalStatus.state).toBe("operational");
+    expect(restored.receipts).toEqual(state.receipts);
+  });
+
   it("produces identical health for the same seed and time", () => {
     const first = seedEnvironment("checkout-regression");
     const second = seedEnvironment("checkout-regression");

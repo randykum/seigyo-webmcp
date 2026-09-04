@@ -33,15 +33,15 @@ The architecture inventory identifies seven service boundaries across Cloudflare
 
 ## Judge flow
 
-1. Open Seigyo first and go to Environment.
-2. Click Open storefront and use the linked MyShop tab for all storefront actions. Direct Seigyo and MyShop visits share production health, while every browser keeps a private cart. The linked tab also preserves an explicitly isolated environment when one is being used.
-3. If the environment is healthy, return to Seigyo Environment and use Release control to deploy a new revision. In the linked MyShop tab, add the Kuro lounge chair and attempt checkout.
+1. Open Seigyo and confirm that Operations overview reports all systems operational.
+2. Go to Environment, click Open storefront, and use the linked MyShop tab for all storefront actions. Direct Seigyo and MyShop visits share production health, while every browser keeps a private cart. The linked tab also preserves an explicitly isolated environment when one is being used.
+3. Return to Seigyo Environment and click Deploy new revision. In the linked MyShop tab, add the Kuro lounge chair and attempt checkout.
 4. Observe the customer-path error while the cart remains intact, then return to the Seigyo tab and select the current active incident from the Active incidents list.
 5. Ask the browser agent to investigate the current incident, collect evidence, propose the safest evidence-backed action, wait for approval, execute it, and verify recovery.
 6. Approve the exact action in the Agent Console when the human checkpoint appears. The agent continues with execution and verification after approval.
 7. Return to the linked MyShop tab and complete the order.
 
-The flow uses the current active incident and does not depend on a fixed incident identifier or a preselected cause. The Seigyo Environment page also provides the operator controls needed to restore the starting condition between judging sessions.
+The flow uses the current active incident and does not depend on a fixed incident identifier. New environments begin healthy, and the fixed Checkout API release control creates the incident used in the walkthrough.
 
 Operating-condition selection and reset are available in Seigyo under Environment.
 

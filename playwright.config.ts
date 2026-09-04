@@ -14,7 +14,7 @@ export default defineConfig({
   ],
   webServer: [
     { command: "pnpm --filter @seigyo/api dev", url: "http://localhost:8787/", reuseExistingServer: true, timeout: 120_000 },
-    { command: "pnpm --filter @seigyo/app dev", url: "http://localhost:5173/", reuseExistingServer: true, timeout: 120_000 },
+    { command: "pnpm --filter @seigyo/app exec vite --port 15173", url: "http://localhost:15173/", reuseExistingServer: true, timeout: 120_000 },
     { command: "pnpm --filter @seigyo/myshop dev", url: "http://localhost:5174/", reuseExistingServer: true, timeout: 120_000 }
   ]
 });

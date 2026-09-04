@@ -7,6 +7,7 @@ import {
   ProposalInputSchema,
   PublicKeySchema,
   ResetInputSchema,
+  RestoreHealthyInputSchema,
   DEFAULT_SESSION_ID,
   SessionIdSchema,
   ServiceIdSchema,
@@ -406,6 +407,26 @@ app.post("/api/scenario/reset", async (context) => {
     sessionId(context.req.header("X-Session-Id"));
     const input = ResetInputSchema.parse(await json(context));
     const data = await requestStub(context.env, context.req.header("X-Session-Id")).reset(input.scenario);
+    return context.json(success(data, data.causalRevision));
+  } catch (caught) {
+    return context.json(
+      failure(caught),
+      errorCode(caught instanceof Error ? caught.message : "") ===
+        "AUTH_REQUIRED"
+        ? 401
+        : 400,
+    );
+  }
+});
+
+app.post("/api/environment/restore", async (context) => {
+  try {
+    sessionId(context.req.header("X-Session-Id"));
+    RestoreHealthyInputSchema.parse(await json(context));
+    const data = await requestStub(
+      context.env,
+      context.req.header("X-Session-Id"),
+    ).restoreHealthy();
     return context.json(success(data, data.causalRevision));
   } catch (caught) {
     return context.json(

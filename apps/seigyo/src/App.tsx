@@ -1173,6 +1173,7 @@ function Environment({
   const [scenario, setScenario] = useState<ScenarioId>(data.scenario);
   const [busy, setBusy] = useState(false);
   const [releaseBusy, setReleaseBusy] = useState(false);
+  const [baselineBusy, setBaselineBusy] = useState(false);
   const checkoutService = data.services.find(
     (service) => service.id === "checkout-api",
   );
@@ -1218,6 +1219,30 @@ function Environment({
       await reload();
     } finally {
       setBusy(false);
+    }
+  };
+  const restoreHealthyBaseline = async () => {
+    if (baselineBusy) return;
+    setBaselineBusy(true);
+    try {
+      await api.restoreHealthy<EnvironmentSnapshot>();
+      cancelAllPendingApprovals(
+        "The environment returned to its healthy baseline.",
+      );
+      notify(
+        "success",
+        "Healthy baseline restored",
+        "All services are operational and ready for a new checkout revision.",
+      );
+      await reload();
+    } catch (error) {
+      notify(
+        "danger",
+        "Baseline restore failed",
+        error instanceof Error ? error.message : "Unknown error",
+      );
+    } finally {
+      setBaselineBusy(false);
     }
   };
   return (
@@ -1332,7 +1357,17 @@ function Environment({
               <dd>{fmtDate(data.virtualNow)}</dd>
             </div>
             <div>
-              <dt>WebMCP</dt>
+              <dt>
+                <button
+                  type="button"
+                  className="settings-stealth-trigger"
+                  onClick={restoreHealthyBaseline}
+                  disabled={baselineBusy}
+                  aria-label="Restore healthy baseline"
+                >
+                  WebMCP
+                </button>
+              </dt>
               <dd>
                 {document.modelContext ? "Available" : "Browser unsupported"}
               </dd>

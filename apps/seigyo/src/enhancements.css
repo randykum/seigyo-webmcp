@@ -129,6 +129,9 @@ td { color: var(--supporting); font-size: 12px; }
 .service-runtime, .service-signals { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
 .service-runtime span, .service-signals span { color: var(--supporting); font-size: 12px; overflow-wrap: anywhere; }
 .service-runtime b, .service-signals b { display: block; margin-bottom: 5px; color: var(--muted); font: 11px "SFMono-Regular", Consolas, monospace; text-transform: uppercase; }
+.settings-stealth-trigger { all: unset; display: inline; color: inherit; font: inherit; letter-spacing: inherit; text-transform: inherit; }
+.settings-stealth-trigger:disabled { color: inherit; }
+.settings-stealth-trigger:focus-visible { outline: 2px solid var(--blue); outline-offset: 3px; }
 
 @media (max-width: 1100px) {
   .service-header { grid-template-columns: minmax(180px,1fr) minmax(190px,1fr) 90px; }

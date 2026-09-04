@@ -165,6 +165,11 @@ export const api = {
       method: "POST",
       body: JSON.stringify({ scenario, confirmation: "RESET ENVIRONMENT" }),
     }),
+  restoreHealthy: <T>() =>
+    request<T>("/api/environment/restore", {
+      method: "POST",
+      body: JSON.stringify({ confirmation: "RESTORE HEALTHY BASELINE" }),
+    }),
   deployCheckoutRevision: (idempotencyKey: string) =>
     request<DeployCheckoutRevisionResult>(
       "/api/deployments/checkout/revisions",

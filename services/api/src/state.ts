@@ -16,8 +16,9 @@ import {
   queryMetrics,
   rejectProposal,
   resetEnvironment,
+  restoreHealthyEnvironment,
   searchLogs,
-  seedEnvironment,
+  seedHealthyEnvironment,
   snapshot,
   tick,
   undoExecution,
@@ -64,7 +65,7 @@ export class OperationsStateObject extends DurableObject<Env> {
         }>("SELECT COUNT(*) AS count FROM environment_state")
         .one();
       if (existing.count === 0) {
-        const initial = seedEnvironment("checkout-regression");
+        const initial = seedHealthyEnvironment();
         this.ctx.storage.sql.exec(
           "INSERT INTO environment_state (id, body, updated_at) VALUES (1, ?, ?)",
           JSON.stringify(initial),
@@ -368,6 +369,14 @@ export class OperationsStateObject extends DurableObject<Env> {
       Object.assign(state, next);
       return snapshot(state);
     }, "scenario.reset");
+  }
+
+  async restoreHealthy() {
+    return this.mutate((state) => {
+      const next = restoreHealthyEnvironment(state);
+      Object.assign(state, next);
+      return snapshot(state);
+    }, "environment.restored");
   }
 
   async deployCheckoutRevision(input: DeployCheckoutRevisionInput) {

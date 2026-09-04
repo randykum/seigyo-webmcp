@@ -14,9 +14,10 @@ describe("OperationsStateObject", () => {
     expect(second.incidents.length).toBeGreaterThanOrEqual(30);
     expect(second.deployments.length).toBeGreaterThanOrEqual(60);
     expect(second.dependencyEdges).toHaveLength(9);
-    expect(second.activeIncident?.status).not.toBe("resolved");
-    expect(second.operationalStatus.openIncidentCount).toBe(1);
-  });
+    expect(second.activeIncident).toBeNull();
+    expect(second.operationalStatus.openIncidentCount).toBe(0);
+    expect(second.operationalStatus.state).toBe("operational");
+  }, 15_000);
 
   it("returns hosting metadata with dependency nodes", async () => {
     const state = env.OPERATIONS_STATE.getByName("dependency-workspace");
@@ -58,6 +59,7 @@ describe("OperationsStateObject", () => {
 
   it("persists an idempotent checkout release after recovery", async () => {
     const state = env.OPERATIONS_STATE.getByName("checkout-release-workspace");
+    await state.reset("checkout-regression");
     const proposal = await state.createProposal({
       incidentId: "INC-042",
       action: {
@@ -91,6 +93,20 @@ describe("OperationsStateObject", () => {
     expect(persisted.activeIncident?.id).toBe(first.incident.id);
     expect(persisted.deployments[0]?.id).toBe(first.deployment.id);
     expect(persisted.incidents.some((item) => item.id === "INC-042")).toBe(
+      true,
+    );
+  });
+
+  it("restores an incident workspace to a healthy baseline", async () => {
+    const state = env.OPERATIONS_STATE.getByName("restore-workspace");
+    await state.reset("checkout-regression");
+    const before = await state.getSnapshot();
+    const restored = await state.restoreHealthy();
+
+    expect(restored.epoch).toBe(before.epoch + 1);
+    expect(restored.activeIncident).toBeNull();
+    expect(restored.operationalStatus.state).toBe("operational");
+    expect((await state.listServices()).health.every((service) => service.status === "healthy")).toBe(
       true,
     );
   });

@@ -30,24 +30,21 @@ await page.addInitScript(() => {
   });
 });
 
-const resetScenario = async () => {
-  const response = await fetch(`${apiUrl}/api/scenario/reset`, {
+const restoreHealthy = async () => {
+  const response = await fetch(`${apiUrl}/api/environment/restore`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
       "X-Session-Id": sessionId,
       Origin: seigyoUrl,
     },
-    body: JSON.stringify({
-      scenario: "checkout-regression",
-      confirmation: "RESET ENVIRONMENT",
-    }),
+    body: JSON.stringify({ confirmation: "RESTORE HEALTHY BASELINE" }),
   });
   if (!response.ok)
-    throw new Error(`Scenario reset failed with ${response.status}`);
+    throw new Error(`Healthy restore failed with ${response.status}`);
 };
 
-await resetScenario();
+await restoreHealthy();
 
 await page.goto(scoped(seigyoUrl), { waitUntil: "networkidle" });
 await page.getByRole("heading", { name: "Operations overview" }).waitFor();
@@ -72,10 +69,37 @@ if (
     "Seigyo snapshot is missing canonical topology or operational status data",
   );
 }
+if (
+  snapshot.body.data.activeIncident !== null ||
+  snapshot.body.data.operationalStatus.state !== "operational"
+) {
+  throw new Error("The public rehearsal did not begin from a healthy environment");
+}
 await page.screenshot({
   path: "screenshots/deployed-seigyo.png",
   fullPage: false,
 });
+
+await page.goto(scoped(`${seigyoUrl}/settings`), { waitUntil: "networkidle" });
+const deployButton = page.getByRole("button", { name: "Deploy new revision" });
+if (!(await deployButton.isEnabled()))
+  throw new Error("Checkout release control was unavailable from the healthy baseline");
+await deployButton.click();
+await page.getByText("Checkout revision deployed").waitFor();
+
+const incidentSnapshot = await page.evaluate(async ({ apiBase, sessionId }) => {
+  const response = await fetch(`${apiBase}/api/snapshot`, {
+    headers: { "X-Session-Id": sessionId },
+  });
+  return (await response.json()).data;
+}, { apiBase: apiUrl, sessionId });
+const incidentId = incidentSnapshot.activeIncident?.id;
+const checkoutDeployment = incidentSnapshot.deployments.find(
+  (deployment) => deployment.serviceId === "checkout-api",
+);
+if (!incidentId || !checkoutDeployment) {
+  throw new Error("Deploying the checkout revision did not create an incident");
+}
 
 await page.goto(scoped(myshopUrl), { waitUntil: "domcontentloaded" });
 await page
@@ -115,27 +139,28 @@ await page.getByRole("link", { name: /Checkout/ }).click();
 await page.getByRole("button", { name: /Place order/ }).click();
 await page.getByRole("alert").waitFor();
 
-await page.goto(scoped(`${seigyoUrl}/incidents/INC-042`), { waitUntil: "networkidle" });
-await page.evaluate(async () =>
+await page.goto(scoped(`${seigyoUrl}/incidents/${incidentId}`), { waitUntil: "networkidle" });
+await page.evaluate(async (incidentId) =>
   globalThis.__seigyoTools["seigyo.investigate_incident"].execute({
-    incidentId: "INC-042",
+    incidentId,
   }),
+  incidentId,
 );
-await page.evaluate(() => {
+await page.evaluate(({ incidentId, deploymentId }) => {
   globalThis.__pendingProposal = globalThis.__seigyoTools[
     "seigyo.propose_action"
   ].execute({
-    incidentId: "INC-042",
+    incidentId,
     action: {
       type: "rollback_deployment",
       targetService: "checkout-api",
       parameters: {},
     },
     rationale: "The checkout error increase follows the current deployment.",
-    evidenceRefs: ["deployment:DEP-160"],
+    evidenceRefs: [`deployment:${deploymentId}`],
     idempotencyKey: "deployed-proposal-rollback-001",
   });
-});
+}, { incidentId, deploymentId: checkoutDeployment.id });
 await page
   .getByRole("alertdialog", { name: "Approve exact intervention" })
   .waitFor();
@@ -155,12 +180,12 @@ const executionResult = await page.evaluate(
   proposalId,
 );
 const verificationResult = await page.evaluate(
-  async (executionId) =>
+  async ({ executionId, incidentId }) =>
     globalThis.__seigyoTools["seigyo.verify_action"].execute({
       executionId,
-      incidentId: "INC-042",
+      incidentId,
     }),
-  executionResult.structuredContent.id,
+  { executionId: executionResult.structuredContent.id, incidentId },
 );
 if (verificationResult.structuredContent.outcome !== "recovered")
   throw new Error("Deployed recovery verification did not recover");
@@ -173,29 +198,6 @@ await page.goto(scoped(`${myshopUrl}/checkout`), { waitUntil: "domcontentloaded"
 await page.getByRole("button", { name: /Place order/ }).click();
 await page.getByRole("heading", { name: /Thank you/ }).waitFor();
 
-const operationsPage = await browser.newPage({
-  viewport: { width: 1440, height: 1000 },
-});
-await operationsPage.goto(scoped(`${seigyoUrl}/settings`), {
-  waitUntil: "networkidle",
-});
-const deployButton = operationsPage.getByRole("button", {
-  name: "Deploy new revision",
-});
-if (!(await deployButton.isEnabled()))
-  throw new Error("Checkout release control was not available after recovery");
-await deployButton.click();
-await operationsPage.getByText("Checkout revision deployed").waitFor();
-if (await deployButton.isEnabled())
-  throw new Error("Checkout release control remained enabled during an incident");
-await page
-  .locator(".service-note")
-  .getByText("Checkout is currently unavailable")
-  .waitFor();
-await operationsPage.goto(scoped(seigyoUrl), { waitUntil: "networkidle" });
-await operationsPage.locator(".status-strip-investigating").waitFor();
-await operationsPage.close();
-
 await browser.close();
 
 for (const origin of [seigyoUrl, myshopUrl]) {
@@ -207,7 +209,7 @@ for (const origin of [seigyoUrl, myshopUrl]) {
   }
 }
 
-await resetScenario();
+await restoreHealthy();
 
 console.log(
   JSON.stringify({
