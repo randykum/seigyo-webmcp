@@ -34,7 +34,7 @@ The architecture inventory identifies seven service boundaries across Cloudflare
 ## Judge flow
 
 1. Open Seigyo first and go to Environment.
-2. Click Open storefront and use the linked MyShop tab for all storefront actions. Independently opening an app URL creates a separate browser session, so it will not share the same cart or environment state.
+2. Click Open storefront and use the linked MyShop tab for all storefront actions. Direct Seigyo and MyShop visits share production health, while every browser keeps a private cart. The linked tab also preserves an explicitly isolated environment when one is being used.
 3. If the environment is healthy, return to Seigyo Environment and use Release control to deploy a new revision. In the linked MyShop tab, add the Kuro lounge chair and attempt checkout.
 4. Observe the customer-path error while the cart remains intact, then return to the Seigyo tab and select the current active incident from the Active incidents list.
 5. Ask the browser agent to investigate the current incident, collect evidence, propose the safest evidence-backed action, wait for approval, execute it, and verify recovery.

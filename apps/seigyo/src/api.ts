@@ -1,4 +1,4 @@
-import { SessionIdSchema } from "@seigyo/contracts";
+import { DEFAULT_SESSION_ID, SessionIdSchema } from "@seigyo/contracts";
 import type {
   ApiResult,
   DeployCheckoutRevisionResult,
@@ -12,7 +12,7 @@ const API_BASE =
     /\/$/,
     "",
   ) ?? "";
-const SESSION_STORAGE_KEY = "seigyo.session-id";
+const SESSION_STORAGE_KEY = "seigyo.environment-session-v2";
 
 const validSession = (value: string | null | undefined): string | undefined => {
   const parsed = SessionIdSchema.safeParse(value);
@@ -27,7 +27,10 @@ const resolveSessionId = (): string => {
   } catch {
     stored = undefined;
   }
-  const resolved = fromUrl ?? stored ?? `judge-${crypto.randomUUID().replaceAll("-", "")}`;
+  // A direct Seigyo visit represents the shared production environment. An
+  // explicit session query still creates an isolated environment for tests or
+  // parallel judge runs, and is retained across route reloads in this tab.
+  const resolved = fromUrl ?? stored ?? DEFAULT_SESSION_ID;
   try {
     sessionStorage.setItem(SESSION_STORAGE_KEY, resolved);
   } catch {

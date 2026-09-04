@@ -357,7 +357,7 @@ test("service architecture names every provider and remains readable", async ({
   expect(await textBelowMinimum(page)).toEqual([]);
 });
 
-test("fresh browser sessions receive distinct keys and carts", async ({
+test("direct apps share production health while carts remain private", async ({
   browser,
 }) => {
   const firstContext = await browser.newContext();
@@ -376,17 +376,31 @@ test("fresh browser sessions receive distinct keys and carts", async ({
   });
   const firstPage = await firstContext.newPage();
   const secondPage = await secondContext.newPage();
+  const operationsPage = await firstContext.newPage();
   await firstPage.goto("http://localhost:5174/");
   await secondPage.goto("http://localhost:5174/");
-  const firstSession = await firstPage.evaluate(() =>
-    sessionStorage.getItem("myshop.seigyo-session"),
+  await operationsPage.goto("http://localhost:5173/");
+  const firstEnvironment = await firstPage.evaluate(() =>
+    sessionStorage.getItem("myshop.environment-session-v2"),
   );
-  const secondSession = await secondPage.evaluate(() =>
-    sessionStorage.getItem("myshop.seigyo-session"),
+  const secondEnvironment = await secondPage.evaluate(() =>
+    sessionStorage.getItem("myshop.environment-session-v2"),
   );
-  expect(firstSession).toMatch(/^judge-[a-f0-9]{32}$/);
-  expect(secondSession).toMatch(/^judge-[a-f0-9]{32}$/);
-  expect(firstSession).not.toBe(secondSession);
+  const operationsEnvironment = await operationsPage.evaluate(() =>
+    sessionStorage.getItem("seigyo.environment-session-v2"),
+  );
+  const firstCart = await firstPage.evaluate(() =>
+    sessionStorage.getItem("myshop.cart-session-v2"),
+  );
+  const secondCart = await secondPage.evaluate(() =>
+    sessionStorage.getItem("myshop.cart-session-v2"),
+  );
+  expect(firstEnvironment).toBe("seigyo-operator-session");
+  expect(secondEnvironment).toBe("seigyo-operator-session");
+  expect(operationsEnvironment).toBe("seigyo-operator-session");
+  expect(firstCart).toMatch(/^myshop-cart-[a-f0-9]{32}$/);
+  expect(secondCart).toMatch(/^myshop-cart-[a-f0-9]{32}$/);
+  expect(firstCart).not.toBe(secondCart);
   const schemas = await firstPage.evaluate(() => {
     const tools = (
       globalThis as typeof globalThis & {

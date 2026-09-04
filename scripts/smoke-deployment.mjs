@@ -9,8 +9,11 @@ if (!seigyoUrl || !myshopUrl || !apiUrl) {
   throw new Error("SEIGYO_URL, MYSHOP_URL, and API_URL are required");
 }
 
-const sessionId = `judge-${randomUUID().replaceAll("-", "")}`;
-const scoped = (url) => `${url}${url.includes("?") ? "&" : "?"}session=${sessionId}`;
+const sessionId = process.env.SMOKE_SESSION_ID ?? `judge-${randomUUID().replaceAll("-", "")}`;
+const directSession = process.env.SMOKE_DIRECT_SESSION === "true";
+const scoped = (url) => directSession
+  ? url
+  : `${url}${url.includes("?") ? "&" : "?"}session=${sessionId}`;
 
 const browser = await chromium.launch();
 const page = await browser.newPage({ viewport: { width: 1440, height: 1000 } });

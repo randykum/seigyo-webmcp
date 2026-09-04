@@ -1,10 +1,12 @@
 import {
+  DEFAULT_SESSION_ID,
   SessionIdSchema,
   type ApiResult,
 } from "@seigyo/contracts";
 
 const API_BASE = (import.meta.env.VITE_API_BASE_URL as string | undefined)?.replace(/\/$/, "") ?? "";
-const SESSION_STORAGE_KEY = "myshop.seigyo-session";
+const SESSION_STORAGE_KEY = "myshop.environment-session-v2";
+const CART_STORAGE_KEY = "myshop.cart-session-v2";
 
 const validSession = (value: string | null | undefined): string | undefined => {
   const parsed = SessionIdSchema.safeParse(value);
@@ -19,7 +21,9 @@ const resolveSessionId = (): string => {
   } catch {
     stored = undefined;
   }
-  const resolved = fromUrl ?? stored ?? `judge-${crypto.randomUUID().replaceAll("-", "")}`;
+  // Direct MyShop and Seigyo visits must observe the same production health.
+  // A session query opts into an isolated environment and survives reloads.
+  const resolved = fromUrl ?? stored ?? DEFAULT_SESSION_ID;
   try {
     sessionStorage.setItem(SESSION_STORAGE_KEY, resolved);
   } catch {
@@ -29,6 +33,34 @@ const resolveSessionId = (): string => {
 };
 
 export const SESSION_ID = resolveSessionId();
+
+const resolveCartId = (): string => {
+  const linkedSession = validSession(
+    new URLSearchParams(location.search).get("session"),
+  );
+  if (linkedSession) {
+    const linkedCartId = `myshop-${linkedSession}`;
+    try {
+      sessionStorage.setItem(CART_STORAGE_KEY, linkedCartId);
+    } catch {
+      // The in-memory value remains valid for the lifetime of this page.
+    }
+    return linkedCartId;
+  }
+  try {
+    const stored = sessionStorage.getItem(CART_STORAGE_KEY);
+    if (stored && /^[a-zA-Z0-9_-]{1,80}$/.test(stored)) return stored;
+  } catch {
+    // A blocked session store does not prevent the current tab from working.
+  }
+  const cartId = `myshop-cart-${crypto.randomUUID().replaceAll("-", "")}`;
+  try {
+    sessionStorage.setItem(CART_STORAGE_KEY, cartId);
+  } catch {
+    // The in-memory value remains valid for the lifetime of this page.
+  }
+  return cartId;
+};
 
 async function request<T>(path: string, init?: RequestInit): Promise<T> {
   const response = await fetch(`${API_BASE}${path}`, { ...init, headers: { "Content-Type": "application/json", "X-Session-Id": SESSION_ID, ...init?.headers } });
@@ -47,7 +79,7 @@ export const shopApi = {
   health: <T>() => request<T>("/api/store/health")
 };
 
-export const CART_ID = `myshop-${SESSION_ID}`;
+export const CART_ID = resolveCartId();
 
 export const shopWebsocketUrl = (): string => {
   if (API_BASE)
